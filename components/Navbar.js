@@ -3,8 +3,8 @@ import Link from "next/link";
 
 export default function Navbar() {
   return (
-    <nav className="w-full relative">
-      <div className="w-[95vw] relative flex-between mx-auto pt-6">
+    <nav className="w-full flex-center fixed py-5 bg-[#160017] z-60">
+      <div className="w-[95vw] flex-between mx-auto relative">
         <div className="w-37 h-12 relative">
           <Image
             src="/assets/main-logo.svg"
@@ -14,13 +14,13 @@ export default function Navbar() {
           />
         </div>
         <ul className="flex-center gap-12">
-          <li className="text-base">
+          <li className="text-sm">
             <Link href="/">MEN</Link>
           </li>
-          <li className="text-base">
+          <li className="text-sm">
             <Link href="/">WOMEN</Link>
           </li>
-          <li className="text-base">
+          <li className="text-sm">
             <Link href="/">DESIGN METHODOLOGY</Link>
           </li>
         </ul>
@@ -29,24 +29,24 @@ export default function Navbar() {
             <Image
               src="/assets/MagnifyingGlass.svg"
               alt="search"
-              width={32}
-              height={32}
+              width={28}
+              height={28}
             />
           </div>
           <div className="relative">
             <Image
               src="/assets/ShoppingBag.svg"
               alt="search"
-              width={32}
-              height={32}
+              width={28}
+              height={28}
             />
           </div>
           <div className="relative">
             <Image
               src="/assets/SquaresFour.svg"
               alt="search"
-              width={32}
-              height={32}
+              width={28}
+              height={28}
             />
           </div>
         </div>

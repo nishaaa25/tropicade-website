@@ -1,9 +1,13 @@
+import OurProcess from "@/components/OurProcess";
 import Image from "next/image";
 
 export default function Home() {
   return (
     <div className="relative w-full">
-      hey
+      <div className="w-full h-screen relative">
+
+      </div>
+      <OurProcess/>
     </div>
   );
 }

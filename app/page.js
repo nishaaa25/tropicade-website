@@ -1,12 +1,11 @@
 import OurProcess from "@/components/OurProcess";
 import Image from "next/image";
+import MainLandingPage from "@/components/pages/MainLandingPage";
 
 export default function Home() {
   return (
     <div className="relative w-full">
-      <div className="w-full h-screen relative">
-
-      </div>
+      <MainLandingPage />
       <OurProcess/>
     </div>
   );

@@ -1,6 +1,8 @@
 import { Bebas} from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
+import { useLenis } from "@/components/Hooks/useLenis";
+import LenisProvider from "@/components/Hooks/lenisProvider";
 
 
 export const metadata = {
@@ -14,8 +16,10 @@ export default function RootLayout({ children }) {
       <body
         className={` antialiased w-full relative`}
       >
-        <Navbar/>
-        {children}
+        <LenisProvider>
+  <Navbar/>
+          {children}
+        </LenisProvider>
       </body>
     </html>
   );

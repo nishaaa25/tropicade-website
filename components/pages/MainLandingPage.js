@@ -13,22 +13,42 @@ const MainLandingPage = () => {
     const animateImageRef = useRef(null)
 
     useGSAP(() => {
+        // Set initial position explicitly
+        gsap.set(animateImageRef.current, {
+            y: 600,
+            opacity: 0
+        });
+
+        // First animation: T-shirt comes from bottom to center
+        const tl = gsap.timeline();
+        tl.to(animateImageRef.current, {
+            y: 0,
+            duration: 3,
+            opacity: 1,
+            ease: "expo.inOut",
+            delay: 0.5
+        });
+
+        // Second animation: ScrollTrigger animation with delay
         gsap.to(animateImageRef.current, {
+            y: -100,
             scrollTrigger: {
                 trigger: animateImageRef.current,
                 start: "top bottom",
                 end: "bottom top",
-                scrub: 1
+                scrub: 1,
+                invalidateOnRefresh: true
             },
-            y: -100,
-            ease: "none"
-        })
+            ease: "none",
+            delay: 3.5, // Wait for first animation to complete (3s + 0.5s delay)
+            immediateRender: false // Don't apply immediately
+        });
     })
 
     return (
         <div>
             <div className="fixed top-56 right-0">
-                <Image ref={animateImageRef} src="/assets/T-Shirt.png" alt="landing-page-bg" width={500} height={500} className="object-cover z-50 h-[40vw] w-[50vw] " />
+                <Image ref={animateImageRef} src="/assets/T-Shirt.png" alt="landing-page-bg" width={500} height={500} className="object-cover z-50 h-[40vw] w-[50vw]" />
             </div>
             <LandingPage />
             <LandingPageAnimated />

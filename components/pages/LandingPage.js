@@ -3,56 +3,46 @@ import Image from "next/image"
 import gsap from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
 import { useRef } from "react"
+import splitType from "split-type"
 
 gsap.registerPlugin(ScrollTrigger)
 
 const LandingPage = () => {
-    const splitTextOne = useRef(null)
     const textAnimeOne = useRef(null)
     const textAnimeTwo = useRef(null)
     const textAnimeThree = useRef(null)
     const subBlogAnime = useRef(null)
     const buttonAnime = useRef(null)
+    const textAnimeOneDiv = useRef(null)
+    const textAnimeTwoDiv = useRef(null)
+    const textAnimeThreeDiv = useRef(null)
+    const subBlogAnimeDiv = useRef(null)
+    const buttonAnimeDiv = useRef(null)
 
 
     useGSAP(() => {
 
-        const tl = gsap.timeline();
-        tl.from(splitTextOne.chars, {
-            y: 100,
-            duration: 2,
+        const splitTextOne = new splitType(textAnimeOne.current, {type: "words"})
+        const splitTextTwo = new splitType(textAnimeTwo.current, {type: "words"})
+        const splitTextThree = new splitType(textAnimeThree.current, {type: "words"})
+        const splitSubBlog = new splitType(subBlogAnime.current, {type: "words"})
+
+        const tl = gsap.timeline(); 
+        tl.from([splitTextOne.words, splitTextTwo.words, splitTextThree.words, splitSubBlog.lines, buttonAnime.current], {
+            y: 600,
+            duration: 3,
             opacity: 0,
             ease: "expo.inOut",
             stagger: 0.1
-        })
-        tl.from(textAnimeTwo.current, {
-            y: 100,
-            duration: 2,
+        }, "he")
+
+        tl.from([textAnimeOneDiv.current, textAnimeTwoDiv.current, textAnimeThreeDiv.current, subBlogAnimeDiv.current, buttonAnimeDiv.current], {
+            y: 600,
+            duration: 3,
             opacity: 0,
             ease: "expo.inOut",
-            delay: -1.5
-        })
-        tl.from(textAnimeThree.current, {
-            y: 100,
-            duration: 2,
-            opacity: 0,
-            ease: "expo.inOut",
-            delay: -1.7
-        })
-        tl.from(subBlogAnime.current, {
-            y: 100,
-            duration: 2,
-            opacity: 0,
-            ease: "expo.inOut",
-            delay: -1.7
-        })
-        tl.from(buttonAnime.current, {
-            y: 100,
-            duration: 2,
-            opacity: 0,
-            ease: "expo.inOut",
-            delay: -1.7
-        })
+            stagger: 0.1
+        }, "he")
         
     })
 
@@ -60,16 +50,26 @@ const LandingPage = () => {
     return (
         <div className='w-full relative h-[90vh] px-16 pt-12'>
             
-            <p ref={textAnimeOne} className="font-bold pb-4">MAKE IT YOURS</p>
+            <div ref={textAnimeOneDiv} className="h-fit overflow-hidden">
+                <p ref={textAnimeOne} className="font-bold pb-4">MAKE IT YOURS</p>
+            </div>
             
-            <h1 ref={textAnimeTwo} className="text-8xl font-bold text-white">CUSTOM STREETWEAR</h1>
-            <h1 ref={textAnimeThree} className="text-8xl font-bold text-white">YOUR WAY</h1>
-            <p ref={subBlogAnime} className="font-thin w-[40%] opacity-50 py-4">Bring your memories, faces, and moments to life — right on your tee. At Tropicade, we blend bold street vibes with personal stories.</p>
+            <div ref={textAnimeTwoDiv} className="h-fit overflow-hidden">
+                <h1 ref={textAnimeTwo} className="text-8xl font-bold text-white">CUSTOM STREETWEAR</h1>
+            </div>
+            <div ref={textAnimeThreeDiv} className="h-fit overflow-hidden">
+                <h1 ref={textAnimeThree} className="text-8xl font-bold text-white">YOUR WAY</h1>
+            </div>
+            <div ref={subBlogAnimeDiv} className="h-fit overflow-hidden">
+                <p ref={subBlogAnime} className="font-thin w-[40%] opacity-50 py-4">Bring your memories, faces, and moments to life — right on your tee. At Tropicade, we blend bold street vibes with personal stories.</p>
+            </div>
 
-            <button ref={buttonAnime} className="bg-[#FF3A65] rounded-full px-4 py-2 flex gap-6">
-                <p className="px-3">SHOP OUR COLLECTION</p>
-                <Image src="/assets/ButtonArrowRotated.svg" alt="ButtonArrow" width={20} height={20} />
-            </button>
+            <div ref={buttonAnimeDiv}>
+                <button ref={buttonAnime} className="bg-[#FF3A65] rounded-full px-4 py-2 flex gap-6">
+                    <p className="px-3">SHOP OUR COLLECTION</p>
+                    <Image src="/assets/ButtonArrowRotated.svg" alt="ButtonArrow" width={20} height={20} />
+                </button>
+            </div>
 
             <div className="h-[10vh] flex items-center justify-evenly w-full backdrop-blur-sm absolute bottom-0 left-0">
                <h1 className="text-xs">Pick your tee & design</h1>

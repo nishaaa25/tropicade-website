@@ -37,7 +37,7 @@ const LandingPage = () => {
         }, "he")
 
         tl.from([textAnimeOneDiv.current, textAnimeTwoDiv.current, textAnimeThreeDiv.current, subBlogAnimeDiv.current, buttonAnimeDiv.current], {
-            y: 600,
+            y: 100,
             duration: 3,
             opacity: 0,
             ease: "expo.inOut",

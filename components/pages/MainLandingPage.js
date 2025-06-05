@@ -44,8 +44,8 @@ const MainLandingPage = () => {
 
     return (
         <div>
-            <div className="fixed top-56 right-0">
-                <Image ref={animateImageRef} src="/assets/T-Shirt.png" alt="landing-page-bg" width={500} height={500} className="object-cover z-50 h-[40vw] w-[50vw]" />
+            <div className="fixed top-40 right-0">
+                <Image ref={animateImageRef} src="/assets/T-Shirt.png" alt="landing-page-bg" width={900} height={900} className="object-contain z-50 h-[44vw] w-[54vw]" />
             </div>
             <LandingPage />
             <LandingPageAnimated />

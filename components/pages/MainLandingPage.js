@@ -13,13 +13,11 @@ const MainLandingPage = () => {
     const animateImageRef = useRef(null)
 
     useGSAP(() => {
-        // Set initial position explicitly
         gsap.set(animateImageRef.current, {
             y: 600,
             opacity: 0
         });
 
-        // First animation: T-shirt comes from bottom to center
         const tl = gsap.timeline();
         tl.to(animateImageRef.current, {
             y: 0,
@@ -29,7 +27,6 @@ const MainLandingPage = () => {
             delay: 0.5
         });
 
-        // Second animation: ScrollTrigger animation with delay
         gsap.to(animateImageRef.current, {
             y: -100,
             scrollTrigger: {
@@ -40,8 +37,8 @@ const MainLandingPage = () => {
                 invalidateOnRefresh: true
             },
             ease: "none",
-            delay: 3.5, // Wait for first animation to complete (3s + 0.5s delay)
-            immediateRender: false // Don't apply immediately
+            delay: 3.5,
+            immediateRender: false
         });
     })
 

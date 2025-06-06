@@ -89,6 +89,12 @@ const MainLandingPage = () => {
             <div className="fixed -bottom-52 -right-30 -z-10">
                 <Image ref={singleLeafRef} src="/assets/singleleaf.svg" alt="landing-page-bg" width={900} height={900} className="object-contain z-50 h-[25vw] w-[35vw]" />
             </div>
+            <div className="h-[60vh] fixed top-1/2 -translate-y-1/2 -right-10 w-[60vh] rounded-full blur-[200px] bg-[#32033F]">
+
+            </div>
+            <div className="h-[60vh] fixed top-[80%] left-1/2 -translate-x-1/2 w-[60vh] rounded-full blur-[200px] bg-[#CF2379]">
+
+            </div>
             <LandingPage />
             <LandingPageAnimated />
         </div>

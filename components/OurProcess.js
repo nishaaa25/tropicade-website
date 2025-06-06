@@ -10,81 +10,43 @@ gsap.registerPlugin(ScrollTrigger, useGSAP);
 export default function OurProcess() {
   const processDivRef = useRef();
   useGSAP(() => {
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: processDivRef.current,
-        start: "top top",
-        end: "+=150%",
-        scrub: 2,
-        pin: true,
-        delay: 0.5
-      },
-    });
-
-    tl.to("#text-1", { x: "-50vw", opacity: 0, duration: 1 }, "30%")
-      .to("#para-1", { x: "50vw", opacity: 0, duration: 1 }, "30%")
-      .to("#text-2", { opacity: 1, duration: 1 }, "30%")
-      .to(["#img-1", "#img-3"], { opacity: 0, duration: 1 }, "30%")
-      .to(
-        "#img-2",
-        { borderColor: "#160017", borderRadius: 0, duration: 1 },
-        "30%"
-      )
-      .fromTo(
-        "#message",
-        { y: "50vh", opacity: 0 },
-        { y: 0, opacity: 1, duration: 1 },
-        "30%"
-      )
-      .to(".tshirt-outline", { opacity: 1, duration: 1 }, "30%")
-      .to("#bottom-btn", { opacity: 0, duration: 1 }, "30%")
-      .fromTo(
-        "#para-2",
-        { y: "40vh", opacity: 0 },
-        { y: 0, opacity: 1, duration: 1 },
-        "30%"
-      );
-
-    tl.to("#text-2", { x: "-50vw", opacity: 0, duration: 1 }, "70%")
-      .to(
-        ".tshirt-outline",
-        {
-          opacity: 0,
-          duration: 1,
-        },
-        "70%"
-      )
-      .to(
-        "#img-2",
-        { scale: 0.8, duration: 1, y: -10, borderColor: "#18171802" },
-        "70%"
-      )
-      .to(
-        ".black-tshirt",
-        {
-          opacity: 1,
-          duration: 1,
-        },
-        "70%"
-      ).from(
-        ["#leaves-1", "#leaves-2", "#leaves-3", "#leaves-4"],
-        {
-          rotate: 20,
-          scale:0,
-          duration: 1,
-        },
-        "70%"
-      )
-      .to(
-        "#message",
-        {
-          y: "50vh",
-          duration: 1,
-        },
-        "70%"
-      )
-      .fromTo("#text-3", { opacity: 0 }, { opacity: 1, duration: 1 }, "70%");
+  const tl = gsap.timeline({
+    scrollTrigger: {
+      trigger: processDivRef.current,
+      start: "top top",
+      end: "+=300%",
+      scrub: 2,
+      pin: true,
+    },
   });
+
+  // Step 1 -> Step 2
+  tl.addLabel("step1")
+    .to("#text-1", { x: "-50vw", opacity: 0, duration: 1 }, "step1")
+    .to("#para-1", { x: "50vw", opacity: 0, duration: 1 }, "step1")
+    .to(["#img-1", "#img-3"], { opacity: 0, duration: 1 }, "step1")
+    .to("#text-2", { opacity: 1, duration: 1 }, "step1")
+    .to("#img-2", {borderColor: "transparent",duration: 1 }, "step1")
+    .fromTo("#message", { y: "50vh", opacity: 0 }, { y: 0, opacity: 1, duration: 1 }, "step1")
+    .to(".tshirt-outline", { opacity: 1, duration: 1 }, "step1")
+    .to("#bottom-btn", { opacity: 0, duration: 1 }, "step1")
+    .fromTo("#para-2", { y: "40vh", opacity: 0 }, { y: 0, opacity: 1, duration: 1 }, "step1");
+
+  // Step 2 -> Step 3
+  tl.addLabel("step2")
+    .to("#text-2", { x: "-50vw", opacity: 0, duration: 1 }, "step2")
+    .to(".tshirt-outline", { opacity: 0, duration: 1 }, "step2")
+    .to("#img-2", { y: -20, scale: 0.9, opacity: 1, duration: 1 }, "step2")
+    .to("#message", { y: "50vh", opacity: 0, duration: 1 }, "step2")
+    .to(".black-tshirt", { opacity: 1, duration: 1 }, "step2")
+    .from(["#leaves-1", "#leaves-2", "#leaves-3", "#leaves-4"], {
+      rotate: 20,
+      scale: 0,
+      duration: 1,
+    }, "step2")
+    .fromTo("#text-3", { opacity: 0 }, { opacity: 1, duration: 1 }, "step2");
+});
+
 
   return (
     <div
@@ -114,7 +76,7 @@ export default function OurProcess() {
           <h1 className="text-[10vw] leading-[10vw] opacity-10 relative">03</h1>
           <div>
             <p className="uppercase text-[2.4vw] leading-[2.4vw] relative w-7/12 -top-[8vh] -right-[8vh] pl-2">
-              add your own{" "}
+              add your own
               <span className="text-dark-pink-500">photos/texts</span>
             </p>
           </div>
@@ -128,25 +90,25 @@ export default function OurProcess() {
             id="img-1"
           >
             <Image
-              src="/assets/product-2.png"
+              src="/assets/product-2.png" 
               alt="alt"
               fill
               className="object-contain"
             />
-          </div>
+          </div>  
           <div
-            className="min-w-62 h-62 relative rounded-[500%] overflow-hidden right-[5vw] border-[15px] border-violet-400 z-50"
+            className="min-w-62 h-62 relative z-20 rounded-full right-[5vw] border-[15px] border-violet-400 overflow-hidden"
             id="img-2"
           >
             <Image
-              src="/assets/product-3.png"
+              src="/assets/product-4.png"
               alt="alt"
               fill
-              className="object-contain"
+              className="object-contain scale-[1.3]"
             />
           </div>
           <div
-            className="min-w-62 h-62 rounded-full relative overflow-hidden right-[10vw] border-[15px] border-violet-400"
+            className="min-w-62 h-62 rounded-full relative z-30 overflow-hidden right-[10vw] border-[15px] border-violet-400"
             id="img-3"
           >
             <Image
@@ -165,7 +127,7 @@ export default function OurProcess() {
             />
           </div>
           <div className="w-10/12 h-[60vh] absolute black-tshirt opacity-0">
-            <div className="w-30 h-30 absolute right-9" id="leaves-1">
+            <div className="w-32 h-32 absolute right-9" id="leaves-1">
               <Image
                 src="/assets/leaves.svg"
                 alt="leaves"
@@ -181,7 +143,7 @@ export default function OurProcess() {
                 className="object-contain"
               />
             </div>
-            <div className="w-30 h-30 absolute -bottom-6 rotate-85 left-30" id="leaves-3">
+            <div className="w-32 h-32 absolute -bottom-6 rotate-110 left-30" id="leaves-3">
               <Image
                 src="/assets/leaves.svg"
                 alt="leaves"
@@ -189,7 +151,7 @@ export default function OurProcess() {
                 className="object-contain"
               />
             </div>
-            <div className="w-30 h-30 absolute bottom-0 -rotate-180 left-10" id="leaves-4">
+            <div className="w-34 h-34 absolute bottom-8 -rotate-180 left-10" id="leaves-4">
               <Image
                 src="/assets/leaves.svg"
                 alt="leaves"

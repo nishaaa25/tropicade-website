@@ -8,8 +8,6 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
   --color-dark-pink-500: #ff3a65;
   --color-violet-400: #2f0526;
 }
@@ -45,6 +43,9 @@ body {
   font-weight: 400;
 }
 
+.font-lufga{
+   font-family: "Lufga", sans-serif;
+}
 .font-bebas {
   font-family: "Bebas", sans-serif;
 }

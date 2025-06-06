@@ -18,6 +18,8 @@ const LandingPage = () => {
   const textAnimeThreeDiv = useRef(null);
   const subBlogAnimeDiv = useRef(null);
   const buttonAnimeDiv = useRef(null);
+  const bottomAnime = useRef(null);
+
 
   useGSAP(() => {
     const splitTextOne = new splitType(textAnimeOne.current, { type: "words" });
@@ -63,6 +65,19 @@ const LandingPage = () => {
       },
       "he"
     );
+
+    gsap.to(bottomAnime.current, {
+      opacity: 0,
+      scrollTrigger: {
+        trigger: document.body,
+        start: "top -10%",
+        end: "top -10%",
+        scrub: 1,
+        invalidateOnRefresh: true,
+      },
+      ease: "none",
+      immediateRender: false,
+    });
   });
 
   return (
@@ -104,7 +119,7 @@ const LandingPage = () => {
         </button>
       </div>
 
-      <div className=" py-3 flex items-center justify-evenly w-full backdrop-blur-[28px] absolute bottom-0 left-0 z-60">
+      <div ref={bottomAnime} className=" py-3 flex items-center justify-evenly w-full backdrop-blur-[28px] absolute bottom-0 left-0 z-60">
         <h1 className="text-sm max-w-30 font-[300]">Pick your tee & design</h1>
         <div className="w-41 h-8 relative">
           <Image

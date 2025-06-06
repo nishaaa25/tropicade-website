@@ -67,6 +67,7 @@ const LandingPage = () => {
     );
 
     gsap.to(bottomAnime.current, {
+      y: 200,
       opacity: 0,
       scrollTrigger: {
         trigger: document.body,
@@ -75,7 +76,7 @@ const LandingPage = () => {
         scrub: 1,
         invalidateOnRefresh: true,
       },
-      ease: "none",
+      ease: "power2.inOut",
       immediateRender: false,
     });
   });
@@ -88,7 +89,7 @@ const LandingPage = () => {
         </p>
       </div>
       <div ref={textAnimeTwoDiv} className="h-fit overflow-hidden font-bebas">
-        <h1 ref={textAnimeTwo} className="text-[9vw] leading-[8.5vw] text-white">
+        <h1 ref={textAnimeTwo} className="text-[9vw] leading-[8.5vw] text-white whitespace-nowrap">
           CUSTOM STREETWEAR.
         </h1>
       </div>
@@ -107,14 +108,14 @@ const LandingPage = () => {
       <div ref={buttonAnimeDiv}>
         <button
           ref={buttonAnime}
-          className="bg-[#FF3A65] px-4 py-2 flex gap-6"
+          className="bg-[#FF3A65] px-2 flex-center gap-2 py-1"
         >
           <p className="px-3">SHOP OUR COLLECTION</p>
           <Image
-            src="/assets/ButtonArrowRotated.svg"
+            src="/assets/ArrowUpRight.svg"
             alt="ButtonArrow"
-            width={20}
-            height={20}
+            width={40}
+            height={40}
           />
         </button>
       </div>

@@ -49,7 +49,7 @@ export default function OurProcess() {
       .to(
         ".clip-1",
         {
-          clipPath: "inset(0 0% 0 0)",
+          width: "100%",
           ease: "power1.out",
           duration: 4,
         },
@@ -101,19 +101,21 @@ export default function OurProcess() {
           y: -20,
           borderRadius: "100%",
           borderWidth: 15,
+          width: "248px",
+          height: "248px",
         },
         {
+          borderRadius: "30%",
+          minWidth: "17vw",
+          height: "60vh",
           borderColor: "transparent",
-          borderRadius: 0,
         },
         "step1"
-      ).fromTo(
+      )
+      .to(
         "#img-2 .main-product",
         {
-          scale: 1.2
-        },
-        {
-          scale: 1,
+          scale: 1.1,
         },
         "step1"
       )
@@ -135,6 +137,14 @@ export default function OurProcess() {
     tl2
       .addLabel("step2", "+=0.5")
       .to("#text-2", { x: "-50vw", opacity: 0 }, "step2")
+      .to(
+        "#img-2 .main-product",
+        {
+          y: -5,
+          scale: 1,
+        },
+        "step2"
+      )
       .to(".tshirt-outline", { scale: 0, opacity: 0 }, "step2")
       .to("#message", { y: "50vh", opacity: 0 }, "step2")
       .to(".black-tshirt", { opacity: 1 }, "step2")
@@ -156,7 +166,7 @@ export default function OurProcess() {
     >
       <div className="absolute top-[15vh] left-[15vh] font-bebas text-div">
         <div className="absolute top-0 z-30" id="text-1">
-          <h1 className="text-[10vw] leading-[10vw] opacity-10 relative">01</h1>
+          <h1 className="text-[10vw] leading-[10vw] opacity-15 relative">01</h1>
           <div>
             <p className="uppercase text-[2.4vw] leading-[2.4vw] relative w-7/12 -top-[8vh] -right-[8vh] pl-2">
               Pick your <span className="text-dark-pink-500">tee</span> &
@@ -165,7 +175,7 @@ export default function OurProcess() {
           </div>
         </div>
         <div className="absolute top-0 z-20 opacity-0" id="text-2">
-          <h1 className="text-[10vw] leading-[10vw] opacity-10 relative">02</h1>
+          <h1 className="text-[10vw] leading-[10vw] opacity-15 relative">02</h1>
           <div>
             <p className="uppercase text-[2.4vw] leading-[2.4vw] relative w-8/12 -top-[8vh] -right-[8vh] pl-2">
               our <span className="text-dark-pink-500">design team</span> will
@@ -174,7 +184,7 @@ export default function OurProcess() {
           </div>
         </div>
         <div className="relative z-10 opacity-0" id="text-3">
-          <h1 className="text-[10vw] leading-[10vw] opacity-10 relative">03</h1>
+          <h1 className="text-[10vw] leading-[10vw] opacity-15 relative">03</h1>
           <div>
             <p className="uppercase text-[2.4vw] leading-[2.4vw] relative w-7/12 -top-[8vh] -right-[8vh] pl-2">
               add your own
@@ -184,7 +194,11 @@ export default function OurProcess() {
         </div>
       </div>
       <div className="relative flex-center w-full gap-10">
-        <div className="w-[32%] relative h-[1px] bg-white clip-1 div-1"></div>
+        <div className="w-[32%] relative flex items-center">
+          <div className="w-2 relative h-[1px] bg-white clip-1 div-1"></div>
+          <div className="w-4 h-4 rounded-full bg-white gradient-1"></div>
+        </div>
+
         <div className="w-[36%] relative flex items-center justify-center h-full img-cont">
           <div
             className="min-w-58 h-58 rounded-full relative overflow-hidden ml-[30%] product"
@@ -205,7 +219,7 @@ export default function OurProcess() {
               src="/assets/product-4.png"
               alt="alt"
               fill
-              className="object-contain main-product"
+              className="object-contain main-product scale-[1.4]"
             />
           </div>
           <div
@@ -227,7 +241,7 @@ export default function OurProcess() {
               className="relative object-contain"
             />
           </div>
-          <div className="w-10/12 h-[60vh] absolute black-tshirt opacity-0">
+          <div className="w-10/12 h-[65vh] absolute black-tshirt opacity-0">
             <div className="w-32 h-32 absolute right-9" id="leaves-1">
               <Image
                 src="/assets/leaves.svg"

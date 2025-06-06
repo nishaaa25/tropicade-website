@@ -69,9 +69,9 @@ body {
   );
   box-shadow: 0px 0px 8px rgba(255, 255, 255, 0.548);
 }
-.clip-1{
-  clip-path: inset(0 96% 0 0);
-}
 .clip-2{
   clip-path: inset(0 0 0 96%);
+}
+.gradient-1{
+  box-shadow: 0px 0px 10px 8px #ff3ab373;
 }

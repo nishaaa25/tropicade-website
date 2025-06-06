@@ -79,7 +79,7 @@ const MainLandingPage = () => {
     });
 
     gsap.to(animateImageRef.current, {
-      opacity: 0,
+     opacity:0,
       scrollTrigger: {
         trigger: contRef.current,
         start: "bottom 90%",
@@ -92,7 +92,7 @@ const MainLandingPage = () => {
     });
 
     gsap.to(leafsRef.current, {
-      y: "-140vh",
+      y: "-120vh",
       scrollTrigger: {
         trigger: leafsRef.current,
         start: "top bottom",

@@ -14,7 +14,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body
-        className={` antialiased w-full relative`}
+        className={`antialiased w-full relative`}
       >
         <LenisProvider>
   <Navbar/>

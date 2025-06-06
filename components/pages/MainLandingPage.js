@@ -71,13 +71,26 @@ const MainLandingPage = () => {
         start: "top top",
         end: "bottom 120%",
         scrub: 1,
-        markers: true,
         invalidateOnRefresh: true,
       },
       ease: "none",
       delay: 3.5,
       immediateRender: false,
     });
+
+    gsap.to(animateImageRef.current, {
+      opacity: 0,
+      scrollTrigger: {
+        trigger: contRef.current,
+        start: "bottom 90%",
+        end: "bottom 140%",
+        scrub: 1,
+        invalidateOnRefresh: true,
+      },
+      ease: "none",
+      immediateRender: false,
+    });
+
     gsap.to(leafsRef.current, {
       y: "-140vh",
       scrollTrigger: {
@@ -117,8 +130,7 @@ const MainLandingPage = () => {
         <div className="h-[60vh] fixed top-1/2 -translate-y-1/2 -right-10 w-[60vh] rounded-full blur-[200px] bg-[#32033F]"></div>
         <div className="h-[60vh] fixed top-[80%] left-1/2 -translate-x-1/2 w-[60vh] rounded-full blur-[200px] bg-[#CF2379]"></div>
       </div>
-      <div className="w-full relative overflow-hidden" ref={contRef}>
-        <div className="absolute top-[25vh] -right-[7vw] z-60">
+      <div className="fixed top-[25vh] -right-[7vw] z-60">
           <Image
             ref={animateImageRef}
             src="/assets/T-Shirt.png"
@@ -127,7 +139,8 @@ const MainLandingPage = () => {
             height={900}
             className="object-contain z-50 h-[50vw] w-[70vw]"
           />
-        </div>
+      </div>
+      <div className="w-full relative overflow-hidden" ref={contRef}>
         <LandingPage />
         <LandingPageAnimated />
       </div>

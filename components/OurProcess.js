@@ -36,7 +36,7 @@ export default function OurProcess() {
   tl.addLabel("step2")
     .to("#text-2", { x: "-50vw", opacity: 0, duration: 1 }, "step2")
     .to(".tshirt-outline", { opacity: 0, duration: 1 }, "step2")
-    .to("#img-2", { y: -20, scale: 0.9, opacity: 1, duration: 1 }, "step2")
+    .to("#img-2", { y: -20, scale: 0.9, opacity: 1, borderColor: "transparent", duration: 1 }, "step2")
     .to("#message", { y: "50vh", opacity: 0, duration: 1 }, "step2")
     .to(".black-tshirt", { opacity: 1, duration: 1 }, "step2")
     .from(["#leaves-1", "#leaves-2", "#leaves-3", "#leaves-4"], {

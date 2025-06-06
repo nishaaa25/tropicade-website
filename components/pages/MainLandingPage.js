@@ -91,7 +91,6 @@ const MainLandingPage = () => {
       immediateRender: false,
     });
   });
-
   return (
     <div className="w-full">
       <div className="fixed -bottom-120 -left-[20vw] -z-10">

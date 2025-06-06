@@ -9,51 +9,152 @@ gsap.registerPlugin(ScrollTrigger, useGSAP);
 
 export default function OurProcess() {
   const processDivRef = useRef();
+
   useGSAP(() => {
-  const tl = gsap.timeline({
-    scrollTrigger: {
-      trigger: processDivRef.current,
-      start: "top top",
-      end: "+=300%",
-      scrub: 2,
-      pin: true,
-    },
+    const tl1 = gsap.timeline({
+      scrollTrigger: {
+        trigger: processDivRef.current,
+        start: "top center",
+        end: "top -10%",
+        scrub: 2,
+      },
+    });
+
+    tl1
+      .from("#text-1 h1", {
+        y: 200,
+        ease: "power1.out",
+        duration: 2,
+      })
+      .from(
+        "#text-1 p",
+        {
+          y: 400,
+          ease: "power1.out",
+          duration: 2,
+        },
+        "<"
+      )
+      .from(
+        ".img-cont .product",
+        {
+          skewY: -10,
+          y: 200,
+          ease: "power1.out",
+          stagger: 0.2,
+          duration: 2,
+        },
+        "<0.2"
+      )
+      .to(
+        ".clip-1",
+        {
+          clipPath: "inset(0 0% 0 0)",
+          ease: "power1.out",
+          duration: 4,
+        },
+        "<0.2"
+      )
+      .to(
+        ".clip-2",
+        {
+          clipPath: "inset(0 0 0 0%)",
+          ease: "power1.out",
+          duration: 4,
+        },
+        "<0"
+      )
+      .from(
+        "#para-1",
+        {
+          x: "50vw",
+          ease: "power1.out",
+          duration: 2,
+        },
+        "<0.2"
+      )
+      .from(".bottom-text", {
+        y: 200,
+        ease: "power1.out",
+        duration: 2,
+      });
+
+    const tl2 = gsap.timeline({
+      scrollTrigger: {
+        trigger: processDivRef.current,
+        start: "top top",
+        end: "+=150%",
+        pin: true,
+        scrub: 1,
+      },
+    });
+
+    tl2
+      .addLabel("step1", "+0.5")
+      .to("#text-1", { x: "-50vw", opacity: 0 }, "step1")
+      .to("#para-1", { x: "50vw", opacity: 0 }, "step1")
+      .to(["#img-1", "#img-3"], { opacity: 0 }, "step1")
+      .to("#text-2", { opacity: 1 }, "step1")
+      .fromTo(
+        "#img-2",
+        {
+          y: -20,
+          borderRadius: "100%",
+          borderWidth: 15,
+        },
+        {
+          borderColor: "transparent",
+          borderRadius: 0,
+        },
+        "step1"
+      ).fromTo(
+        "#img-2 .main-product",
+        {
+          scale: 1.2
+        },
+        {
+          scale: 1,
+        },
+        "step1"
+      )
+      .fromTo(
+        "#message",
+        { y: "50vh", opacity: 0 },
+        { y: 0, opacity: 1 },
+        "step1"
+      )
+      .to(".tshirt-outline", { opacity: 1 }, "step1")
+      .to("#bottom-btn", { opacity: 0 }, "step1")
+      .fromTo(
+        "#para-2",
+        { y: "40vh", opacity: 0 },
+        { y: 0, opacity: 1 },
+        "step1"
+      );
+
+    tl2
+      .addLabel("step2", "+=0.5")
+      .to("#text-2", { x: "-50vw", opacity: 0 }, "step2")
+      .to(".tshirt-outline", { scale: 0, opacity: 0 }, "step2")
+      .to("#message", { y: "50vh", opacity: 0 }, "step2")
+      .to(".black-tshirt", { opacity: 1 }, "step2")
+      .from(
+        ["#leaves-1", "#leaves-2", "#leaves-3", "#leaves-4"],
+        {
+          rotate: 90,
+          scale: 0,
+        },
+        "step2"
+      )
+      .fromTo("#text-3", { opacity: 0 }, { opacity: 1 }, "step2");
   });
-
-  // Step 1 -> Step 2
-  tl.addLabel("step1")
-    .to("#text-1", { x: "-50vw", opacity: 0, duration: 1 }, "step1")
-    .to("#para-1", { x: "50vw", opacity: 0, duration: 1 }, "step1")
-    .to(["#img-1", "#img-3"], { opacity: 0, duration: 1 }, "step1")
-    .to("#text-2", { opacity: 1, duration: 1 }, "step1")
-    .to("#img-2", {borderColor: "transparent",duration: 1 }, "step1")
-    .fromTo("#message", { y: "50vh", opacity: 0 }, { y: 0, opacity: 1, duration: 1 }, "step1")
-    .to(".tshirt-outline", { opacity: 1, duration: 1 }, "step1")
-    .to("#bottom-btn", { opacity: 0, duration: 1 }, "step1")
-    .fromTo("#para-2", { y: "40vh", opacity: 0 }, { y: 0, opacity: 1, duration: 1 }, "step1");
-
-  // Step 2 -> Step 3
-  tl.addLabel("step2")
-    .to("#text-2", { x: "-50vw", opacity: 0, duration: 1 }, "step2")
-    .to(".tshirt-outline", { opacity: 0, duration: 1 }, "step2")
-    .to("#img-2", { y: -20, scale: 0.9, opacity: 1, duration: 1 }, "step2")
-    .to("#message", { y: "50vh", opacity: 0, duration: 1 }, "step2")
-    .to(".black-tshirt", { opacity: 1, duration: 1 }, "step2")
-    .from(["#leaves-1", "#leaves-2", "#leaves-3", "#leaves-4"], {
-      rotate: 20,
-      scale: 0,
-      duration: 1,
-    }, "step2")
-    .fromTo("#text-3", { opacity: 0 }, { opacity: 1, duration: 1 }, "step2");
-});
-
 
   return (
     <div
       className="w-full h-screen relative py-20 flex-center overflow-hidden"
       ref={processDivRef}
     >
-      <div className="absolute top-[15vh] left-[15vh] font-bebas">
+      <div className="absolute top-[15vh] left-[15vh] font-bebas text-div">
         <div className="absolute top-0 z-30" id="text-1">
           <h1 className="text-[10vw] leading-[10vw] opacity-10 relative">01</h1>
           <div>
@@ -83,32 +184,32 @@ export default function OurProcess() {
         </div>
       </div>
       <div className="relative flex-center w-full gap-10">
-        <div className="w-[32%] relative h-[1px] bg-white"></div>
-        <div className="w-[36%] relative flex items-center justify-center h-full">
+        <div className="w-[32%] relative h-[1px] bg-white clip-1 div-1"></div>
+        <div className="w-[36%] relative flex items-center justify-center h-full img-cont">
           <div
-            className="min-w-58 h-58 rounded-full relative overflow-hidden ml-[30%]"
+            className="min-w-58 h-58 rounded-full relative overflow-hidden ml-[30%] product"
             id="img-1"
           >
             <Image
-              src="/assets/product-2.png" 
+              src="/assets/product-2.png"
               alt="alt"
               fill
               className="object-contain"
             />
-          </div>  
+          </div>
           <div
-            className="min-w-62 h-62 relative z-20 rounded-full right-[5vw] border-[15px] border-violet-400 overflow-hidden"
+            className="min-w-62 h-62 relative z-20 right-[5vw] border-violet-400 rounded-full overflow-hidden product"
             id="img-2"
           >
             <Image
               src="/assets/product-4.png"
               alt="alt"
               fill
-              className="object-contain scale-[1.3]"
+              className="object-contain main-product"
             />
           </div>
           <div
-            className="min-w-62 h-62 rounded-full relative z-30 overflow-hidden right-[10vw] border-[15px] border-violet-400"
+            className="min-w-62 h-62 rounded-full relative z-30 overflow-hidden right-[10vw] border-[15px] border-violet-400 product"
             id="img-3"
           >
             <Image
@@ -135,7 +236,10 @@ export default function OurProcess() {
                 className="object-contain"
               />
             </div>
-            <div className="w-32 h-32 absolute -rotate-80 right-30 -top-10" id="leaves-2">
+            <div
+              className="w-32 h-32 absolute -rotate-80 right-30 -top-10"
+              id="leaves-2"
+            >
               <Image
                 src="/assets/leaves.svg"
                 alt="leaves"
@@ -143,7 +247,10 @@ export default function OurProcess() {
                 className="object-contain"
               />
             </div>
-            <div className="w-32 h-32 absolute -bottom-6 rotate-110 left-30" id="leaves-3">
+            <div
+              className="w-32 h-32 absolute -bottom-6 rotate-110 left-30"
+              id="leaves-3"
+            >
               <Image
                 src="/assets/leaves.svg"
                 alt="leaves"
@@ -151,7 +258,10 @@ export default function OurProcess() {
                 className="object-contain"
               />
             </div>
-            <div className="w-34 h-34 absolute bottom-8 -rotate-180 left-10" id="leaves-4">
+            <div
+              className="w-34 h-34 absolute bottom-8 -rotate-180 left-10"
+              id="leaves-4"
+            >
               <Image
                 src="/assets/leaves.svg"
                 alt="leaves"
@@ -169,11 +279,11 @@ export default function OurProcess() {
             </div>
           </div>
         </div>
-        <div className="w-[32%] relative bg-white h-[1px] ml-[2vw]"></div>
+        <div className="w-[32%] relative bg-white h-[1px] ml-[2vw] clip-2"></div>
       </div>
       <div className="absolute -bottom-9 w-full flex-center">
         <div className="flex-center relative">
-          <h1 className="relative opacity-15 uppercase text-[12vw] leading-[12vw] font-bebas">
+          <h1 className="relative opacity-15 uppercase text-[12vw] leading-[12vw] font-bebas bottom-text">
             OUR PROCESS
           </h1>
           <div
@@ -228,7 +338,7 @@ export default function OurProcess() {
             </div>
           </div>
           <div
-            className="absolute top-2 rounded-full rounded-br-none custom-border flex-center gap-2 mr-[5%] bg-white/5 backdrop-blur-3xl w-1/2 text-[13px] text-white p-3 opacity-0 z-20"
+            className="absolute top-2 rounded-full rounded-br-none custom-border flex-center gap-2 mr-[5%] bg-white/5 backdrop-blur-sm w-1/2 text-[13px] text-white p-3 opacity-0 z-20"
             id="message"
           >
             <Image
@@ -255,7 +365,7 @@ export default function OurProcess() {
             className="max-w-50 text-[0.9vw] leading-[1.3vw] font-[300] p-2 absolute"
             id="para-1"
           >
-            Choose from 24+ Designs available & ready to be customised by you
+            Choose from 24+ Des igns available & ready to be customised by you
           </p>
           <p
             className="max-w-50 text-[0.9vw] leading-[1.3vw] font-[300] p-2 relative opacity-0"

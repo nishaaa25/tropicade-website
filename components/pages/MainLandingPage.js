@@ -3,7 +3,7 @@ import { useGSAP } from "@gsap/react";
 import LandingPage from "./LandingPage";
 import LandingPageAnimated from "./LandingPageAnimated";
 import Image from "next/image";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import OurProcess from "../OurProcess";
@@ -15,6 +15,23 @@ const MainLandingPage = () => {
   const leafsRef = useRef(null);
   const contRef = useRef(null);
   const singleLeafRef = useRef(null);
+    const customCursor = useRef();
+
+  useEffect(() => {
+    const moveCursor = (e) => {
+      const x = e.clientX - customCursor.current.clientWidth / 2;
+      const y = e.clientY - customCursor.current.clientHeight / 2;
+      gsap.to(customCursor.current, {
+        x,
+        y,
+        duration: 1.5,
+        ease: "expo.out",
+      });
+    };
+
+    window.addEventListener("mousemove", moveCursor);
+    return () => window.removeEventListener("mousemove", moveCursor);
+  });
   useGSAP(() => {
     gsap.set(animateImageRef.current, {
       y: 600,
@@ -79,7 +96,7 @@ const MainLandingPage = () => {
     });
 
     gsap.to(animateImageRef.current, {
-     opacity:0,
+      opacity: 0,
       scrollTrigger: {
         trigger: contRef.current,
         start: "bottom 90%",
@@ -130,15 +147,23 @@ const MainLandingPage = () => {
         <div className="h-[60vh] fixed top-1/2 -translate-y-1/2 -right-10 w-[60vh] rounded-full blur-[200px] bg-[#32033F]"></div>
         <div className="h-[60vh] fixed top-[80%] left-1/2 -translate-x-1/2 w-[60vh] rounded-full blur-[200px] bg-[#CF2379]"></div>
       </div>
-      <div className="fixed top-[25vh] -right-[7vw] z-60">
-          <Image
-            ref={animateImageRef}
-            src="/assets/T-Shirt.png"
-            alt="landing-page-bg"
-            width={900}
-            height={900}
-            className="object-contain z-50 h-[50vw] w-[70vw]"
-          />
+      <div className="fixed top-[25vh] -right-[7vw] z-60 tshirt">
+        <Image
+          ref={animateImageRef}
+          src="/assets/T-Shirt.png"
+          alt="landing-page-bg"
+          width={900}
+          height={900}
+          className="object-contain z-50 h-[50vw] w-[70vw]"
+        />
+        <div
+          ref={customCursor}
+          className="customCursor fixed top-0 left-0 pointer-events-none z-90 h-34 w-34 rounded-full  flex items-center justify-center bg-white/10  backdrop-blur-sm border-3"
+        >
+          <p className="grotesk uppercase text-xs text-white z-10 font-bebas px-4 text-center">
+            Click to View Details
+          </p>
+        </div>
       </div>
       <div className="w-full relative overflow-hidden" ref={contRef}>
         <LandingPage />

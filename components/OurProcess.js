@@ -11,153 +11,159 @@ export default function OurProcess() {
   const processDivRef = useRef();
 
   useGSAP(() => {
-    const tl1 = gsap.timeline({
-      scrollTrigger: {
-        trigger: processDivRef.current,
-        start: "top center",
-        end: "top -10%",
-        scrub: 2,
-      },
-    });
-
-    tl1
-      .from("#text-1 h1", {
-        y: 200,
-        ease: "power1.out",
-        duration: 2,
-      })
-      .from(
-        "#text-1 p",
-        {
-          y: 400,
-          ease: "power1.out",
-          duration: 2,
-        },
-        "<"
-      )
-      .from(
-        ".img-cont .product",
-        {
-          skewY: -10,
-          y: 200,
-          ease: "power1.out",
-          stagger: 0.2,
-          duration: 2,
-        },
-        "<0.2"
-      )
-      .to(
-        ".clip-1",
-        {
-          width: "100%",
-          ease: "power1.out",
-          duration: 4,
-        },
-        "<0.2"
-      )
-      .to(
-        ".clip-2",
-        {
-          clipPath: "inset(0 0 0 0%)",
-          ease: "power1.out",
-          duration: 4,
-        },
-        "<0"
-      )
-      .from(
-        "#para-1",
-        {
-          x: "50vw",
-          ease: "power1.out",
-          duration: 2,
-        },
-        "<0.2"
-      )
-      .from(".bottom-text", {
-        y: 200,
-        ease: "power1.out",
-        duration: 2,
-      });
-
-    const tl2 = gsap.timeline({
-      scrollTrigger: {
-        trigger: processDivRef.current,
-        start: "top top",
-        end: "+=150%",
-        pin: true,
-        scrub: 1,
-      },
-    });
-
-    tl2
-      .addLabel("step1", "+0.5")
-      .to("#text-1", { x: "-50vw", opacity: 0 }, "step1")
-      .to("#para-1", { x: "50vw", opacity: 0 }, "step1")
-      .to(["#img-1", "#img-3"], { opacity: 0 }, "step1")
-      .to("#text-2", { opacity: 1 }, "step1")
-      .fromTo(
-        "#img-2",
-        {
-          y: -20,
-          borderRadius: "100%",
-          borderWidth: 15,
-          width: "248px",
-          height: "248px",
-        },
-        {
-          borderRadius: "30%",
-          minWidth: "17vw",
-          height: "60vh",
-          borderColor: "transparent",
-        },
-        "step1"
-      )
-      .to(
-        "#img-2 .main-product",
-        {
-          scale: 1.1,
-        },
-        "step1"
-      )
-      .fromTo(
-        "#message",
-        { y: "50vh", opacity: 0 },
-        { y: 0, opacity: 1 },
-        "step1"
-      )
-      .to(".tshirt-outline", { opacity: 1 }, "step1")
-      .to("#bottom-btn", { opacity: 0 }, "step1")
-      .fromTo(
-        "#para-2",
-        { y: "40vh", opacity: 0 },
-        { y: 0, opacity: 1 },
-        "step1"
-      );
-
-    tl2
-      .addLabel("step2", "+=0.5")
-      .to("#text-2", { x: "-50vw", opacity: 0 }, "step2")
-      .to(
-        "#img-2 .main-product",
-        {
-          y: -5,
-          scale: 1,
-        },
-        "step2"
-      )
-      .to(".tshirt-outline", { scale: 0, opacity: 0 }, "step2")
-      .to("#message", { y: "50vh", opacity: 0 }, "step2")
-      .to(".black-tshirt", { opacity: 1 }, "step2")
-      .from(
-        ["#leaves-1", "#leaves-2", "#leaves-3", "#leaves-4"],
-        {
-          rotate: 90,
-          scale: 0,
-        },
-        "step2"
-      )
-      .fromTo("#text-3", { opacity: 0 }, { opacity: 1 }, "step2");
+  const tl1 = gsap.timeline({
+    scrollTrigger: {
+      trigger: processDivRef.current,
+      start: "top center",
+      end: "top -10%",
+      scrub: 2,
+    },
   });
+
+  tl1
+    .from("#text-1 h1", {
+      y: 200,
+      ease: "power1.out",
+      duration: 2,
+    })
+    .from(
+      "#text-1 p",
+      {
+        y: 400,
+        ease: "power1.out",
+        duration: 2,
+      },
+      "<"
+    )
+    .from(
+      ".img-cont .product",
+      {
+        skewY: -10,
+        y: 200,
+        ease: "power1.out",
+        stagger: 0.2,
+        duration: 2,
+      },
+      "<0.2"
+    )
+    .to(
+      ".clip-1",
+      {
+        width: "100%",
+        ease: "power1.out",
+        duration: 4,
+      },
+      "<0.2"
+    )
+    .to(
+      ".clip-2",
+      {
+        clipPath: "inset(0 0 0 0%)",
+        ease: "power1.out",
+        duration: 4,
+      },
+      "<0"
+    )
+    .from(
+      "#para-1",
+      {
+        x: "50vw",
+        ease: "power1.out",
+        duration: 2,
+      },
+      "<0.2"
+    )
+    .from(".bottom-text", {
+      y: 200,
+      ease: "power1.out",
+      duration: 2,
+    });
+
+  const tl2 = gsap.timeline({
+    scrollTrigger: {
+      trigger: processDivRef.current,
+      start: "top top",
+      end: "+=300%", // slower scroll progress
+      pin: true,
+      scrub: 5, // smoother and slower
+    },
+  });
+
+  tl2
+    .addLabel("step1", "+1")
+    .to("#text-1", { x: "-50vw", opacity: 0, duration: 2 }, "step1")
+    .to("#para-1", { x: "50vw", opacity: 0, duration: 2 }, "step1")
+    .to(["#img-1", "#img-3"], { opacity: 0, duration: 2 }, "step1")
+    .to("#text-2", { opacity: 1, duration: 2 }, "step1")
+    .fromTo(
+      "#img-2",
+      {
+        y: -20,
+        borderRadius: "100%",
+        borderWidth: 15,
+        width: "248px",
+        height: "248px",
+      },
+      {
+        borderRadius: "30%",
+        minWidth: "17vw",
+        height: "60vh",
+        borderColor: "transparent",
+        duration: 3,
+      },
+      "step1"
+    )
+    .to(
+      "#img-2 .main-product",
+      {
+        scale: 1.1,
+        duration: 2,
+      },
+      "step1"
+    )
+    .fromTo(
+      "#message",
+      { y: "50vh", opacity: 0 },
+      { y: 0, opacity: 1, duration: 2 },
+      "step1"
+    )
+    .to(".tshirt-outline", { opacity: 1, duration: 2 }, "step1")
+    .to("#bottom-btn", { opacity: 0, duration: 1.5 }, "step1")
+    .fromTo(
+      "#para-2",
+      { y: "40vh", opacity: 0 },
+      { y: 0, opacity: 1, duration: 2 },
+      "step1"
+    );
+
+  tl2
+    .addLabel("step2", "+=3") 
+    .to("#text-2", { x: "-50vw", opacity: 0, duration: 2 }, "step2")
+    .to(
+      "#img-2 .main-product",
+      { y: -5, scale: 1, duration: 2 },
+      "step2"
+    )
+    .to(".tshirt-outline", { scale: 0, opacity: 0, duration: 2 }, "step2")
+    .to("#message", { y: "50vh", opacity: 0, duration: 2 }, "step2")
+    .to(".black-tshirt", { opacity: 1, duration: 2 }, "step2")
+    .from(
+      ["#leaves-1", "#leaves-2", "#leaves-3", "#leaves-4"],
+      {
+        rotate: 90,
+        scale: 0,
+        duration: 2,
+      },
+      "step2"
+    )
+    .fromTo(
+      "#text-3",
+      { opacity: 0 },
+      { opacity: 1, duration: 2 },
+      "step2"
+    );
+});
+
 
   return (
     <div
@@ -233,7 +239,7 @@ export default function OurProcess() {
               className="object-contain"
             />
           </div>
-          <div className="w-10/12 h-[68vh] absolute mt-4 tshirt-outline opacity-0 ">
+          <div className="w-10/12 h-[68vh] absolute mt-4 tshirt-outline opacity-0">
             <Image
               src="/assets/outline.svg"
               alt="alt"

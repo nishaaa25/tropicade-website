@@ -1,6 +1,6 @@
-import OurProcess from "@/components/OurProcess";
-import Image from "next/image";
+"use client";
 import MainLandingPage from "@/components/pages/MainLandingPage";
+
 
 export default function Home() {
   return (

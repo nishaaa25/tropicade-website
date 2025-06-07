@@ -43,10 +43,10 @@ export default function Navbar() {
           </div>
           <div className="relative">
             <Image
-              src="/assets/SquaresFour.svg"
+              src="/assets/menu.svg"
               alt="search"
-              width={28}
-              height={28}
+              width={21}
+              height={21}
             />
           </div>
         </div>

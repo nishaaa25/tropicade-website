@@ -45,13 +45,23 @@ const LandingPageAnimated = () => {
         scrollTrigger: {
           trigger: bestSellersRef.current,
           start: "top 95%",
-          end: "bottom 20%",
+          end: "+=100%",
           toggleActions: "play none none reverse",
         },
       }
     );
 
-    gsap.from(
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: ".best-seller",
+        start: "top top",
+        end: "+=100%",
+        pin: true,
+        stagger: 0.05,
+        toggleActions: "play none none reverse",
+      },
+    });
+    tl.from(
       [
         mostLikedDivRef.current,
         bestSellersDivRef.current,
@@ -64,22 +74,15 @@ const LandingPageAnimated = () => {
         duration: 2,
         opacity: 0,
         ease: "expo.inOut",
-        stagger: 0.05,
-        scrollTrigger: {
-          trigger: bestSellersRef.current,
-          start: "top 95%",
-          end: "bottom 20%",
-          toggleActions: "play none none reverse",
-        },
       }
     );
   });
 
   return (
-    <div className="h-screen w-full relative">
-      <div className="absolute top-[45%] -translate-y-1/2">
+    <div className="h-screen w-full relative best-seller">
+      <div className="absolute top-[50%] -translate-y-1/2 w-1/2 flex flex-col ml-[4vw]">
         <div ref={mostLikedDivRef} className="h-fit overflow-hidden">
-          <p className="px-3 py-[6px] relative flex-center w-fit my-4 left-14 bg-[#FF3A651A] text-[#ff3a65] items-center gap-3">
+          <p className="px-3 py-[6px] relative flex-center w-fit mb-1 bg-[#FF3A651A] text-[#ff3a65] items-center gap-3">
             <Image
               src="/assets/HeartStraight.svg"
               alt="ArrowRight"
@@ -89,31 +92,24 @@ const LandingPageAnimated = () => {
             <span className="text-xs leading-[10px]">MOST LIKED DESIGNS</span>
           </p>
         </div>
-        <div ref={bestSellersDivRef} className="h-fit overflow-hidden">
+        <div ref={bestSellersDivRef} className="h-fit overflow-hidden mb-5">
           <h1
             ref={bestSellersRef}
-            className="text-8xl font-bebas text-white px-12 "
+            className="text-8xl font-bebas text-white "
           >
             BEST SELLERS
           </h1>
         </div>
-        <div ref={tShirtDivRef} className="h-fit overflow-hidden">
-          <div
-            ref={tShirtRef}
-            className="text-white px-12 flex flex-col relative left-1"
-          >
-            <p className="opacity-40 font-bebas text-[#828282]">T SHIRT</p>
-            <div className="flex items-center gap-4">
-              <p className="text-xl">BOOTLEG</p>
-              <p className="bg-[#EAB6511A] text-[#EAB651] px-3 py-1 text-sm">
-                DESIGN #2
-              </p>
-            </div>
-            <p className="text-xl">$ 1,250</p>
+        <div ref={tShirtDivRef} className="h-fit overflow-hidden w-full">
+          <p className="uppercase text-[#828282] text-sm font-bebas">TSHIRT</p>
+          <div className="flex items-center gap-3 mr-auto uppercase">
+            <p className="text-xl ">Bootleg</p>
+            <div className="text-[#EAB651] bg-[#eab651]/10 px-3 py-[1px]">DESIGN #2</div>
           </div>
+          <p className="text-xl">$1,250</p>
         </div>
-        <div ref={imagesDivRef} className="h-fit overflow-hidden">
-          <div ref={imagesRef} className="flex gap-4 px-12 py-8">
+        <div ref={imagesDivRef} className="h-fit overflow-hidden mb-6">
+          <div ref={imagesRef} className="flex gap-4 py-8">
             <div className="w-25 h-25 relative rounded-full overflow-hidden border-dark-pink-500 border-3">
               <Image
                 src={LandingPageImageOne}
@@ -142,7 +138,7 @@ const LandingPageAnimated = () => {
         </div>
         <div
           ref={buttonDivRef}
-          className="relative flex items-center justify-start gap-5 ml-12"
+          className="relative flex items-center justify-start gap-5"
           id="bottom-btn"
         >
           <button

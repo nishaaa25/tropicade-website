@@ -75,3 +75,11 @@ body {
 .gradient-1{
   box-shadow: 0px 0px 10px 8px #ff3ab373;
 }
+
+.tshirt .customCursor{
+  opacity: 100
+}
+
+.tshirt:hover .customCursor{
+  opacity: 100
+}

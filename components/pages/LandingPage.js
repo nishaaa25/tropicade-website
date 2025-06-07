@@ -70,9 +70,9 @@ const LandingPage = () => {
       y: 200,
       opacity: 0,
       scrollTrigger: {
-        trigger: document.body,
-        start: "top -10%",
-        end: "top -10%",
+        trigger: bottomAnime.current,
+        start: "top 91%",
+        end: "+=5%",
         scrub: 1,
         invalidateOnRefresh: true,
       },
@@ -120,7 +120,7 @@ const LandingPage = () => {
         </button>
       </div>
 
-      <div ref={bottomAnime} className=" py-3 flex items-center justify-evenly w-full backdrop-blur-[28px] absolute bottom-0 left-0 z-60">
+      <div ref={bottomAnime} className=" py-4 flex items-center justify-evenly w-full backdrop-blur-[28px] absolute bottom-0 left-0 z-60">
         <h1 className="text-sm max-w-30 font-[300]">Pick your tee & design</h1>
         <div className="w-41 h-8 relative">
           <Image

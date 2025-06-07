@@ -169,6 +169,7 @@ export default function OurProcess() {
     <div
       className="w-full h-screen relative py-20 flex-center overflow-hidden"
       ref={processDivRef}
+      id="our-process"
     >
       <div className="absolute top-[15vh] left-[15vh] font-bebas text-div">
         <div className="absolute top-0 z-30" id="text-1">

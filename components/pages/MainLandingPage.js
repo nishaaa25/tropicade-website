@@ -7,6 +7,7 @@ import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import OurProcess from "../OurProcess";
+import VerticalScale from "../VerticalScale";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -15,7 +16,7 @@ const MainLandingPage = () => {
   const leafsRef = useRef(null);
   const contRef = useRef(null);
   const singleLeafRef = useRef(null);
-    const customCursor = useRef();
+  const customCursor = useRef();
 
   useEffect(() => {
     const moveCursor = (e) => {
@@ -166,10 +167,17 @@ const MainLandingPage = () => {
         </div>
       </div>
       <div className="w-full relative overflow-hidden" ref={contRef}>
-        <LandingPage />
-        <LandingPageAnimated />
+        <div id="hero">
+          <LandingPage />
+        </div>
+        <div id="bestsellers">
+          <LandingPageAnimated />
+        </div>
       </div>
-      <OurProcess />
+      <div id="ourprocess">
+        <OurProcess />
+      </div>
+      <VerticalScale />
     </div>
   );
 };

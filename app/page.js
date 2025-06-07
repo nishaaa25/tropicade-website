@@ -1,5 +1,6 @@
 "use client";
 import MainLandingPage from "@/components/pages/MainLandingPage";
+import VerticalScale from "@/components/VerticalScale";
 
 
 export default function Home() {

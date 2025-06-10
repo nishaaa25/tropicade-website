@@ -82,7 +82,17 @@ const LandingPageAnimated = ({ onImageChange }) => {
     });
     const splitTShirt = new splitType(tShirtRef.current, { type: "words" });
 
-    gsap.from(
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: ".best-seller",
+        start: "top top",
+        end: "+=100%",
+        pin: true,
+        toggleActions: "play none none reverse",
+      },
+    });
+
+    tl.from(
       [
         splitBestSellers.words,
         splitTShirt.words,
@@ -90,30 +100,15 @@ const LandingPageAnimated = ({ onImageChange }) => {
         buttonRef.current,
       ],
       {
-        y: 600,
-        duration: 2,
+        y: 400,
+        duration: 1.5,
         opacity: 0,
-        ease: "expo.inOut",
+        ease: "power3.out",
         stagger: 0.05,
-        scrollTrigger: {
-          trigger: bestSellersRef.current,
-          start: "top 95%",
-          end: "+=100%",
-          toggleActions: "play none none reverse",
-        },
-      }
+      },
+      0
     );
 
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: ".best-seller",
-        start: "top top",
-        end: "+=100%",
-        pin: true,
-        stagger: 0.05,
-        toggleActions: "play none none reverse",
-      },
-    });
     tl.from(
       [
         mostLikedDivRef.current,
@@ -123,11 +118,13 @@ const LandingPageAnimated = ({ onImageChange }) => {
         buttonDivRef.current,
       ],
       {
-        y: 100,
-        duration: 2,
+        y: 60,
+        duration: 1.2,
         opacity: 0,
-        ease: "expo.inOut",
-      }
+        ease: "power2.out",
+        stagger: 0.08,
+      },
+      0.2
     );
   });
 

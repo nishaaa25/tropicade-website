@@ -63,30 +63,24 @@ export default function VerticalScale() {
       } fixed bottom-8 left-4 z-50`}
       ref={containerRef}
     >
-      <div className="relative flex flex-col gap-2">
-        <div className="w-3 border-1 border-[#7b7b7b]/40"></div>
-        <div className="w-2 border-1 border-[#7b7b7b]/40"></div>
-        <div className="w-2 border-1 border-[#7b7b7b]/40"></div>
-        <div className="w-2 border-1 border-[#7b7b7b]/40"></div>
-        <div className="w-3 border-1 border-[#7b7b7b]"></div>
-        <div className="w-2 border-1 border-[#7b7b7b]"></div>
-        <div className="w-2 border-1 border-[#7b7b7b]"></div>
-        <div className="w-2 border-1 border-[#7b7b7b]"></div>
+      <div className="relative flex flex-col gap-1">
+        <div className="w-2 border-[0.5px] border-[#7b7b7b]/40"></div>
+        <div className="w-1.5 border-[0.5px] border-[#7b7b7b]/40"></div>
+        <div className="w-1.5 border-[0.5px] border-[#7b7b7b]/40"></div>
+        <div className="w-2 border-[0.5px] border-[#7b7b7b]"></div>
+        <div className="w-1.5 border-[0.5px] border-[#7b7b7b]"></div>
 
-          <div className="flex items-center gap-2">
-            <div className="w-6 border-2 border-white"></div>
-            <div className="border-[1.5px] border-white rounded-full h-3 w-3"></div>
-            <p className="font-bebas text-xs text-white">{labelText}</p>
+          <div className="flex items-center gap-1.5">
+            <div className="w-4 border-[1px] border-white"></div>
+            <div className="border-[1px] border-white rounded-full h-2 w-2"></div>
+            <p className="font-bebas text-[10px] text-white">{labelText}</p>
           </div>
 
-        <div className="w-2 border-1 border-[#7b7b7b]"></div>
-        <div className="w-2 border-1 border-[#7b7b7b]"></div>
-        <div className="w-2 border-1 border-[#7b7b7b]"></div>
-        <div className="w-3 border-1 border-[#7b7b7b]"></div>
-        <div className="w-2 border-1 border-[#7b7b7b]/40"></div>
-        <div className="w-2 border-1 border-[#7b7b7b]/40"></div>
-        <div className="w-2 border-1 border-[#7b7b7b]/40"></div>
-        <div className="w-3 border-1 border-[#7b7b7b]/40"></div>
+        <div className="w-1.5 border-[0.5px] border-[#7b7b7b]"></div>
+        <div className="w-2 border-[0.5px] border-[#7b7b7b]"></div>
+        <div className="w-1.5 border-[0.5px] border-[#7b7b7b]/40"></div>
+        <div className="w-1.5 border-[0.5px] border-[#7b7b7b]/40"></div>
+        <div className="w-2 border-[0.5px] border-[#7b7b7b]/40"></div>
       </div>
     </div>
   );

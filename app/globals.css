@@ -59,6 +59,9 @@ body {
   }
 }
 
+.custom-shadow-2{
+  box-shadow: 0px 0px 8px 1px #ff3a65;
+}
 .custom-border {
   border: 0.9px white solid;
   border-color: linear-gradient(
@@ -76,7 +79,7 @@ body {
   box-shadow: 0px 0px 10px 8px #ff3ab373;
 }
 .custom-polygon{
-}
+clip-path: polygon(100% 0, 83% 0, 0 100%, 100% 100%, 100% 93%);}
 
 .tshirt .customCursor{
   opacity: 100

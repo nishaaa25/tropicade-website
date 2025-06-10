@@ -3,17 +3,17 @@ import Link from "next/link";
 
 export default function Navbar() {
   return (
-    <nav className="w-full flex-center fixed py-4  z-60 backdrop-blur-sm">
+    <nav className="w-full flex-center fixed py-4 z-60 backdrop-blur-sm">
       <div className="w-[95vw] flex-between mx-auto relative">
-        <div className="w-37 h-12 relative">
+        <Link href="/" className="w-37 h-12 relative z-80" >
           <Image
             src="/assets/main-logo.svg"
             alt="main-logo"
             fill
             className="object-contain relative"
           />
-        </div>
-        <ul className="flex-center gap-12">
+        </Link>
+        <ul className="flex-center gap-12 relative z-80">
           <li className="text-sm">
             <Link href="/">MEN</Link>
           </li>
@@ -24,7 +24,7 @@ export default function Navbar() {
             <Link href="/">DESIGN METHODOLOGY</Link>
           </li>
         </ul>
-        <div className="flex-center gap-7">
+        <div className="flex-center gap-7 relative z-80">
           <div className="relative">
             <Image
               src="/assets/MagnifyingGlass.svg"

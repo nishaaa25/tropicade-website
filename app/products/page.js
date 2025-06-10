@@ -1,94 +1,16 @@
 "use client";
 import ProductCard from "@/components/ProductCard";
+import { products } from "@/lib/data";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 
 const categories = ["All", "Bootleg", "Only You", "Eras Tour"];
 
-const products = [
-  {
-    id: 1,
-    name: "BOOTLEG",
-    price: 990,
-    image: "/assets/black.png",
-    category: "Bootleg",
-  },
-  {
-    id: 2,
-    name: "BOOTLEG",
-    price: 990,
-    image: "/assets/T-Shirt.png",
-    category: "Bootleg",
-  },
-  {
-    id: 3,
-    name: "LEG",
-    price: 990,
-    image: "/assets/T-Shirt.png",
-    category: "Bootleg",
-  },{
-    id: 4,
-    name: "BOOTLEG",
-    price: 990,
-    image: "/assets/black.png",
-    category: "Bootleg",
-  },{
-    id: 5,
-    name: "BOOTLEG",
-    price: 990,
-    image: "/assets/black.png",
-    category: "Bootleg",
-  },  {
-    id: 6,
-    name: "BOOTLEG",
-    price: 990,
-    image: "/assets/T-Shirt.png",
-    category: "Bootleg",
-  },
-  {
-    id: 7,
-    name: "LEG",
-    price: 990,
-    image: "/assets/T-Shirt.png",
-    category: "Bootleg",
-  },{
-    id: 8,
-    name: "BOOTLEG",
-    price: 990,
-    image: "/assets/black.png",
-    category: "Bootleg",
-  },{
-    id: 9,
-    name: "BOOTLEG",
-    price: 990,
-    image: "/assets/black.png",
-    category: "Bootleg",
-  },  {
-    id: 10,
-    name: "BOOTLEG",
-    price: 990,
-    image: "/assets/T-Shirt.png",
-    category: "Bootleg",
-  },
-  {
-    id: 11,
-    name: "LEG",
-    price: 990,
-    image: "/assets/T-Shirt.png",
-    category: "Bootleg",
-  },{
-    id: 12,
-    name: "BOOTLEG",
-    price: 990,
-    image: "/assets/black.png",
-    category: "Bootleg",
-  }
-];
-
 export default function ProductsPage() {
   const [activeCategory, setActiveCategory] = useState("All");
   const [searchQuery, setSearchQuery] = useState("");
+;
 
   const filteredProducts = products.filter((product) => {
     const matchesCategory =
@@ -123,10 +45,10 @@ export default function ProductsPage() {
         <div className="h-[60vh] fixed top-1/2 -translate-y-1/2 -right-30 w-[60vh] rounded-full blur-[180px] bg-[#440a53] z-10"></div>
         <div className="h-[60vh] fixed top-[80%] left-1/2 -translate-x-1/2 w-[60vh] rounded-full blur-[200px] bg-[#CF2379] z-30"></div>
       </div>
-      <div className="container mx-auto w-[90%] pt-[17vh]">
+      <div className="container mx-auto w-[90%] pt-[17vh] relative">
         <Link
           href="/"
-          className="flex items-center gap-3 text-white hover:text-dark-pink-500"
+          className="flex items-center gap-3 text-white "
         >
           <Image
             src="/assets/arrow-back.svg"

@@ -5,7 +5,7 @@ import VerticalScale from "@/components/VerticalScale";
 
 export default function Home() {
   return (
-    <div className="relative w-full">
+    <div className="relative w-full overflow-x-hidden">
       <MainLandingPage />
     </div>
   );

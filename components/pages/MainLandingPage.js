@@ -20,6 +20,11 @@ const MainLandingPage = () => {
   const cursorCircle = useRef();
   const [cursorText, setCursorText] = useState("");
   const [scrollProgress, setScrollProgress] = useState(0);
+  const [tshirtImage, setTshirtImage] = useState("/assets/T-Shirt.png");
+
+  const handleTshirtImageChange = (newImageSrc) => {
+    setTshirtImage(newImageSrc);
+  };
 
   useEffect(() => {
     const moveCursor = (e) => {
@@ -212,7 +217,7 @@ const MainLandingPage = () => {
       <div className="fixed top-[25vh] -right-[7vw] z-60 tshirt">
         <Image
           ref={animateImageRef}
-          src="/assets/T-Shirt.png"
+          src={tshirtImage}
           alt="landing-page-bg"
           width={900}
           height={900}
@@ -248,7 +253,7 @@ const MainLandingPage = () => {
                 strokeDashoffset={`${2 * Math.PI * 48 * (1 - scrollProgress / 100)}`}
               />
             </svg>
-            <div className="absolute inset-1 rounded-full bg-black/20 backdrop-blur-sm"></div>
+            <div className="absolute inset-1 rounded-full"></div>
           </div>
           <p className="grotesk uppercase text-xs text-white z-10 font-bebas px-4 text-center relative">
             {cursorText}
@@ -260,7 +265,7 @@ const MainLandingPage = () => {
           <LandingPage />
         </div>
         <div id="bestsellers">
-          <LandingPageAnimated />
+          <LandingPageAnimated onImageChange={handleTshirtImageChange} />
         </div>
       </div>
       <div id="ourprocess">

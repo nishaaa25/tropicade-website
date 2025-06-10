@@ -12,7 +12,7 @@ import { VFX } from "@vfx-js/core";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const LandingPageAnimated = () => {
+const LandingPageAnimated = ({ onImageChange }) => {
   const mostLikedRef = useRef(null);
   const bestSellersRef = useRef(null);
   const tShirtRef = useRef(null);
@@ -24,7 +24,10 @@ const LandingPageAnimated = () => {
   const imagesDivRef = useRef(null);
   const buttonDivRef = useRef(null);
 
-  const handleImageClick = () => {
+  const handleImageClick = (newImageSrc) => {
+
+    onImageChange(newImageSrc);
+
     // Find the T-shirt element in the parent component
     const tshirtElement = document.querySelector('.tshirt img');
     if (tshirtElement) {
@@ -32,21 +35,12 @@ const LandingPageAnimated = () => {
       const computedStyle = window.getComputedStyle(tshirtElement);
       const rect = tshirtElement.getBoundingClientRect();
       
-      // Store original styles with computed values
-      const originalStyle = {
-        width: computedStyle.width,
-        height: computedStyle.height,
-        minWidth: computedStyle.minWidth,
-        minHeight: computedStyle.minHeight,
-        maxWidth: computedStyle.maxWidth,
-        maxHeight: computedStyle.maxHeight,
-        transform: computedStyle.transform,
-        position: computedStyle.position,
-        objectFit: computedStyle.objectFit,
-        objectPosition: computedStyle.objectPosition,
-        display: computedStyle.display,
-        boxSizing: computedStyle.boxSizing
-      };
+      // Store original styles with computed values - capture the actual CSS classes
+      const originalClasses = tshirtElement.className;
+      const originalSrc = tshirtElement.src;
+      
+      // Store original inline styles
+      const originalInlineStyles = tshirtElement.style.cssText;
 
       // Lock dimensions before applying VFX
       tshirtElement.style.width = rect.width + 'px';
@@ -64,15 +58,18 @@ const LandingPageAnimated = () => {
 
       const vfx = new VFX();
       vfx.add(tshirtElement, { 
-        shader: "rgbShift",
-        overflow: 0
+        shader: "glitch",
+        overflow: 100,
       });
       
-      // Remove the effect after a short duration
+      // Remove the effect after a short duration and change the image
       setTimeout(() => {
         vfx.remove(tshirtElement);
-        // Restore original styles
-        Object.assign(tshirtElement.style, originalStyle);
+        // Change the image source
+        tshirtElement.src = newImageSrc;
+        // Restore original classes and inline styles completely
+        tshirtElement.className = originalClasses;
+        tshirtElement.style.cssText = originalInlineStyles;
       }, 2000);
     }
   };
@@ -165,7 +162,7 @@ const LandingPageAnimated = () => {
         <div ref={imagesDivRef} className="h-fit overflow-hidden mb-6">
           <div ref={imagesRef} className="flex gap-4 py-8">
             <button 
-              onClick={handleImageClick}
+              onClick={() => handleImageClick("/assets/changedImage.png")}
               className="w-25 h-25 relative rounded-full overflow-hidden border-dark-pink-500 border-3 cursor-pointer hover:scale-105 transition-transform duration-200"
             >
               <Image
@@ -176,7 +173,7 @@ const LandingPageAnimated = () => {
               />
             </button>
             <button 
-              onClick={handleImageClick}
+              onClick={() => handleImageClick("/assets/changedImage.png")}
               className="w-25 h-25 relative rounded-full overflow-hidden border-4 border-white/10 cursor-pointer hover:scale-105 transition-transform duration-200"
             >
               <Image
@@ -187,7 +184,7 @@ const LandingPageAnimated = () => {
               />
             </button>
             <button 
-              onClick={handleImageClick}
+              onClick={() => handleImageClick("/assets/changedImage.png")}
               className="w-25 h-25 relative rounded-full overflow-hidden border-4 border-white/10 cursor-pointer hover:scale-105 transition-transform duration-200"
             >
               <Image

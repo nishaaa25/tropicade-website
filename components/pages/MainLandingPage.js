@@ -50,7 +50,8 @@ const MainLandingPage = () => {
       if (hoverText) {
         setCursorText(hoverText);
         gsap.to(customCursor.current, {
-          scale: 1.2,
+          width: "100px",
+          height: "100px",
           duration: 0.3,
           ease: "power2.out"
         });
@@ -62,7 +63,8 @@ const MainLandingPage = () => {
       if (hoverText) {
         setCursorText("");
         gsap.to(customCursor.current, {
-          scale: 1,
+          width: "2px",
+          height: "2px",
           duration: 0.3,
           ease: "power2.out"
         });
@@ -226,9 +228,10 @@ const MainLandingPage = () => {
         />
         <div
           ref={customCursor}
-          className="customCursor fixed top-0 left-0 pointer-events-none z-90 h-34 w-34 rounded-full flex items-center justify-center backdrop-blur-md border border-white/20"
+          className="customCursor fixed top-0 left-0 pointer-events-none z-90 w-[2px] h-[2px] rounded-full flex items-center justify-center border-2 border-white/30"
           style={{
             background: 'rgba(255, 255, 255, 0.05)',
+            backdropFilter: 'blur(10px)',
           }}
         >
           <div className="absolute inset-0 rounded-full">
@@ -239,21 +242,20 @@ const MainLandingPage = () => {
                 r="48"
                 fill="none"
                 stroke="rgba(255, 255, 255, 0.2)"
-                strokeWidth="2"
+                strokeWidth="1"
               />
               <circle
                 cx="50"
                 cy="50"
                 r="48"
                 fill="none"
-                stroke="#727272"
-                strokeWidth="3"
+                stroke="#ff3a65"
+                strokeWidth="2"
                 strokeLinecap="round"
                 strokeDasharray={`${2 * Math.PI * 48}`}
                 strokeDashoffset={`${2 * Math.PI * 48 * (1 - scrollProgress / 100)}`}
               />
             </svg>
-            <div className="absolute inset-1 rounded-full"></div>
           </div>
           <p className="grotesk uppercase text-xs text-white z-10 font-bebas px-4 text-center relative">
             {cursorText}

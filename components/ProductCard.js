@@ -12,12 +12,12 @@ export default function ProductCard({ id, image, name, price }) {
             className="object-cover"
           />
         </div>
-        <div className="w-[92%] h-[92%] relative -top-[7vh] left-[10px]">
+        <div className="w-[100%] h-[100%] relative -top-[8vh] ">
           <Image
             src={image}
             alt={name}
             fill 
-            className="object-cover group-hover:scale-110 transition-transform duration-300"
+            className="object-contain group-hover:scale-110 transition-transform duration-300"
           />
         </div>
       </div>

@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import LandingPageImageOne from "@/public/assets/landingAnimation-1.png";
 import LandingPageImageTwo from "@/public/assets/landingAnimation-2.png";
 import LandingPageImageThree from "@/public/assets/landingAnimation-3.png";
@@ -24,8 +24,10 @@ const LandingPageAnimated = ({ onImageChange }) => {
   const imagesDivRef = useRef(null);
   const buttonDivRef = useRef(null);
 
-  const handleImageClick = (newImageSrc) => {
+  const [activeImageIndex, setActiveImageIndex] = useState(0);
 
+  const handleImageClick = (newImageSrc, index) => {
+    setActiveImageIndex(index);
     onImageChange(newImageSrc);
 
     // Find the T-shirt element in the parent component
@@ -162,8 +164,12 @@ const LandingPageAnimated = ({ onImageChange }) => {
         <div ref={imagesDivRef} className="h-fit overflow-hidden mb-6">
           <div ref={imagesRef} className="flex gap-4 py-8">
             <button 
-              onClick={() => handleImageClick("/assets/changedImage.png")}
-              className="w-25 h-25 relative rounded-full overflow-hidden border-dark-pink-500 border-3 cursor-pointer hover:scale-105 transition-transform duration-200"
+              onClick={() => handleImageClick("/assets/changedImage.png", 0)}
+              className={`w-25 h-25 relative rounded-full overflow-hidden cursor-pointer hover:scale-105 transition-transform duration-200 ${
+                activeImageIndex === 0 
+                  ? 'border-4 border-red-500' 
+                  : 'border-4 border-white/10'
+              }`}
             >
               <Image
                 src={LandingPageImageOne}
@@ -173,8 +179,12 @@ const LandingPageAnimated = ({ onImageChange }) => {
               />
             </button>
             <button 
-              onClick={() => handleImageClick("/assets/changedImage.png")}
-              className="w-25 h-25 relative rounded-full overflow-hidden border-4 border-white/10 cursor-pointer hover:scale-105 transition-transform duration-200"
+              onClick={() => handleImageClick("/assets/changedImage.png", 1)}
+              className={`w-25 h-25 relative rounded-full overflow-hidden cursor-pointer hover:scale-105 transition-transform duration-200 ${
+                activeImageIndex === 1 
+                  ? 'border-4 border-red-500' 
+                  : 'border-4 border-white/10'
+              }`}
             >
               <Image
                 src={LandingPageImageTwo}
@@ -184,8 +194,12 @@ const LandingPageAnimated = ({ onImageChange }) => {
               />
             </button>
             <button 
-              onClick={() => handleImageClick("/assets/changedImage.png")}
-              className="w-25 h-25 relative rounded-full overflow-hidden border-4 border-white/10 cursor-pointer hover:scale-105 transition-transform duration-200"
+              onClick={() => handleImageClick("/assets/changedImage.png", 2)}
+              className={`w-25 h-25 relative rounded-full overflow-hidden cursor-pointer hover:scale-105 transition-transform duration-200 ${
+                activeImageIndex === 2 
+                  ? 'border-4 border-red-500' 
+                  : 'border-4 border-white/10'
+              }`}
             >
               <Image
                 src={LandingPageImageThree}

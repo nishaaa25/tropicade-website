@@ -1,4 +1,5 @@
-"use client";
+  "use client";
+
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import ScrollTrigger from "gsap/dist/ScrollTrigger";
@@ -11,165 +12,176 @@ export default function OurProcess() {
   const processDivRef = useRef();
 
   useGSAP(() => {
-  const tl1 = gsap.timeline({
-    scrollTrigger: {
-      trigger: processDivRef.current,
-      start: "top center",
-      end: "top -10%",
-      scrub: 2,
-    },
-  });
-
-  tl1
-    .from("#text-1 h1", {
-      y: 200,
-      ease: "power1.out",
-      duration: 2,
-    })
-    .from(
-      "#text-1 p",
-      {
-        y: 400,
-        ease: "power1.out",
-        duration: 2,
+    const tl1 = gsap.timeline({
+      scrollTrigger: {
+        trigger: processDivRef.current,
+        start: "top center",
+        end: "top -10%",
+        scrub: 2,
       },
-      "<"
-    )
-    .from(
-      ".img-cont .product",
-      {
-        skewY: -10,
-        y: 200,
-        ease: "power1.out",
-        stagger: 0.2,
-        duration: 2,
-      },
-      "<0.2"
-    )
-    .to(
-      ".clip-1",
-      {
-        width: "100%",
-        ease: "power1.out",
-        duration: 4,
-      },
-      "<0.2"
-    )
-    .to(
-      ".clip-2",
-      {
-        clipPath: "inset(0 0 0 0%)",
-        ease: "power1.out",
-        duration: 4,
-      },
-      "<0"
-    )
-    .from(
-      "#para-1",
-      {
-        x: "50vw",
-        ease: "power1.out",
-        duration: 2,
-      },
-      "<0.2"
-    )
-    .from(".bottom-text", {
-      y: 200,
-      ease: "power1.out",
-      duration: 2,
     });
 
-  const tl2 = gsap.timeline({
-    scrollTrigger: {
+    tl1
+      .from("#text-1 h1", {
+        y: 200,
+        ease: "power1.out",
+        duration: 2,
+      })
+      .from(
+        "#text-1 p",
+        {
+          y: 400,
+          ease: "power1.out",
+          duration: 2,
+        },
+        "<"
+      )
+      .from(
+        ".img-cont .product",
+        {
+          skewY: -10,
+          y: 200,
+          ease: "power1.out",
+          stagger: 0.2,
+          duration: 2,
+        },
+        "<0.2"
+      )
+      .to(
+        ".clip-1",
+        {
+          width: "100%",
+          ease: "power1.out",
+          duration: 4,
+        },
+        "<0.2"
+      )
+      .to(
+        ".clip-2",
+        {
+          clipPath: "inset(0 0 0 0%)",
+          ease: "power1.out",
+          duration: 4,
+        },
+        "<0"
+      )
+      .from(
+        "#para-1",
+        {
+          x: "50vw",
+          ease: "power1.out",
+          duration: 2,
+        },
+        "<0.2"
+      )
+      .from(".bottom-text", {
+        y: 200,
+        ease: "power1.out",
+        duration: 2,
+      });
+
+    // Create main animation timeline that will be controlled by scroll
+    const mainTimeline = gsap.timeline({ paused: true });
+
+    mainTimeline
+      .addLabel("step1", 0)
+      .to("#text-1", { x: "-50vw", opacity: 0, duration: 1.5 }, "step1")
+      .to("#para-1", { x: "50vw", opacity: 0, duration: 1.5 }, "step1")
+      .to(["#img-1", "#img-3"], { opacity: 0, duration: 1.5 }, "step1")
+      .to("#text-2", { opacity: 1, duration: 1.5 }, "step1")
+      .fromTo(
+        "#img-2",
+        {
+          y: -20,
+          borderRadius: "100%",
+          borderWidth: 15,
+          width: "248px",
+          height: "248px",
+        },
+        {
+          borderRadius: "30%",
+          minWidth: "17vw",
+          height: "60vh",
+          borderColor: "transparent",
+          duration: 2,
+        },
+        "step1"
+      )
+      .to(
+        "#img-2 .main-product",
+        {
+          scale: 1.1,
+          duration: 1.5,
+        },
+        "step1"
+      )
+      .fromTo(
+        "#message",
+        { y: "50vh", opacity: 0 },
+        { y: 0, opacity: 1, duration: 1.5 },
+        "step1"
+      )
+      .to(".tshirt-outline", { opacity: 1, duration: 1.5 }, "step1")
+      .to("#bottom-btn", { opacity: 0, duration: 1 }, "step1")
+      .fromTo(
+        "#para-2",
+        { y: "40vh", opacity: 0 },
+        { y: 0, opacity: 1, duration: 1.5 },
+        "step1"
+      )
+      .addLabel("step2", "+=0.2") 
+      .to("#text-2", { x: "-50vw", opacity: 0, duration: 1.5 }, "step2")
+      .to("#para-2", { x: "50vw", opacity: 0, duration: 1.5 }, "step2")
+      .to(
+        "#img-2 .main-product",
+        { y: -5, scale: 1, duration: 1.5 },
+        "step2"
+      )
+      .to(".tshirt-outline", { scale: 0, opacity: 0, duration: 1.5 }, "step2")
+      .to("#message", { y: "50vh", opacity: 0, duration: 1.5 }, "step2")
+      .to(".black-tshirt", { opacity: 1, duration: 1.5 }, "step2")
+      .from(
+        ["#leaves-1", "#leaves-2", "#leaves-3", "#leaves-4"],
+        {
+          rotate: 90,
+          scale: 0,
+          duration: 1.5,
+        },
+        "step2"
+      )
+      .fromTo(
+        "#text-3",
+        { opacity: 0 },
+        { opacity: 1, duration: 1.5 },
+        "step2"
+      );
+
+    // Use ScrollTrigger to trigger the full animation sequence
+    ScrollTrigger.create({
       trigger: processDivRef.current,
       start: "top top",
-      end: "+=300%", // slower scroll progress
+      end: "+=100%",
       pin: true,
-      scrub: 5, // smoother and slower
-    },
+      onEnter: () => {
+        // Play the full animation sequence when entering
+        mainTimeline.timeScale(1).play();
+      },
+      onLeaveBack: () => {
+        // Reverse the full animation sequence when scrolling back with much faster speed
+        mainTimeline.timeScale(4).reverse();
+      },
+      onEnterBack: () => {
+        // Reset time scale and play forward when entering back
+        mainTimeline.timeScale(1).play();
+      }
+    });
   });
-
-  tl2
-    .addLabel("step1", "+1")
-    .to("#text-1", { x: "-50vw", opacity: 0, duration: 2 }, "step1")
-    .to("#para-1", { x: "50vw", opacity: 0, duration: 2 }, "step1")
-    .to(["#img-1", "#img-3"], { opacity: 0, duration: 2 }, "step1")
-    .to("#text-2", { opacity: 1, duration: 2 }, "step1")
-    .fromTo(
-      "#img-2",
-      {
-        y: -20,
-        borderRadius: "100%",
-        borderWidth: 15,
-        width: "248px",
-        height: "248px",
-      },
-      {
-        borderRadius: "30%",
-        minWidth: "17vw",
-        height: "60vh",
-        borderColor: "transparent",
-        duration: 3,
-      },
-      "step1"
-    )
-    .to(
-      "#img-2 .main-product",
-      {
-        scale: 1.1,
-        duration: 2,
-      },
-      "step1"
-    )
-    .fromTo(
-      "#message",
-      { y: "50vh", opacity: 0 },
-      { y: 0, opacity: 1, duration: 2 },
-      "step1"
-    )
-    .to(".tshirt-outline", { opacity: 1, duration: 2 }, "step1")
-    .to("#bottom-btn", { opacity: 0, duration: 1.5 }, "step1")
-    .fromTo(
-      "#para-2",
-      { y: "40vh", opacity: 0 },
-      { y: 0, opacity: 1, duration: 2 },
-      "step1"
-    );
-
-  tl2
-    .addLabel("step2", "+=3") 
-    .to("#text-2", { x: "-50vw", opacity: 0, duration: 2 }, "step2")
-    .to(
-      "#img-2 .main-product",
-      { y: -5, scale: 1, duration: 2 },
-      "step2"
-    )
-    .to(".tshirt-outline", { scale: 0, opacity: 0, duration: 2 }, "step2")
-    .to("#message", { y: "50vh", opacity: 0, duration: 2 }, "step2")
-    .to(".black-tshirt", { opacity: 1, duration: 2 }, "step2")
-    .from(
-      ["#leaves-1", "#leaves-2", "#leaves-3", "#leaves-4"],
-      {
-        rotate: 90,
-        scale: 0,
-        duration: 2,
-      },
-      "step2"
-    )
-    .fromTo(
-      "#text-3",
-      { opacity: 0 },
-      { opacity: 1, duration: 2 },
-      "step2"
-    );
-});
-
 
   return (
     <div
       className="w-full h-screen relative py-20 flex-center overflow-hidden"
       ref={processDivRef}
-      id="our-process"
+      id="ourprocess"
     >
       <div className="absolute top-[15vh] left-[15vh] font-bebas text-div">
         <div className="absolute top-0 z-30" id="text-1">
@@ -280,7 +292,7 @@ export default function OurProcess() {
               />
             </div>
             <div
-              className="w-34 h-34 absolute bottom-8 -rotate-180 left-10"
+              className="w-32 h-32 absolute bottom-8 -rotate-180 left-10"
               id="leaves-4"
             >
               <Image

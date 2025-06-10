@@ -61,7 +61,7 @@ const LandingPageAnimated = ({ onImageChange }) => {
       const vfx = new VFX();
       vfx.add(tshirtElement, { 
         shader: "glitch",
-        overflow: 100,
+        overflow: 0,
       });
       
       // Remove the effect after a short duration and change the image
@@ -176,7 +176,7 @@ const LandingPageAnimated = ({ onImageChange }) => {
               />
             </button>
             <button 
-              onClick={() => handleImageClick("/assets/changedImage.png", 1)}
+              onClick={() => handleImageClick("/assets/changedImage1.png", 1)}
               className={`w-25 h-25 relative rounded-full overflow-hidden cursor-pointer hover:scale-105 transition-transform duration-200 ${
                 activeImageIndex === 1 
                   ? 'border-4 border-red-500' 
@@ -191,7 +191,7 @@ const LandingPageAnimated = ({ onImageChange }) => {
               />
             </button>
             <button 
-              onClick={() => handleImageClick("/assets/changedImage.png", 2)}
+              onClick={() => handleImageClick("/assets/changedImage2.png", 2)}
               className={`w-25 h-25 relative rounded-full overflow-hidden cursor-pointer hover:scale-105 transition-transform duration-200 ${
                 activeImageIndex === 2 
                   ? 'border-4 border-red-500' 

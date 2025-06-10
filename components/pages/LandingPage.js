@@ -4,6 +4,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useRef } from "react";
 import splitType from "split-type";
+import Link from "next/link";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -19,7 +20,6 @@ const LandingPage = () => {
   const subBlogAnimeDiv = useRef(null);
   const buttonAnimeDiv = useRef(null);
   const bottomAnime = useRef(null);
-
 
   useGSAP(() => {
     const splitTextOne = new splitType(textAnimeOne.current, { type: "words" });
@@ -89,12 +89,18 @@ const LandingPage = () => {
         </p>
       </div>
       <div ref={textAnimeTwoDiv} className="h-fit overflow-hidden font-bebas">
-        <h1 ref={textAnimeTwo} className="text-[9vw] leading-[8.5vw] text-white whitespace-nowrap">
+        <h1
+          ref={textAnimeTwo}
+          className="text-[9vw] leading-[8.5vw] text-white whitespace-nowrap"
+        >
           CUSTOM STREETWEAR.
         </h1>
       </div>
       <div ref={textAnimeThreeDiv} className="h-fit overflow-hidden font-bebas">
-        <h1 ref={textAnimeThree} className="text-[9vw] leading-[9vw] text-white">
+        <h1
+          ref={textAnimeThree}
+          className="text-[9vw] leading-[9vw] text-white"
+        >
           YOUR WAY
         </h1>
       </div>
@@ -106,21 +112,26 @@ const LandingPage = () => {
       </div>
 
       <div ref={buttonAnimeDiv}>
-        <button
-          ref={buttonAnime}
-          className="bg-[#FF3A65] px-2 flex-center gap-2 py-1"
-        >
-          <p className="px-3">SHOP OUR COLLECTION</p>
-          <Image
-            src="/assets/ArrowUpRight.svg"
-            alt="ButtonArrow"
-            width={40}
-            height={40}
-          />
-        </button>
+        <Link href="/products">
+          <button
+            ref={buttonAnime}
+            className="bg-[#FF3A65] px-2 flex-center gap-2 py-1"
+          >
+            <p className="px-3">SHOP OUR COLLECTION</p>
+            <Image
+              src="/assets/ArrowUpRight.svg"
+              alt="ButtonArrow"
+              width={40}
+              height={40}
+            />
+          </button>
+        </Link>
       </div>
 
-      <div ref={bottomAnime} className=" py-4 flex items-center justify-evenly w-full backdrop-blur-[28px] absolute bottom-0 left-0 z-60">
+      <div
+        ref={bottomAnime}
+        className=" py-4 flex items-center justify-evenly w-full backdrop-blur-[28px] absolute bottom-0 left-0 z-60"
+      >
         <h1 className="text-sm max-w-30 font-[300]">Pick your tee & design</h1>
         <div className="w-41 h-8 relative">
           <Image
@@ -130,7 +141,9 @@ const LandingPage = () => {
             className="object-cover relative"
           />
         </div>
-        <h1 className="text-sm max-w-36">Our design team will get in touch with you</h1>
+        <h1 className="text-sm max-w-36">
+          Our design team will get in touch with you
+        </h1>
         <div className="w-41 h-8 relative">
           <Image
             src="/assets/ArrowRight.svg"

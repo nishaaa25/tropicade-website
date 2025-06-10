@@ -1,9 +1,8 @@
-import { Bebas} from "next/font/google";
+import { Bebas } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import { useLenis } from "@/components/Hooks/useLenis";
 import LenisProvider from "@/components/Hooks/lenisProvider";
-
 
 export const metadata = {
   title: "Create Next App",
@@ -13,11 +12,9 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body
-        className={`antialiased w-full relative`}
-      >
+      <body className={`antialiased w-full relative`}>
         <LenisProvider>
-  <Navbar/>
+          <Navbar />
           {children}
         </LenisProvider>
       </body>

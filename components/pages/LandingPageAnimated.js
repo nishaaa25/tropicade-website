@@ -147,13 +147,13 @@ const LandingPageAnimated = ({ onImageChange }) => {
     // Store the timeline in a ref for access in event handlers
     animationRef.current = entranceTl;
 
-    // Set up ScrollTrigger for pinning
+    // Set up ScrollTrigger for pinning with reduced scroll distance
     const scrollTrigger = ScrollTrigger.create({
       trigger: containerRef.current,
       start: "top top",
-      end: "+=100%",
+      end: "+=10%",
       pin: true,
-      pinSpacing: true,
+      pinSpacing: false,
       onEnter: () => {
         if (!hasAnimated) {
           requestAnimationFrame(() => {

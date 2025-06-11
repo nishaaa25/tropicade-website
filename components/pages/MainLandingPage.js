@@ -63,8 +63,8 @@ const MainLandingPage = () => {
       if (hoverText) {
         setCursorText("");
         gsap.to(customCursor.current, {
-          width: "2px",
-          height: "2px",
+          width: "24px",
+          height: "24px",
           duration: 0.3,
           ease: "power2.out"
         });
@@ -223,12 +223,12 @@ const MainLandingPage = () => {
           alt="landing-page-bg"
           width={900}
           height={900}
-          className="object-contain z-50 h-[50vw] w-[70vw] will-change-transform"
+          className="object-contain z-50 h-[50vw] w-[70vw] will-change-transform cursor-pointer"
           data-cursor-text="View T-Shirt Details"
         />
         <div
           ref={customCursor}
-          className="customCursor fixed top-0 left-0 pointer-events-none z-90 w-[2px] h-[2px] rounded-full flex items-center justify-center border-2 border-white/30"
+          className="customCursor fixed top-0 left-0 pointer-events-none z-90 w-6 h-6 rounded-full flex items-center justify-center border-2 border-white/30"
           style={{
             background: 'rgba(255, 255, 255, 0.05)',
             backdropFilter: 'blur(10px)',

@@ -10,10 +10,12 @@ export default function ProductDetailsPage() {
   const [selectedSize, setSelectedSize] = useState("S");
   const [selectedColor, setSelectedColor] = useState(colors[0]);
   const [activeTab, setActiveTab] = useState("FRONT");
+  const items = Array.from({ length: 12 }, (_, i) => i + 1);
+  const radius = 219;
 
   return (
     <div className="h-screen relative overflow-hidden w-full">
-      <div className="fixed -bottom-80 -left-[15vw] -z-10">
+      <div className="fixed -bottom-80 -l eft-[15vw] -z-10">
         <Image
           src="/assets/leafs.svg"
           alt="landing-page-bg"
@@ -146,28 +148,37 @@ export default function ProductDetailsPage() {
             </div>
           </div>
         </div>
-        <div className="fixed -right-[14vw] top-1/2 -translate-y-1/2 flex flex-col gap-4 bg-[#200124] w-[55vh] h-[55vh] rounded-full flex-center mr-8">
-        <div className="relative w-[70%] h-[70%] border-l-2 border-white/50  rounded-full flex items-center ">
-        <div className="w-4 h-4 rounded-full bg-dark-pink-500 right-2 custom-shadow-2 relative"></div>
-        </div>
-          {/* <div className="absolute">
-            {[1, 2, 3, 4, 5].map((i) => (
-              <div
-                key={i}
-                className={`w-12 h-12 rounded-full bg-white/10 ${
-                  i === 2 ? "w-16 h-16 bg-[#ff4d6d]" : ""
-                }`}
-              >
-                <Image
-                  src="/assets/product-1.png"
-                  alt={`Design ${i}`}
-                  width={i === 2 ? 64 : 48}
-                  height={i === 2 ? 64 : 48}
-                  className="rounded-full object-cover"
-                />
-              </div>
-            ))}
-          </div> */}
+        <div className="fixed -right-[18vw] top-1/2 -translate-y-1/2 flex flex-col gap-4 bg-[#200124] w-[60vh] h-[60vh] rounded-full flex-center mr-8">
+          <div className="relative w-[70%] h-[70%] border-l-2 border-white/50  rounded-full flex items-center ">
+            <div className="w-4 h-4 rounded-full bg-dark-pink-500 right-2 custom-shadow-2 relative"></div>
+          </div>
+          <ul
+            className="absolute top-1/2 -translate-y-1/2 grid place-items-center "
+            style={{ transform: "rotate(-90deg)" }}
+          >
+            {items.map((item, i) => {
+              const angle = (360 / items.length) * i;
+              const transform = `rotate(${angle}deg) translate(${radius}px) rotate(-${angle}deg)`;
+              return (
+                <li
+                  key={i}
+                  className={`${
+                    i === 9
+                      ? "w-17 h-17 border-dark-pink-500"
+                      : "w-10 h-10 border-white/5"
+                  } absolute bg-[#3c3841]  grid place-items-center rounded-full overflow-hidden border-3 `}
+                  style={{ transform }}
+                >
+                  <Image
+                    src={`/assets/product-1.png`}
+                    alt="alt"
+                    fill
+                    className="rotate-90 text-white text-xs font-sans"
+                  ></Image>
+                </li>
+              );
+            })}
+          </ul>
         </div>
       </div>
     </div>

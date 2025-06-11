@@ -44,24 +44,11 @@ const LandingPageAnimated = ({ onImageChange }) => {
       // Store original inline styles
       const originalInlineStyles = tshirtElement.style.cssText;
 
-      // Lock dimensions before applying VFX
-      tshirtElement.style.width = rect.width + 'px';
-      tshirtElement.style.height = rect.height + 'px';
-      tshirtElement.style.minWidth = rect.width + 'px';
-      tshirtElement.style.minHeight = rect.height + 'px';
-      tshirtElement.style.maxWidth = rect.width + 'px';
-      tshirtElement.style.maxHeight = rect.height + 'px';
-      tshirtElement.style.objectFit = 'contain';
-      tshirtElement.style.objectPosition = 'center';
-      tshirtElement.style.boxSizing = 'border-box';
-      tshirtElement.style.overflow = 'hidden';
-      tshirtElement.style.flexShrink = '0';
-      tshirtElement.style.flexGrow = '0';
-
       const vfx = new VFX();
       vfx.add(tshirtElement, { 
         shader: "glitch",
         overflow: 0,
+        transparent: true,
       });
       
       // Remove the effect after a short duration and change the image
@@ -85,9 +72,10 @@ const LandingPageAnimated = ({ onImageChange }) => {
     const tl = gsap.timeline({
       scrollTrigger: {
         trigger: ".best-seller",
-        start: "top top",
+        start: "center center",
         end: "+=100%",
         pin: true,
+        markers: true,
         toggleActions: "play none none reverse",
       },
     });

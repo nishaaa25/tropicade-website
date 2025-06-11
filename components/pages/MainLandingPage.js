@@ -93,7 +93,7 @@ const MainLandingPage = () => {
   useGSAP(() => {
     // Set initial state with will-change for better performance
     gsap.set(animateImageRef.current, {
-      y: 600,
+      y: 800,
       opacity: 0,
       force3D: true,
       transformOrigin: "center center",
@@ -216,51 +216,24 @@ const MainLandingPage = () => {
         <div className="h-[60vh] fixed top-1/2 -translate-y-1/2 -right-10 w-[60vh] rounded-full blur-[200px] bg-[#32033F]"></div>
         <div className="h-[60vh] fixed top-[80%] left-1/2 -translate-x-1/2 w-[60vh] rounded-full blur-[200px] bg-[#CF2379]"></div>
       </div>
-      <div className="fixed top-[25vh] -right-[7vw] z-60 tshirt">
+      <div className="fixed top-[20vh] right-[3vw] z-60 tshirt">
         <Image
           ref={animateImageRef}
           src={tshirtImage}
           alt="landing-page-bg"
           width={900}
           height={900}
-          className="object-contain z-50 h-[50vw] w-[70vw] will-change-transform cursor-pointer"
+          className="object-contain z-50 h-[50vw] w-fit will-change-transform cursor-pointer"
           data-cursor-text="View T-Shirt Details"
         />
-        <div
+        <Image
           ref={customCursor}
-          className="customCursor fixed top-0 left-0 pointer-events-none z-90 w-6 h-6 rounded-full flex items-center justify-center border-2 border-white/30"
-          style={{
-            background: 'rgba(255, 255, 255, 0.05)',
-            backdropFilter: 'blur(10px)',
-          }}
-        >
-          <div className="absolute inset-0 rounded-full">
-            <svg className="absolute inset-0 w-full h-full -rotate-90" viewBox="0 0 100 100">
-              <circle
-                cx="50"
-                cy="50"
-                r="48"
-                fill="none"
-                stroke="rgba(255, 255, 255, 0.2)"
-                strokeWidth="1"
-              />
-              <circle
-                cx="50"
-                cy="50"
-                r="48"
-                fill="none"
-                stroke="#ff3a65"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeDasharray={`${2 * Math.PI * 48}`}
-                strokeDashoffset={`${2 * Math.PI * 48 * (1 - scrollProgress / 100)}`}
-              />
-            </svg>
-          </div>
-          <p className="grotesk uppercase text-xs text-white z-10 font-bebas px-4 text-center relative">
-            {cursorText}
-          </p>
-        </div>
+          src="/assets/customCursor.svg"
+          alt="custom cursor"
+          width={24}
+          height={24}
+          className="customCursor fixed top-0 left-0 pointer-events-none z-90"
+        />
       </div>
       <div className="w-full relative overflow-hidden" ref={contRef}>
         <div id="hero">

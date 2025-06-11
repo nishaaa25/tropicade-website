@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import LandingPageImageOne from "@/public/assets/landingAnimation-1.png";
 import LandingPageImageTwo from "@/public/assets/landingAnimation-2.png";
 import LandingPageImageThree from "@/public/assets/landingAnimation-3.png";
@@ -23,8 +23,11 @@ const LandingPageAnimated = ({ onImageChange }) => {
   const tShirtDivRef = useRef(null);
   const imagesDivRef = useRef(null);
   const buttonDivRef = useRef(null);
+  const containerRef = useRef(null);
+  const animationRef = useRef(null);
 
   const [activeImageIndex, setActiveImageIndex] = useState(0);
+  const [hasAnimated, setHasAnimated] = useState(false);
 
   const handleImageClick = (newImageSrc, index) => {
     setActiveImageIndex(index);
@@ -44,24 +47,11 @@ const LandingPageAnimated = ({ onImageChange }) => {
       // Store original inline styles
       const originalInlineStyles = tshirtElement.style.cssText;
 
-      // Lock dimensions before applying VFX
-      tshirtElement.style.width = rect.width + 'px';
-      tshirtElement.style.height = rect.height + 'px';
-      tshirtElement.style.minWidth = rect.width + 'px';
-      tshirtElement.style.minHeight = rect.height + 'px';
-      tshirtElement.style.maxWidth = rect.width + 'px';
-      tshirtElement.style.maxHeight = rect.height + 'px';
-      tshirtElement.style.objectFit = 'contain';
-      tshirtElement.style.objectPosition = 'center';
-      tshirtElement.style.boxSizing = 'border-box';
-      tshirtElement.style.overflow = 'hidden';
-      tshirtElement.style.flexShrink = '0';
-      tshirtElement.style.flexGrow = '0';
-
       const vfx = new VFX();
       vfx.add(tshirtElement, { 
         shader: "glitch",
         overflow: 0,
+        transparent: true,
       });
       
       // Remove the effect after a short duration and change the image
@@ -77,59 +67,130 @@ const LandingPageAnimated = ({ onImageChange }) => {
   };
 
   useGSAP(() => {
+    // Split text immediately and hide it
     const splitBestSellers = new splitType(bestSellersRef.current, {
       type: "words",
     });
     const splitTShirt = new splitType(tShirtRef.current, { type: "words" });
 
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: ".best-seller",
-        start: "top top",
-        end: "+=100%",
-        pin: true,
-        toggleActions: "play none none reverse",
-      },
+    // Hide all elements immediately before any animation
+    gsap.set([
+      splitBestSellers.words,
+      splitTShirt.words,
+      imagesRef.current,
+      buttonRef.current,
+      mostLikedDivRef.current,
+      bestSellersDivRef.current,
+      tShirtDivRef.current,
+      imagesDivRef.current,
+      buttonDivRef.current
+    ], {
+      y: 20,
+      opacity: 0,
+      scale: 0.99,
+      visibility: "visible",
+      force3D: true,
+      willChange: "transform, opacity"
     });
 
-    tl.from(
-      [
-        splitBestSellers.words,
-        splitTShirt.words,
-        imagesRef.current,
-        buttonRef.current,
-      ],
-      {
-        y: 400,
-        duration: 1.5,
-        opacity: 0,
-        ease: "power3.out",
-        stagger: 0.05,
-      },
-      0
-    );
-
-    tl.from(
-      [
-        mostLikedDivRef.current,
-        bestSellersDivRef.current,
-        tShirtDivRef.current,
-        imagesDivRef.current,
-        buttonDivRef.current,
-      ],
-      {
-        y: 60,
-        duration: 1.2,
-        opacity: 0,
+    // Create the entrance animation timeline
+    const entranceTl = gsap.timeline({ 
+      paused: true,
+      defaults: {
         ease: "power2.out",
-        stagger: 0.08,
+        duration: 0.5
+      }
+    });
+
+    // First wave - header elements
+    entranceTl.to([
+      mostLikedDivRef.current,
+      bestSellersDivRef.current
+    ], {
+      y: 0,
+      opacity: 1,
+      scale: 1,
+      stagger: 0.08,
+      duration: 0.4,
+      clearProps: "willChange"
+    });
+
+    // Second wave - main text
+    entranceTl.to([
+      splitBestSellers.words,
+      splitTShirt.words
+    ], {
+      y: 0,
+      opacity: 1,
+      scale: 1,
+      stagger: 0.03,
+      duration: 0.4,
+      clearProps: "willChange"
+    }, "-=0.2");
+
+    // Third wave - images and button
+    entranceTl.to([
+      imagesRef.current,
+      buttonRef.current,
+      tShirtDivRef.current,
+      imagesDivRef.current,
+      buttonDivRef.current
+    ], {
+      y: 0,
+      opacity: 1,
+      scale: 1,
+      stagger: 0.05,
+      duration: 0.4,
+      clearProps: "willChange"
+    }, "-=0.1");
+
+    // Store the timeline in a ref for access in event handlers
+    animationRef.current = entranceTl;
+
+    // Set up ScrollTrigger for pinning
+    const scrollTrigger = ScrollTrigger.create({
+      trigger: containerRef.current,
+      start: "top top",
+      end: "+=100%",
+      pin: true,
+      pinSpacing: true,
+      onEnter: () => {
+        if (!hasAnimated) {
+          requestAnimationFrame(() => {
+            animationRef.current.play(0);
+            setHasAnimated(true);
+          });
+        }
       },
-      0.2
-    );
+      onLeaveBack: () => {
+        if (hasAnimated) {
+          animationRef.current.reverse();
+          setHasAnimated(false);
+        }
+      }
+    });
+
+    // Listen for the exit animation completion from LandingPage
+    const handleExitComplete = () => {
+      if (!hasAnimated) {
+        requestAnimationFrame(() => {
+          animationRef.current.play(0);
+          setHasAnimated(true);
+        });
+      }
+    };
+
+    window.addEventListener('landingPageExitComplete', handleExitComplete);
+
+    // Cleanup
+    return () => {
+      window.removeEventListener('landingPageExitComplete', handleExitComplete);
+      scrollTrigger.kill();
+    };
   });
 
   return (
-    <div className="h-screen w-full relative best-seller overflow-hidden">
+    <div ref={containerRef} className="h-screen w-full relative best-seller overflow-hidden">
       <div className="absolute top-[50%] -translate-y-1/2 w-1/2 flex flex-col ml-[4vw]">
         <div ref={mostLikedDivRef} className="h-fit overflow-hidden">
           <p className="px-3 py-[6px] relative flex-center w-fit mb-1 bg-[#FF3A651A] text-[#ff3a65] items-center gap-3">

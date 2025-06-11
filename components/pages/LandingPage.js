@@ -2,7 +2,7 @@ import { useGSAP } from "@gsap/react";
 import Image from "next/image";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { useRef } from "react";
+import { useRef, useEffect } from "react";
 import splitType from "split-type";
 import Link from "next/link";
 
@@ -20,6 +20,7 @@ const LandingPage = () => {
   const subBlogAnimeDiv = useRef(null);
   const buttonAnimeDiv = useRef(null);
   const bottomAnime = useRef(null);
+  const containerRef = useRef(null);
 
   useGSAP(() => {
     const splitTextOne = new splitType(textAnimeOne.current, { type: "words" });
@@ -29,6 +30,7 @@ const LandingPage = () => {
     });
     const splitSubBlog = new splitType(subBlogAnime.current, { type: "words" });
 
+    // Initial entrance animation
     const tl = gsap.timeline();
     tl.from(
       [
@@ -66,23 +68,48 @@ const LandingPage = () => {
       "he"
     );
 
-    gsap.to(bottomAnime.current, {
-      y: 200,
-      opacity: 0,
+    // Exit animation on scroll
+    const exitTl = gsap.timeline({
       scrollTrigger: {
-        trigger: bottomAnime.current,
-        start: "top 91%",
-        end: "+=5%",
+        trigger: containerRef.current,
+        start: "top top",
+        end: "+=100",
         scrub: 1,
-        invalidateOnRefresh: true,
-      },
-      ease: "power2.inOut",
-      immediateRender: false,
+        onEnter: () => {
+          // Enable normal scrolling after transition
+          document.body.style.overflow = "auto";
+        }
+      }
     });
+
+    exitTl.to(
+      [
+        splitTextOne.words,
+        splitTextTwo.words,
+        splitTextThree.words,
+        splitSubBlog.lines,
+        buttonAnime.current,
+        bottomAnime.current
+      ],
+      {
+        y: -200,
+        opacity: 0,
+        duration: 0.6,
+        ease: "power2.inOut",
+        stagger: 0.03,
+        onComplete: () => {
+          // Dispatch a custom event when exit animation completes
+          window.dispatchEvent(new CustomEvent('landingPageExitComplete'));
+        }
+      }
+    );
+
+    // Disable initial scrolling until transition
+    document.body.style.overflow = "hidden";
   });
 
   return (
-    <div className="w-full relative h-screen px-16 pt-[17vh]">
+    <div ref={containerRef} className="w-full relative h-screen px-16 pt-[17vh]">
       <div ref={textAnimeOneDiv} className="h-fit overflow-hidden ml-4">
         <p ref={textAnimeOne} className="font-bold leading-4">
           MAKE IT YOURS

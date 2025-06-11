@@ -80,15 +80,16 @@ export default function OurProcess() {
         duration: 2,
       });
 
-    // Create main animation timeline that will be controlled by scroll
-    const mainTimeline = gsap.timeline({ paused: true });
+    // Create separate timelines for each step
+    const step1Timeline = gsap.timeline({ paused: true });
+    const step2Timeline = gsap.timeline({ paused: true });
 
-    mainTimeline
-      .addLabel("step1", 0)
-      .to("#text-1", { x: "-50vw", opacity: 0, duration: 1.5 }, "step1")
-      .to("#para-1", { x: "50vw", opacity: 0, duration: 1.5 }, "step1")
-      .to(["#img-1", "#img-3"], { opacity: 0, duration: 1.5 }, "step1")
-      .to("#text-2", { opacity: 1, duration: 1.5 }, "step1")
+    // Step 1: Transition from initial state to step 2
+    step1Timeline
+      .to("#text-1", { x: "-50vw", opacity: 0, duration: 1.5 }, 0)
+      .to("#para-1", { x: "50vw", opacity: 0, duration: 1.5 }, 0)
+      .to(["#img-1", "#img-3"], { opacity: 0, duration: 1.5 }, 0)
+      .to("#text-2", { opacity: 1, duration: 1.5 }, 0)
       .fromTo(
         "#img-2",
         {
@@ -105,7 +106,7 @@ export default function OurProcess() {
           borderColor: "transparent",
           duration: 2,
         },
-        "step1"
+        0
       )
       .to(
         "#img-2 .main-product",
@@ -113,33 +114,35 @@ export default function OurProcess() {
           scale: 1.1,
           duration: 1.5,
         },
-        "step1"
+        0
       )
       .fromTo(
         "#message",
         { y: "50vh", opacity: 0 },
         { y: 0, opacity: 1, duration: 1.5 },
-        "step1"
+        0
       )
-      .to(".tshirt-outline", { opacity: 1, duration: 1.5 }, "step1")
-      .to("#bottom-btn", { opacity: 0, duration: 1 }, "step1")
+      .to(".tshirt-outline", { opacity: 1, duration: 1.5 }, 0)
+      .to("#bottom-btn", { opacity: 0, duration: 1 }, 0)
       .fromTo(
         "#para-2",
         { y: "40vh", opacity: 0 },
         { y: 0, opacity: 1, duration: 1.5 },
-        "step1"
-      )
-      .addLabel("step2", "+=0.2") 
-      .to("#text-2", { x: "-50vw", opacity: 0, duration: 1.5 }, "step2")
-      .to("#para-2", { x: "50vw", opacity: 0, duration: 1.5 }, "step2")
+        0
+      );
+
+    // Step 2: Transition from step 2 to step 3
+    step2Timeline
+      .to("#text-2", { x: "-50vw", opacity: 0, duration: 1.5 }, 0)
+      .to("#para-2", { x: "50vw", opacity: 0, duration: 1.5 }, 0)
       .to(
         "#img-2 .main-product",
         { y: -5, scale: 1, duration: 1.5 },
-        "step2"
+        0
       )
-      .to(".tshirt-outline", { scale: 0, opacity: 0, duration: 1.5 }, "step2")
-      .to("#message", { y: "50vh", opacity: 0, duration: 1.5 }, "step2")
-      .to(".black-tshirt", { opacity: 1, duration: 1.5 }, "step2")
+      .to(".tshirt-outline", { scale: 0, opacity: 0, duration: 1.5 }, 0)
+      .to("#message", { y: "50vh", opacity: 0, duration: 1.5 }, 0)
+      .to(".black-tshirt", { opacity: 1, duration: 1.5 }, 0)
       .from(
         ["#leaves-1", "#leaves-2", "#leaves-3", "#leaves-4"],
         {
@@ -147,32 +150,54 @@ export default function OurProcess() {
           scale: 0,
           duration: 1.5,
         },
-        "step2"
+        0
       )
       .fromTo(
         "#text-3",
         { opacity: 0 },
         { opacity: 1, duration: 1.5 },
-        "step2"
+        0
       );
 
-    // Use ScrollTrigger to trigger the full animation sequence
+    let currentStep = 0; // 0 = initial, 1 = step2, 2 = step3
+
+    // Use ScrollTrigger to control step-by-step progression
     ScrollTrigger.create({
       trigger: processDivRef.current,
       start: "top top",
-      end: "+=100%",
+      end: "+=150%", // Reduced from 200% to 150%
       pin: true,
-      onEnter: () => {
-        // Play the full animation sequence when entering
-        mainTimeline.timeScale(1).play();
-      },
-      onLeaveBack: () => {
-        // Reverse the full animation sequence when scrolling back with much faster speed
-        mainTimeline.timeScale(4).reverse();
-      },
-      onEnterBack: () => {
-        // Reset time scale and play forward when entering back
-        mainTimeline.timeScale(1).play();
+      scrub: 1,
+      onUpdate: (self) => {
+        const progress = self.progress;
+        
+        if (progress < 0.25 && currentStep !== 0) {
+          // Going to step 1 (initial to step 2) - reduced from 0.33 to 0.25
+          if (currentStep === 2) {
+            step2Timeline.reverse();
+          }
+          if (currentStep >= 1) {
+            step1Timeline.reverse();
+          }
+          currentStep = 0;
+        } else if (progress >= 0.25 && progress < 0.66 && currentStep !== 1) {
+          // Going to step 2 - changed from 0.33-0.66 to 0.25-0.66
+          if (currentStep === 0) {
+            step1Timeline.play();
+          } else if (currentStep === 2) {
+            step2Timeline.reverse();
+          }
+          currentStep = 1;
+        } else if (progress >= 0.66 && currentStep !== 2) {
+          // Going to step 3 - changed from 1 to 0.66
+          if (currentStep === 0) {
+            step1Timeline.play();
+            step2Timeline.play();
+          } else if (currentStep === 1) {
+            step2Timeline.play();
+          }
+          currentStep = 2;
+        }
       }
     });
   });

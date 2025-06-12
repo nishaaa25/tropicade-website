@@ -24,9 +24,16 @@ const Landing = () => {
     const subBlogAnime = useRef(null);
     const buttonAnime = useRef(null);
     const tshirtRef = useRef(null);
-    
+
     // New ref for the three images container
     const threeImagesRef = useRef(null);
+    // New ref for additional text above images
+    const additionalTextRef = useRef(null);
+    // New refs for step 2 additional text elements
+    const categoryRef = useRef(null);
+    const productNameRef = useRef(null);
+    const designTagRef = useRef(null);
+    const priceRef = useRef(null);
 
     const data = [
         {
@@ -40,10 +47,11 @@ const Landing = () => {
             "heading": "MOST LIKED DESIGNS",
             "subHeading": "BEST SELLERS",
             "thirdHeading": "",
-            "description": "Bootleg Design #2 - Our most popular streetwear design loved by thousands of customers worldwide.",
+            "description": "",
             "buttonText": "EXPLORE ALL DESIGNS",
             "price": "$1,250",
-            "category": "TSHIRT"
+            "category": "TSHIRT",
+            "additionalText": "Choose from our most popular designs"
         }
     ];
 
@@ -54,10 +62,33 @@ const Landing = () => {
         if (textAnimeTwo.current) splitHeading(textAnimeTwo.current);
         if (textAnimeThree.current) splitHeading(textAnimeThree.current);
         if (subBlogAnime.current) splitHeading(subBlogAnime.current);
-        
-        // Initially hide the three images
+        if (additionalTextRef.current) splitHeading(additionalTextRef.current);
+
+        // Initially hide the three images and additional text
         if (threeImagesRef.current) {
             gsap.set(threeImagesRef.current, { opacity: 0, y: 30 });
+        }
+        if (additionalTextRef.current) {
+            gsap.set(additionalTextRef.current, { opacity: 0, y: 20 });
+        }
+
+        // Initially hide step 2 additional text elements
+        if (categoryRef.current) {
+            gsap.set(categoryRef.current, { opacity: 0, y: 20 });
+        }
+        if (productNameRef.current) {
+            gsap.set(productNameRef.current, { opacity: 0, y: 20 });
+        }
+        if (designTagRef.current) {
+            gsap.set(designTagRef.current, { opacity: 0, y: 20 });
+        }
+        if (priceRef.current) {
+            gsap.set(priceRef.current, { opacity: 0, y: 20 });
+        }
+
+        // Set initial button position
+        if (buttonAnime.current) {
+            gsap.set(buttonAnime.current, { y: crrScroll === 0 ? -96 : 0, padding: crrScroll === 0 ? '8px 16px 8px 16px' : '16px 32px 16px 32px' });
         }
     }, { scope: cardContainerRef.current });
 
@@ -98,9 +129,17 @@ const Landing = () => {
                     ease: 'expo.inOut'
                 });
 
+                // Button animation for scroll up
+                gsap.to(buttonAnime.current, {
+                    y: -96,
+                    padding: '8px 26px 8px 26px',
+                    duration: 4,
+                    ease: 'expo.inOut'
+                });
+
                 floatTl
                     .to('.date span', { yPercent: 100, duration: 0.3 })
-                    .to(['.heading span', '.text-anime span', '.sub-blog span'], {
+                    .to(['.heading span', '.text-anime span', '.sub-blog span', '.additional-text span'], {
                         yPercent: 100,
                         duration: 0.4,
                         opacity: .3,
@@ -125,9 +164,17 @@ const Landing = () => {
                     ease: 'expo.inOut'
                 });
 
+                // Button animation for scroll down
+                gsap.to(buttonAnime.current, {
+                    y: 0,
+                    padding: '16px 32px 16px 32px',
+                    duration: 4,
+                    ease: 'expo.inOut'
+                });
+
                 floatTl
                     .to('.date span', { yPercent: 100, duration: 0.3 })
-                    .to(['.heading span', '.text-anime span', '.sub-blog span'], {
+                    .to(['.heading span', '.text-anime span', '.sub-blog span', '.additional-text span'], {
                         yPercent: -100,
                         duration: 0.4,
                         opacity: .3,
@@ -160,6 +207,7 @@ const Landing = () => {
         if (textAnimeThree.current) textAnimeThree.current.textContent = data[crrScroll].thirdHeading;
         if (subBlogAnime.current) subBlogAnime.current.textContent = data[crrScroll].description;
         if (buttonAnime.current) buttonAnime.current.textContent = data[crrScroll].buttonText;
+        if (additionalTextRef.current) additionalTextRef.current.textContent = '';
 
         splitAllHeadings();
 
@@ -168,7 +216,7 @@ const Landing = () => {
         // When scrolling up, text comes from bottom (positive yPercent)
         const animateDirection = isScrollingUp ? -100 : 100;
 
-        gsap.from(['.heading span', '.text-anime span', '.sub-blog span'], {
+        gsap.from(['.heading span', '.text-anime span', '.sub-blog span', '.additional-text span'], {
             yPercent: animateDirection,
             duration: 0.4,
             opacity: 1,
@@ -176,19 +224,53 @@ const Landing = () => {
             stagger: 0.01
         });
 
-        // Handle three images visibility based on current scroll
-        if (threeImagesRef.current) {
+        // Handle three images and additional text visibility based on current scroll
+        if (threeImagesRef.current && additionalTextRef.current) {
             if (crrScroll === 1) {
-                // Show images in step 2
-                gsap.to(threeImagesRef.current, {
+                // Show step 2 additional text elements with staggered animation
+                const tl = gsap.timeline();
+                
+                tl.to(categoryRef.current, {
+                    opacity: 1,
+                    y: 0,
+                    duration: 0.4,
+                    ease: 'power2.out',
+                    delay: 0.1
+                })
+                .to([productNameRef.current, designTagRef.current], {
+                    opacity: 1,
+                    y: 0,
+                    duration: 0.4,
+                    ease: 'power2.out',
+                    stagger: 0.1
+                }, '-=0.2')
+                .to(priceRef.current, {
+                    opacity: 1,
+                    y: 0,
+                    duration: 0.4,
+                    ease: 'power2.out'
+                }, '-=0.2')
+                .to(additionalTextRef.current, {
+                    opacity: 1,
+                    y: 0,
+                    duration: 0.5,
+                    ease: 'power2.out'
+                }, '-=0.1')
+                .to(threeImagesRef.current, {
                     opacity: 1,
                     y: 0,
                     duration: 0.6,
-                    ease: 'power2.out',
-                    delay: 0.3 // Small delay after text animation
-                });
+                    ease: 'power2.out'
+                }, '-=0.3');
             } else {
-                // Hide images in step 1
+                // Hide step 2 additional text elements and images
+                gsap.to([categoryRef.current, productNameRef.current, designTagRef.current, priceRef.current, additionalTextRef.current], {
+                    opacity: 0,
+                    y: 20,
+                    duration: 0.4,
+                    ease: 'power2.inOut',
+                    stagger: 0.05
+                });
                 gsap.to(threeImagesRef.current, {
                     opacity: 0,
                     y: 30,
@@ -220,6 +302,7 @@ const Landing = () => {
         if (textAnimeTwo.current) splitHeading(textAnimeTwo.current);
         if (textAnimeThree.current) splitHeading(textAnimeThree.current);
         if (subBlogAnime.current) splitHeading(subBlogAnime.current);
+        if (additionalTextRef.current) splitHeading(additionalTextRef.current);
     }
 
     function changeCount(option) {
@@ -273,20 +356,34 @@ const Landing = () => {
                             </h1>
                         </div>
 
-                        <div className="h-fit overflow-hidden font-bebas mb-4">
+                        <div className="h-fit overflow-hidden font-bebas">
                             <h1 ref={textAnimeThree} className="text-anime text-9xl leading-none text-white">
                                 YOUR WAY
                             </h1>
                         </div>
 
-                        <div className="h-fit overflow-hidden my-2 mb-6">
+                        <div className="h-fit overflow-hidden my-2 mb-2">
                             <p ref={subBlogAnime} className="sub-blog font-thin opacity-70 py-2 text-white text-sm max-w-2xl">
                                 Bring your memories, faces, and moments to life — right on your tee. At Tropicade, we blend bold street vibes with personal stories.
                             </p>
                         </div>
 
+                        {/* Additional text above images - Only visible in step 2 */}
+                        <div className="h-fit overflow-hidden mb-3">
+                            <div style={{ display: crrScroll === 1 ? 'block' : 'none' }}>
+                                <p ref={categoryRef} className='font-bebas opacity-50'>T SHIRT</p>
+                                <div className='flex gap-2 items-center'>
+                                    <p ref={productNameRef} className='text-lg'>BOOTLEG</p>
+                                    <p ref={designTagRef} className='px-4 text-xs py-1 bg-[#EAB6511A] text-[#EAB651]'>DESIGN #2</p>
+                                </div>
+                                <p ref={priceRef} className='text-lg font-bebas'>$ 1,250</p>
+                            </div>
+                            <p ref={additionalTextRef} className="additional-text font-medium text-white text-base opacity-0">
+                            </p>
+                        </div>
+
                         {/* Three Images - Only visible in step 2 */}
-                        <div ref={threeImagesRef} className="flex gap-6 mb-8 opacity-0">
+                        <div ref={threeImagesRef} className="flex gap-6 mb-4 opacity-0">
                             <div className="w-24 h-24 relative rounded-full overflow-hidden">
                                 <Image
                                     src="/assets/landingAnimation-1.png" // Replace with your actual image paths
@@ -314,7 +411,7 @@ const Landing = () => {
                         </div>
 
                         <div className="mb-16">
-                            <button ref={buttonAnime} className="bg-[#FF3A65] px-8 py-4 text-white text-lg font-medium hover:bg-[#e6335a] transition-colors">
+                            <button ref={buttonAnime} className="bg-[#FF3A65] text-white text-lg font-medium hover:bg-[#e6335a] transition-colors">
                                 SHOP OUR COLLECTION →
                             </button>
                         </div>

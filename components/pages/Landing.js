@@ -23,14 +23,13 @@ const Landing = () => {
     const textAnimeThree = useRef(null);
     const subBlogAnime = useRef(null);
     const buttonAnime = useRef(null);
+    const tshirtRef = useRef(null);
+    
+    // New ref for the three images container
+    const threeImagesRef = useRef(null);
 
     const data = [
         {
-            "imgs": [
-                "https://images.prismic.io/cusp/43da11bd-03f5-426f-804b-c79112adf8a3_sprout.jpg?auto=compress,format",
-                "https://images.prismic.io/cusp/48913ed9-381d-4479-b04a-5237fe136c15_sprout-l.jpg?auto=compress,format",
-                "https://images.prismic.io/cusp/8dbf3f4c-f6ac-4072-9b4e-b4297a29c711_sprout-r.jpg?auto=compress,format"
-            ],
             "heading": "MAKE IT YOURS",
             "subHeading": "CUSTOM STREETWEAR.",
             "thirdHeading": "YOUR WAY",
@@ -38,30 +37,13 @@ const Landing = () => {
             "buttonText": "SHOP OUR COLLECTION"
         },
         {
-            "imgs": [
-                "https://images.prismic.io/cusp/ca9636a5-0dec-45e7-ad5a-d32bb15ac63f_factory_preview_main.jpg?auto=compress,format",
-                "https://images.prismic.io/cusp/1b58ec60-cc78-443c-9ea0-3b6622d20b60_factory_preview_2.jpg?auto=compress,format",
-                "https://images.prismic.io/cusp/b34eee83-cf04-49b5-a714-a044af9aea20_factory_preview_1.jpg?auto=compress,format"
-            ],
-            "heading": "BEST SELLERS",
-            "subHeading": "MOST LIKED",
-            "thirdHeading": "DESIGNS",
+            "heading": "MOST LIKED DESIGNS",
+            "subHeading": "BEST SELLERS",
+            "thirdHeading": "",
             "description": "Bootleg Design #2 - Our most popular streetwear design loved by thousands of customers worldwide.",
             "buttonText": "EXPLORE ALL DESIGNS",
             "price": "$1,250",
             "category": "TSHIRT"
-        },
-        {
-            "imgs": [
-                "https://images.prismic.io/cusp/6a352978-a03a-4a25-98ab-50f46a0f50a7_iStock-915736424-min.jpg?auto=compress,format",
-                "https://images.prismic.io/cusp/599686f4-7005-457d-8241-be3488929964_light_0024-min.jpg?auto=compress,format",
-                "https://images.prismic.io/cusp/a465858d-8638-41ed-b9e3-2f6dbbc984a5_iStock-1015958068-min.jpg?auto=compress,format"
-            ],
-            "heading": "PREMIUM QUALITY",
-            "subHeading": "HANDCRAFTED",
-            "thirdHeading": "STREETWEAR",
-            "description": "Experience the perfect blend of comfort and style with our premium quality materials and expert craftsmanship.",
-            "buttonText": "VIEW COLLECTION"
         }
     ];
 
@@ -72,6 +54,11 @@ const Landing = () => {
         if (textAnimeTwo.current) splitHeading(textAnimeTwo.current);
         if (textAnimeThree.current) splitHeading(textAnimeThree.current);
         if (subBlogAnime.current) splitHeading(subBlogAnime.current);
+        
+        // Initially hide the three images
+        if (threeImagesRef.current) {
+            gsap.set(threeImagesRef.current, { opacity: 0, y: 30 });
+        }
     }, { scope: cardContainerRef.current });
 
     // For ScrollAnimation
@@ -80,18 +67,39 @@ const Landing = () => {
         const handleWheel = (d) => {
             if (isAnimating) return;
 
+            const { wheelDelta: wD } = d;
+
+            // If we're at the last section and scrolling down, allow normal scroll
+            if (crrScroll === data.length - 1 && wD < 0) {
+                return; // Let the browser handle normal scrolling
+            }
+
+            // If we're at the first section and scrolling up, prevent scroll
+            if (crrScroll === 0 && wD > 0) {
+                d.preventDefault();
+                return;
+            }
+
+            d.preventDefault();
             setIsAnimating(true);
             const floatTl = gsap.timeline({
                 onComplete: () => setIsAnimating(false),
             });
-            const { wheelDelta: wD } = d;
 
             if (wD > 0) {
+                // Scrolling up - text should come from bottom to top
                 splitAllHeadings();
                 changeCount('-');
 
+                // T-shirt animation for scroll up - return to original position
+                gsap.to(tshirtRef.current, {
+                    y: 0,
+                    duration: 4,
+                    ease: 'expo.inOut'
+                });
+
                 floatTl
-                    .to('.date span', { yPercent: -100, duration: 0.3 })
+                    .to('.date span', { yPercent: 100, duration: 0.3 })
                     .to(['.heading span', '.text-anime span', '.sub-blog span'], {
                         yPercent: 100,
                         duration: 0.4,
@@ -100,17 +108,25 @@ const Landing = () => {
                         stagger: 0.01,
                         onComplete: () => setMonitor(Math.random())
                     }, '<')
-                    .set('.date span', { yPercent: 100 })
+                    .set('.date span', { yPercent: -100 })
                     .to('.date span', {
                         yPercent: 0,
                         duration: 0.3
                     }, '<+0.05')
             } else {
+                // Scrolling down - text should come from top to bottom
                 splitAllHeadings();
                 changeCount('+');
 
+                // T-shirt animation for scroll down - lift up slightly
+                gsap.to(tshirtRef.current, {
+                    y: -70,
+                    duration: 4,
+                    ease: 'expo.inOut'
+                });
+
                 floatTl
-                    .to('.date span', { yPercent: -100, duration: 0.3 })
+                    .to('.date span', { yPercent: 100, duration: 0.3 })
                     .to(['.heading span', '.text-anime span', '.sub-blog span'], {
                         yPercent: -100,
                         duration: 0.4,
@@ -119,7 +135,7 @@ const Landing = () => {
                         stagger: 0.01,
                         onComplete: () => setMonitor(Math.random())
                     }, '<')
-                    .set('.date span', { yPercent: 100 })
+                    .set('.date span', { yPercent: -100 })
                     .to('.date span', {
                         yPercent: 0,
                         duration: 0.3
@@ -129,7 +145,7 @@ const Landing = () => {
 
         window.addEventListener('wheel', handleWheel);
         return () => window.removeEventListener('wheel', handleWheel);
-    }, [isAnimating, crrScroll, isIntroCompleted]);
+    }, [isAnimating, crrScroll, isIntroCompleted, data.length]);
 
     // To Change Data
     useEffect(() => {
@@ -147,10 +163,10 @@ const Landing = () => {
 
         splitAllHeadings();
 
-        const hoi = prevCrrScroll > crrScroll;
-        const animateDirection = (prevCrrScroll === 2 && crrScroll === 0) || (prevCrrScroll === 0 && crrScroll === 2)
-            ? (!hoi ? -100 : 100)
-            : (hoi ? -100 : 100);
+        const isScrollingUp = prevCrrScroll > crrScroll;
+        // When scrolling down, text comes from top (negative yPercent)
+        // When scrolling up, text comes from bottom (positive yPercent)
+        const animateDirection = isScrollingUp ? -100 : 100;
 
         gsap.from(['.heading span', '.text-anime span', '.sub-blog span'], {
             yPercent: animateDirection,
@@ -159,6 +175,28 @@ const Landing = () => {
             ease: 'power2.out',
             stagger: 0.01
         });
+
+        // Handle three images visibility based on current scroll
+        if (threeImagesRef.current) {
+            if (crrScroll === 1) {
+                // Show images in step 2
+                gsap.to(threeImagesRef.current, {
+                    opacity: 1,
+                    y: 0,
+                    duration: 0.6,
+                    ease: 'power2.out',
+                    delay: 0.3 // Small delay after text animation
+                });
+            } else {
+                // Hide images in step 1
+                gsap.to(threeImagesRef.current, {
+                    opacity: 0,
+                    y: 30,
+                    duration: 0.4,
+                    ease: 'power2.inOut'
+                });
+            }
+        }
 
         subHeadingRef.current.textContent = data[crrScroll].subHeading;
         setPrevCrrScroll(crrScroll);
@@ -185,7 +223,13 @@ const Landing = () => {
     }
 
     function changeCount(option) {
-        setCrrScroll(prev => (option === '+' ? (prev < 2 ? ++prev : 0) : (prev > 0 ? --prev : 2)));
+        setCrrScroll(prev => {
+            if (option === '+') {
+                return prev < data.length - 1 ? prev + 1 : prev;
+            } else {
+                return prev > 0 ? prev - 1 : prev;
+            }
+        });
     }
 
     return (
@@ -202,44 +246,81 @@ const Landing = () => {
                     <h1 ref={headings} className='heading whitespace-nowrap leading-none overflow-hidden text-[22vw] uppercase font-thin text-[#f33a3a] flex font-bebas'>MAKE IT YOURS</h1>
                 </div>
 
+                {/* T-shirt Image - Absolute positioned */}
+                <div className="absolute right-12 top-[20%] transform z-10">
+                    <div ref={tshirtRef} className="w-[50vw] h-[50vw] relative">
+                        <Image
+                            src="/assets/T-Shirt.png"
+                            alt="T-Shirt"
+                            fill
+                            className="object-contain"
+                        />
+                    </div>
+                </div>
+
                 {/* Main Content - Left Aligned */}
-                <div className="flex items-center justify-start w-full h-full px-12">
+                <div className="flex items-center justify-start w-full h-full px-12 pt-20">
                     <div className="text-left w-full">
-                        <div className="h-fit overflow-hidden mb-6">
-                            <p ref={textAnimeOne} className="text-anime font-bold text-lg text-white">
+                        <div className="h-fit overflow-hidden">
+                            <p ref={textAnimeOne} className="text-anime font-bold text-sm text-white">
                                 MAKE IT YOURS
                             </p>
                         </div>
 
-                        <div className="h-fit overflow-hidden font-bebas mb-4">
-                            <h1 ref={textAnimeTwo} className="text-anime text-[8vw] leading-none text-white">
+                        <div className="h-fit overflow-hidden font-bebas">
+                            <h1 ref={textAnimeTwo} className="text-anime text-9xl leading-none text-white">
                                 CUSTOM STREETWEAR.
                             </h1>
                         </div>
 
-                        <div className="h-fit overflow-hidden font-bebas mb-8">
-                            <h1 ref={textAnimeThree} className="text-anime text-[8vw] leading-none text-white">
+                        <div className="h-fit overflow-hidden font-bebas mb-4">
+                            <h1 ref={textAnimeThree} className="text-anime text-9xl leading-none text-white">
                                 YOUR WAY
                             </h1>
                         </div>
 
-                        <div className="h-fit overflow-hidden my-2 mb-10">
-                            <p ref={subBlogAnime} className="sub-blog font-thin opacity-70 py-2 text-white text-lg max-w-2xl">
+                        <div className="h-fit overflow-hidden my-2 mb-6">
+                            <p ref={subBlogAnime} className="sub-blog font-thin opacity-70 py-2 text-white text-sm max-w-2xl">
                                 Bring your memories, faces, and moments to life — right on your tee. At Tropicade, we blend bold street vibes with personal stories.
                             </p>
                         </div>
 
-                        <div className="mb-12">
+                        {/* Three Images - Only visible in step 2 */}
+                        <div ref={threeImagesRef} className="flex gap-6 mb-8 opacity-0">
+                            <div className="w-24 h-24 relative rounded-full overflow-hidden">
+                                <Image
+                                    src="/assets/landingAnimation-1.png" // Replace with your actual image paths
+                                    alt="Design 1"
+                                    fill
+                                    className="object-cover"
+                                />
+                            </div>
+                            <div className="w-24 h-24 relative rounded-full overflow-hidden">
+                                <Image
+                                    src="/assets/landingAnimation-2.png" // Replace with your actual image paths
+                                    alt="Design 2"
+                                    fill
+                                    className="object-cover"
+                                />
+                            </div>
+                            <div className="w-24 h-24 relative rounded-full overflow-hidden">
+                                <Image
+                                    src="/assets/landingAnimation-3.png" // Replace with your actual image paths
+                                    alt="Design 3"
+                                    fill
+                                    className="object-cover"
+                                />
+                            </div>
+                        </div>
+
+                        <div className="mb-16">
                             <button ref={buttonAnime} className="bg-[#FF3A65] px-8 py-4 text-white text-lg font-medium hover:bg-[#e6335a] transition-colors">
                                 SHOP OUR COLLECTION →
                             </button>
                         </div>
 
                         {/* Process Steps */}
-                        <div
-
-                            className=" py-4 flex items-center justify-evenly w-full backdrop-blur-[28px] absolute bottom-0 left-0 z-60"
-                        >
+                        <div className="py-4 flex items-center justify-evenly w-full backdrop-blur-[28px] absolute bottom-0 left-0 z-60">
                             <h1 className="text-sm max-w-30 font-[300]">Pick your tee & design</h1>
                             <div className="w-41 h-8 relative">
                                 <Image

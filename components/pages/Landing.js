@@ -9,7 +9,7 @@ const Landing = () => {
     const [crrScroll, setCrrScroll] = useState(0);
     const [prevCrrScroll, setPrevCrrScroll] = useState(crrScroll);
     const [monitor, setMonitor] = useState(0);
-    const [isIntroCompleted, setIsIntroCompleted] = useState(true);
+    const [isIntroCompleted, setIsIntroCompleted] = useState(false); // Changed to false to enable intro animation
 
     // Refs for Landing Page content
     const headings = useRef(null);
@@ -54,12 +54,11 @@ const Landing = () => {
             "description": "",
             "buttonText": "EXPLORE ALL DESIGNS",
             "price": "$1,250",
-            "category": "TSHIRT",
-            "additionalText": "Choose from our most popular designs"
+            "category": "TSHIRT"
         }
     ];
 
-    // Initialize heading split
+    // Initialize heading split and intro animation
     useGSAP(() => {
         splitHeading(headings.current);
         if (textAnimeOne.current) splitHeading(textAnimeOne.current);
@@ -94,6 +93,54 @@ const Landing = () => {
         if (buttonAnimeTwo.current) {
             gsap.set(buttonAnimeTwo.current, { opacity: 0, y: 20 });
         }
+
+        // Set initial position for process steps
+        if (processStepsRef.current) {
+            gsap.set(processStepsRef.current, { y: 0, opacity: 1 });
+        }
+
+        // Initial animation on page load
+        const introTl = gsap.timeline({
+            onComplete: () => {
+                setIsIntroCompleted(true);
+            }
+        });
+
+        // Set initial positions for intro animation
+        gsap.set(['.text-anime span', '.sub-blog span'], { yPercent: 100, opacity: 0 });
+        gsap.set(buttonAnime.current, { opacity: 0, y: 30 });
+        gsap.set(tshirtRef.current, { y: 100, opacity: 0 }); // Set initial position for t-shirt
+
+        // Animate text from bottom to top - Made smoother with better easing
+        introTl
+            .to('.text-anime span', {
+                yPercent: 0,
+                opacity: 1,
+                duration: 0.3,
+                ease: 'power3.out', // Changed to power3 for smoother easing
+                stagger: 0.005
+            })
+            .to('.sub-blog span', {
+                yPercent: 0,
+                opacity: 1,
+                duration: 0.25,
+                ease: 'power3.out', // Changed to power3 for smoother easing
+                stagger: 0.003
+            }, '-=0.2')
+            .to(buttonAnime.current, {
+                opacity: 1,
+                y: 0,
+                duration: 0.25,
+                ease: 'power3.out' // Changed to power3 for smoother easing
+            }, '-=0.15')
+            // Animate t-shirt from bottom to top - Made smoother
+            .to(tshirtRef.current, {
+                y: 0,
+                opacity: 1,
+                duration: 0.5,
+                ease: 'power3.out' // Changed to power3 for smoother easing
+            }, '-=0.4');
+
     }, { scope: cardContainerRef.current });
 
     // For ScrollAnimation
@@ -142,75 +189,89 @@ const Landing = () => {
 
                             if (isScrollingDown) {
                                 // Scrolling down - moving to step 2
-                                splitAllHeadings();
                                 setCrrScroll(1);
 
-                                // T-shirt animation for scroll down - lift up slightly
+                                // T-shirt animation for scroll down - lift up slightly - Made smoother
                                 gsap.to(tshirtRef.current, {
                                     y: -70,
-                                    duration: 1.2,
-                                    ease: 'power2.inOut'
+                                    duration: 0.5,
+                                    ease: 'power3.inOut' // Changed to power3 for smoother easing
+                                });
+
+                                // Process steps animation - move down faster and fade out - Made smoother
+                                gsap.to(processStepsRef.current, {
+                                    y: 100,
+                                    opacity: 0,
+                                    duration: 0.4,
+                                    ease: 'power3.inOut' // Changed to power3 for smoother easing
                                 });
 
                                 floatTl
                                     .to('.date span', { 
                                         yPercent: 100, 
-                                        duration: 0.6,
-                                        ease: 'power2.inOut'
+                                        duration: 0.25,
+                                        ease: 'power3.inOut' // Changed to power3 for smoother easing
                                     })
                                     .to(['.heading span', '.text-anime span', '.sub-blog span', '.additional-text span'], {
                                         yPercent: -100,
-                                        duration: 0.8,
+                                        duration: 0.3,
                                         opacity: 0.3,
-                                        ease: 'power2.inOut',
-                                        stagger: 0.02,
+                                        ease: 'power3.inOut', // Changed to power3 for smoother easing
+                                        stagger: 0.005,
                                         onComplete: () => setMonitor(Math.random())
                                     }, '<')
                                     .set('.date span', { yPercent: -100 })
                                     .to('.date span', {
                                         yPercent: 0,
-                                        duration: 0.6,
-                                        ease: 'power2.out'
-                                    }, '<+0.1');
+                                        duration: 0.25,
+                                        ease: 'power3.out' // Changed to power3 for smoother easing
+                                    }, '<+0.03');
                             } else {
                                 // Scrolling up - moving to step 1
-                                splitAllHeadings();
                                 setCrrScroll(0);
 
-                                // T-shirt animation for scroll up - return to original position
+                                // T-shirt animation for scroll up - return to original position - Made smoother
                                 gsap.to(tshirtRef.current, {
                                     y: 0,
-                                    duration: 1.2,
-                                    ease: 'power2.inOut'
+                                    duration: 0.5,
+                                    ease: 'power3.inOut' // Changed to power3 for smoother easing
+                                });
+
+                                // Process steps animation - return to initial position - Made smoother
+                                gsap.to(processStepsRef.current, {
+                                    y: 0,
+                                    opacity: 1,
+                                    duration: 0.4,
+                                    ease: 'power3.inOut' // Changed to power3 for smoother easing
                                 });
 
                                 gsap.to(buttonAnimeTwo.current, {
                                     opacity: 0,
                                     y: 20,
-                                    duration: 0.6,
-                                    ease: 'power2.inOut'
+                                    duration: 0.25,
+                                    ease: 'power3.inOut' // Changed to power3 for smoother easing
                                 });
 
                                 floatTl
                                     .to('.date span', { 
                                         yPercent: 100, 
-                                        duration: 0.6,
-                                        ease: 'power2.inOut'
+                                        duration: 0.25,
+                                        ease: 'power3.inOut' // Changed to power3 for smoother easing
                                     })
                                     .to(['.heading span', '.text-anime span', '.sub-blog span', '.additional-text span'], {
                                         yPercent: 100,
-                                        duration: 0.8,
+                                        duration: 0.3,
                                         opacity: 0.3,
-                                        ease: 'power2.inOut',
-                                        stagger: 0.02,
+                                        ease: 'power3.inOut', // Changed to power3 for smoother easing
+                                        stagger: 0.005,
                                         onComplete: () => setMonitor(Math.random())
                                     }, '<')
                                     .set('.date span', { yPercent: -100 })
                                     .to('.date span', {
                                         yPercent: 0,
-                                        duration: 0.6,
-                                        ease: 'power2.out'
-                                    }, '<+0.1');
+                                        duration: 0.25,
+                                        ease: 'power3.out' // Changed to power3 for smoother easing
+                                    }, '<+0.03');
                             }
                         }
                     }
@@ -226,7 +287,8 @@ const Landing = () => {
 
     // To Change Data
     useEffect(() => {
-        if (!isIntroCompleted) return;
+        // Skip the first render when intro is not completed to prevent double animation
+        if (!isIntroCompleted || monitor === 0) return;
 
         // Update main heading
         headings.current.textContent = data[crrScroll].heading;
@@ -240,62 +302,84 @@ const Landing = () => {
 
         splitAllHeadings();
 
+        // Animate text for all step changes (including back to step 1) - Made smoother
         const isScrollingUp = prevCrrScroll > crrScroll;
         // When scrolling down, text comes from top (negative yPercent)
         // When scrolling up, text comes from bottom (positive yPercent)
         const animateDirection = isScrollingUp ? -100 : 100;
 
-        gsap.from(['.heading span', '.text-anime span', '.sub-blog span', '.additional-text span'], {
-            yPercent: animateDirection,
-            duration: 0.8,
-            opacity: 1,
-            ease: 'power2.out',
-            stagger: 0.02
-        });
+        // Kill any existing animations on these elements to prevent conflicts
+        gsap.killTweensOf(['.heading span', '.text-anime span', '.sub-blog span', '.additional-text span']);
+
+        gsap.fromTo(['.heading span', '.text-anime span', '.sub-blog span', '.additional-text span'], 
+            {
+                yPercent: animateDirection,
+                opacity: 0
+            },
+            {
+                yPercent: 0,
+                duration: 0.3,
+                opacity: 1,
+                ease: 'power3.out', // Changed to power3 for smoother easing
+                stagger: 0.005
+            }
+        );
 
         // Handle three images and additional text visibility based on current scroll
         if (threeImagesRef.current && additionalTextRef.current) {
-            if (crrScroll === 1) {
-                // Show step 2 additional text elements with staggered animation
-                const tl = gsap.timeline({ delay: 0.3 }); // Reduced delay for smoother transition
+            // Kill any existing animations to prevent conflicts
+            gsap.killTweensOf([categoryRef.current, productNameRef.current, designTagRef.current, priceRef.current, additionalTextRef.current, threeImagesRef.current, buttonAnimeTwo.current]);
 
-                tl.to(categoryRef.current, {
-                    opacity: 1,
-                    y: 0,
-                    duration: 0.6,
-                    ease: 'power2.out'
-                })
-                    .to([productNameRef.current, designTagRef.current], {
+            if (crrScroll === 1) {
+                // Show step 2 additional text elements with staggered animation - Made smoother
+                const tl = gsap.timeline({ delay: 0.15 });
+
+                tl.fromTo(categoryRef.current, 
+                    { opacity: 0, y: 20 },
+                    {
                         opacity: 1,
                         y: 0,
-                        duration: 0.6,
-                        ease: 'power2.out',
-                        stagger: 0.1
-                    }, '-=0.3')
-                    .to(priceRef.current, {
+                        duration: 0.25,
+                        ease: 'power3.out' // Changed to power3 for smoother easing
+                    }
+                )
+                .fromTo([productNameRef.current, designTagRef.current], 
+                    { opacity: 0, y: 20 },
+                    {
                         opacity: 1,
                         y: 0,
-                        duration: 0.6,
-                        ease: 'power2.out'
-                    }, '-=0.3')
-                    .to(additionalTextRef.current, {
+                        duration: 0.25,
+                        ease: 'power3.out', // Changed to power3 for smoother easing
+                        stagger: 0.03
+                    }, '-=0.15'
+                )
+                .fromTo(priceRef.current, 
+                    { opacity: 0, y: 20 },
+                    {
                         opacity: 1,
                         y: 0,
-                        duration: 0.7,
-                        ease: 'power2.out'
-                    }, '-=0.2')
-                    .to(threeImagesRef.current, {
+                        duration: 0.25,
+                        ease: 'power3.out' // Changed to power3 for smoother easing
+                    }, '-=0.15'
+                )
+                .fromTo(threeImagesRef.current, 
+                    { opacity: 0, y: 30 },
+                    {
                         opacity: 1,
                         y: 0,
-                        duration: 0.8,
-                        ease: 'power2.out'
-                    }, '-=0.4')
-                    .to(buttonAnimeTwo.current, {
+                        duration: 0.3,
+                        ease: 'power3.out' // Changed to power3 for smoother easing
+                    }, '-=0.2'
+                )
+                .fromTo(buttonAnimeTwo.current, 
+                    { opacity: 0, y: 20 },
+                    {
                         opacity: 1,
                         y: 0,
-                        duration: 0.6,
-                        ease: 'power2.out'
-                    }, '-=0.3');
+                        duration: 0.25,
+                        ease: 'power3.out' // Changed to power3 for smoother easing
+                    }, '-=0.15'
+                );
             } else {
                 // Hide step 2 additional text elements and images with smoother animation
                 const hideTl = gsap.timeline();
@@ -303,21 +387,21 @@ const Landing = () => {
                 hideTl.to([categoryRef.current, productNameRef.current, designTagRef.current, priceRef.current, additionalTextRef.current], {
                     opacity: 0,
                     y: 20,
-                    duration: 0.5,
-                    ease: 'power2.inOut',
-                    stagger: 0.03
+                    duration: 0.2,
+                    ease: 'power3.inOut', // Changed to power3 for smoother easing
+                    stagger: 0.005
                 })
                 .to(threeImagesRef.current, {
                     opacity: 0,
                     y: 30,
-                    duration: 0.5,
-                    ease: 'power2.inOut'
+                    duration: 0.2,
+                    ease: 'power3.inOut' // Changed to power3 for smoother easing
                 }, '<')
                 .to(buttonAnimeTwo.current, {
                     opacity: 0,
                     y: 20,
-                    duration: 0.5,
-                    ease: 'power2.inOut'
+                    duration: 0.2,
+                    ease: 'power3.inOut' // Changed to power3 for smoother easing
                 }, '<');
             }
         }
@@ -391,7 +475,7 @@ const Landing = () => {
                         </div>
 
                         {/* Main Content - Left Aligned */}
-                        <div className="flex items-center justify-start w-full h-full px-12 pt-20">
+                        <div className="flex items-center justify-start w-full h-full px-12">
                             <div className="text-left w-full">
                                 <div className="h-fit overflow-hidden">
                                     <p ref={textAnimeOne} className="text-anime font-bold text-sm text-white" style={{ willChange: 'transform' }}>
@@ -494,7 +578,7 @@ const Landing = () => {
                         </div>
 
                         {/* Process Steps - Changed from sticky to absolute positioning */}
-                        <div ref={processStepsRef} className="absolute bottom-0 left-0 w-full py-4 flex items-center justify-evenly backdrop-blur-[28px] z-60">
+                        <div ref={processStepsRef} className="absolute bottom-0 left-0 w-full py-4 flex items-center justify-evenly backdrop-blur-[28px] z-60" style={{ willChange: 'transform' }}>
                             <h1 className="text-sm max-w-30 font-[300]">Pick your tee & design</h1>
                             <div className="w-41 h-8 relative">
                                 <Image

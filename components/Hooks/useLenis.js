@@ -6,9 +6,8 @@ import Lenis from '@studio-freight/lenis';
 export const useLenis = () => {
   useEffect(() => {
     const lenis = new Lenis({
-      lerp: 0.1,         // smoothness
-      duration: 1.2,     // scroll duration
-      smooth: true,
+      lerp: .1,         // smoothness
+      duration: 10,
     });
 
     const raf = (time) => {

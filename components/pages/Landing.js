@@ -18,6 +18,9 @@ const Landing = () => {
     const cardContainerRef = useRef(null);
     const loaderCounterRef = useRef(null);
     const wrapperRef = useRef(null);
+    const customCursor = useRef(null);
+    const cursorCircle = useRef(null);
+    const [cursorText, setCursorText] = useState('');
 
     // Refs for LandingPage content
     const textAnimeOne = useRef(null);
@@ -57,6 +60,63 @@ const Landing = () => {
             "category": "TSHIRT"
         }
     ];
+
+
+    useEffect(() => {
+        const moveCursor = (e) => {
+            const x = e.clientX - customCursor.current.clientWidth / 2;
+            const y = e.clientY - customCursor.current.clientHeight / 2;
+            gsap.to(customCursor.current, {
+                x,
+                y,
+                duration: 1.5,
+                ease: "expo.out",
+            });
+        };
+
+        const handleMouseEnter = (e) => {
+            const hoverText = e.target.getAttribute('data-cursor-text');
+            if (hoverText) {
+                setCursorText(hoverText);
+                gsap.to(customCursor.current, {
+                    width: "100px",
+                    height: "100px",
+                    duration: 0.3,
+                    ease: "power2.out"
+                });
+            }
+        };
+
+        const handleMouseLeave = (e) => {
+            const hoverText = e.target.getAttribute('data-cursor-text');
+            if (hoverText) {
+                setCursorText("");
+                gsap.to(customCursor.current, {
+                    width: "24px",
+                    height: "24px",
+                    duration: 0.3,
+                    ease: "power2.out"
+                });
+            }
+        };
+
+        window.addEventListener("mousemove", moveCursor);
+
+        const hoverElements = document.querySelectorAll('[data-cursor-text]');
+        hoverElements.forEach(element => {
+            element.addEventListener('mouseenter', handleMouseEnter);
+            element.addEventListener('mouseleave', handleMouseLeave);
+        });
+
+        return () => {
+            window.removeEventListener("mousemove", moveCursor);
+            hoverElements.forEach(element => {
+                element.removeEventListener('mouseenter', handleMouseEnter);
+                element.removeEventListener('mouseleave', handleMouseLeave);
+            });
+        };
+    }, []);
+
 
     // Initialize heading split and intro animation
     useGSAP(() => {
@@ -155,7 +215,7 @@ const Landing = () => {
                     const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
                     const viewportHeight = window.innerHeight;
                     const stickyThreshold = viewportHeight * 2; // 200vh
-                    
+
                     // Handle sticky positioning - Use sticky instead of fixed/absolute
                     if (cardContainerRef.current) {
                         gsap.set(cardContainerRef.current, {
@@ -167,20 +227,20 @@ const Landing = () => {
                             zIndex: 10
                         });
                     }
-                    
+
                     // Only handle scroll within the sticky section
                     if (scrollTop >= 0 && scrollTop < stickyThreshold) {
                         // Adjusted scroll thresholds - animation starts earlier
                         const scrollProgress = scrollTop / viewportHeight; // 0 to 2
                         // Animation starts at 0.3vh (30% of viewport) instead of 1vh
                         const targetStep = scrollProgress >= 0.3 ? 1 : 0;
-                        
+
                         // Only trigger animation if we're changing steps and not already animating
                         if (targetStep !== crrScroll && !isAnimating) {
                             setIsAnimating(true);
-                            
+
                             const isScrollingDown = targetStep > crrScroll;
-                            
+
                             const floatTl = gsap.timeline({
                                 onComplete: () => {
                                     setIsAnimating(false);
@@ -207,8 +267,8 @@ const Landing = () => {
                                 });
 
                                 floatTl
-                                    .to('.date span', { 
-                                        yPercent: 100, 
+                                    .to('.date span', {
+                                        yPercent: 100,
                                         duration: 0.25,
                                         ease: 'power3.inOut' // Changed to power3 for smoother easing
                                     })
@@ -253,8 +313,8 @@ const Landing = () => {
                                 });
 
                                 floatTl
-                                    .to('.date span', { 
-                                        yPercent: 100, 
+                                    .to('.date span', {
+                                        yPercent: 100,
                                         duration: 0.25,
                                         ease: 'power3.inOut' // Changed to power3 for smoother easing
                                     })
@@ -311,7 +371,7 @@ const Landing = () => {
         // Kill any existing animations on these elements to prevent conflicts
         gsap.killTweensOf(['.heading span', '.text-anime span', '.sub-blog span', '.additional-text span']);
 
-        gsap.fromTo(['.heading span', '.text-anime span', '.sub-blog span', '.additional-text span'], 
+        gsap.fromTo(['.heading span', '.text-anime span', '.sub-blog span', '.additional-text span'],
             {
                 yPercent: animateDirection,
                 opacity: 0
@@ -334,7 +394,7 @@ const Landing = () => {
                 // Show step 2 additional text elements with staggered animation - Made smoother
                 const tl = gsap.timeline({ delay: 0.15 });
 
-                tl.fromTo(categoryRef.current, 
+                tl.fromTo(categoryRef.current,
                     { opacity: 0, y: 20 },
                     {
                         opacity: 1,
@@ -343,47 +403,47 @@ const Landing = () => {
                         ease: 'power3.out' // Changed to power3 for smoother easing
                     }
                 )
-                .fromTo([productNameRef.current, designTagRef.current], 
-                    { opacity: 0, y: 20 },
-                    {
-                        opacity: 1,
-                        y: 0,
-                        duration: 0.25,
-                        ease: 'power3.out', // Changed to power3 for smoother easing
-                        stagger: 0.03
-                    }, '-=0.15'
-                )
-                .fromTo(priceRef.current, 
-                    { opacity: 0, y: 20 },
-                    {
-                        opacity: 1,
-                        y: 0,
-                        duration: 0.25,
-                        ease: 'power3.out' // Changed to power3 for smoother easing
-                    }, '-=0.15'
-                )
-                .fromTo(threeImagesRef.current, 
-                    { opacity: 0, y: 30 },
-                    {
-                        opacity: 1,
-                        y: 0,
-                        duration: 0.3,
-                        ease: 'power3.out' // Changed to power3 for smoother easing
-                    }, '-=0.2'
-                )
-                .fromTo(buttonAnimeTwo.current, 
-                    { opacity: 0, y: 20 },
-                    {
-                        opacity: 1,
-                        y: 0,
-                        duration: 0.25,
-                        ease: 'power3.out' // Changed to power3 for smoother easing
-                    }, '-=0.15'
-                );
+                    .fromTo([productNameRef.current, designTagRef.current],
+                        { opacity: 0, y: 20 },
+                        {
+                            opacity: 1,
+                            y: 0,
+                            duration: 0.25,
+                            ease: 'power3.out', // Changed to power3 for smoother easing
+                            stagger: 0.03
+                        }, '-=0.15'
+                    )
+                    .fromTo(priceRef.current,
+                        { opacity: 0, y: 20 },
+                        {
+                            opacity: 1,
+                            y: 0,
+                            duration: 0.25,
+                            ease: 'power3.out' // Changed to power3 for smoother easing
+                        }, '-=0.15'
+                    )
+                    .fromTo(threeImagesRef.current,
+                        { opacity: 0, y: 30 },
+                        {
+                            opacity: 1,
+                            y: 0,
+                            duration: 0.3,
+                            ease: 'power3.out' // Changed to power3 for smoother easing
+                        }, '-=0.2'
+                    )
+                    .fromTo(buttonAnimeTwo.current,
+                        { opacity: 0, y: 20 },
+                        {
+                            opacity: 1,
+                            y: 0,
+                            duration: 0.25,
+                            ease: 'power3.out' // Changed to power3 for smoother easing
+                        }, '-=0.15'
+                    );
             } else {
                 // Hide step 2 additional text elements and images with smoother animation
                 const hideTl = gsap.timeline();
-                
+
                 hideTl.to([categoryRef.current, productNameRef.current, designTagRef.current, priceRef.current, additionalTextRef.current], {
                     opacity: 0,
                     y: 20,
@@ -391,18 +451,18 @@ const Landing = () => {
                     ease: 'power3.inOut', // Changed to power3 for smoother easing
                     stagger: 0.005
                 })
-                .to(threeImagesRef.current, {
-                    opacity: 0,
-                    y: 30,
-                    duration: 0.2,
-                    ease: 'power3.inOut' // Changed to power3 for smoother easing
-                }, '<')
-                .to(buttonAnimeTwo.current, {
-                    opacity: 0,
-                    y: 20,
-                    duration: 0.2,
-                    ease: 'power3.inOut' // Changed to power3 for smoother easing
-                }, '<');
+                    .to(threeImagesRef.current, {
+                        opacity: 0,
+                        y: 30,
+                        duration: 0.2,
+                        ease: 'power3.inOut' // Changed to power3 for smoother easing
+                    }, '<')
+                    .to(buttonAnimeTwo.current, {
+                        opacity: 0,
+                        y: 20,
+                        duration: 0.2,
+                        ease: 'power3.inOut' // Changed to power3 for smoother easing
+                    }, '<');
             }
         }
 
@@ -416,8 +476,8 @@ const Landing = () => {
         element.textContent = '';
         chars.forEach((char) => {
             const span = document.createElement('span');
-            gsap.set(span, { 
-                display: 'inline-block', 
+            gsap.set(span, {
+                display: 'inline-block',
                 pointerEvents: 'none',
                 willChange: 'transform'
             });
@@ -521,7 +581,7 @@ const Landing = () => {
                                 <div
                                     ref={threeImagesRef}
                                     className="flex gap-6 mb-4"
-                                    style={{ 
+                                    style={{
                                         display: crrScroll === 1 ? 'flex' : 'none',
                                         willChange: 'transform'
                                     }}
@@ -566,7 +626,7 @@ const Landing = () => {
                                     <button
                                         ref={buttonAnimeTwo}
                                         className="bg-[#FF3A65] text-white text-lg font-medium hover:bg-[#e6335a] transition-colors px-8 py-4"
-                                        style={{ 
+                                        style={{
                                             display: crrScroll === 1 ? 'inline-block' : 'none',
                                             willChange: 'transform'
                                         }}
@@ -613,11 +673,19 @@ const Landing = () => {
                     </div>
                 </main>
             </div>
-            
+
             {/* OurProcess without background color - will scroll normally after sticky section */}
             <div id="our-process" className="relative">
                 <OurProcess />
             </div>
+            <Image
+                ref={customCursor}
+                src="/assets/customCursor.svg"
+                alt="custom cursor"
+                width={24}
+                height={24}
+                className="customCursor fixed top-0 left-0 pointer-events-none z-90"
+            />
         </>
     );
 };

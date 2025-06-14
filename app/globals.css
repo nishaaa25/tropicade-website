@@ -92,3 +92,12 @@ clip-path: polygon(100% 0, 83% 0, 0 100%, 100% 100%, 100% 93%);}
 .tshirt:hover .customCursor{
   opacity: 100
 }
+
+
+.firstHeading, .secondHeading {
+  will-change: transform, opacity;
+}
+
+.container {
+  transform: translateZ(0); /* Creates a new composite layer */
+}

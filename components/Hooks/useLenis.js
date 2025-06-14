@@ -6,8 +6,12 @@ import Lenis from '@studio-freight/lenis';
 export const useLenis = () => {
   useEffect(() => {
     const lenis = new Lenis({
-      lerp: .1,         // smoothness
-      duration: 10,
+      lerp: 0.03,
+      duration: 3,
+      smoothWheel: true,
+      wheelMultiplier: 0.4,
+      smoothTouch: false,
+      touchMultiplier: 1,
     });
 
     const raf = (time) => {

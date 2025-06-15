@@ -288,12 +288,12 @@ const Landing = () => {
                     ref={containerRef}
                     className="sticky-content sticky top-0 h-screen w-full overflow-hidden"
                     style={{ willChange: 'transform' }}>
-                    <div className="fifthPara px-10 pt-24">
+                    <div className="fifthPara px-10 pt-[8rem]">
                         <div className="h-fit overflow-hidden">
                             <p className="uppercase text-white">make it yours</p>
                         </div>
                     </div>
-                    <div className="fifthPara-1 px-10 pt-24">
+                    <div className="fifthPara-1 px-10 pt-16">
                         <div className="h-fit w-fit overflow-hidden">
                             <p className="uppercase text-[#FF3A65] px-4 py-2 bg-[#FF3A651A] font-light opacity-0 flex items-center gap-2">
                                 <Image src="/assets/HeartStraight.svg" alt="heart" width={18} height={18} />
@@ -302,9 +302,9 @@ const Landing = () => {
                         </div>
                     </div>
                     <div className="flex px-10">
-                        <div className="firstHeading absolute top-[7rem] left-8">
+                        <div className="firstHeading absolute top-[9rem] left-8">
                             <div className="h-fit overflow-hidden">
-                                <h1 className="text-9xl leading-none text-white font-bebas">custom streetwear</h1>
+                                <h1 className="text-9xl leading-none text-white font-bebas">custom threads</h1>
                             </div>
                             <div className="h-fit overflow-hidden">
                                 <h1 className="text-9xl leading-none text-white font-bebas">your way</h1>
@@ -316,11 +316,11 @@ const Landing = () => {
                             </div>
                         </div>
                     </div>
-                    <div className="thirdPara absolute top-[24rem] left-10">
+                    <div className="thirdPara absolute top-[26rem] left-10">
                         <p className="text-white font-light">Bring your memories, faces, and moments to life — right on your tee.</p>
                         <p className="text-white font-light">At Tropicade, we blend bold street vibes with personal stories.</p>
                     </div>
-                    <div className="fourthButton px-10 absolute top-[28rem]">
+                    <div className="fourthButton px-10 absolute top-[30rem]">
                         <button className="px-10 py-2 rounded-full bg-[#FF3A65] text-white uppercase font-light">
                             shop our collection
                         </button>

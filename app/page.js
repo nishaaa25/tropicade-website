@@ -3,7 +3,7 @@ import Landing from "@/components/pages/Landing";
 
 export default function Home() {
   return (
-    <div>
+    <div className="relative w-full overflow-x-hidden">
       {/* <MainLandingPage /> */}
       <Landing />
     </div>

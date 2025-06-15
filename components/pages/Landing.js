@@ -375,7 +375,7 @@ const Landing = () => {
                                 height={36}
                             />
                         </button>
-                        <div className="flex-center relative">
+                        {/* <div className="flex-center relative">
                             <div className="w-9 h-9 rounded-full relative overflow-hidden ">
                                 <Image
                                     src="/assets/product-2.png"
@@ -411,7 +411,7 @@ const Landing = () => {
                                     +24
                                 </div>
                             </div>
-                        </div>
+                        </div> */}
                     </div>
 
                     <div ref={tShirtRef} className="absolute top-24 right-[-4vw] w-[55vw] h-[50vw] ">

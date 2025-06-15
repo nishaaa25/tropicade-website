@@ -5,6 +5,7 @@ import Image from "next/image"
 import { useRef } from "react"
 import OurProcess from "../OurProcess"
 import VerticalScale from "../VerticalScale"
+import Link from "next/link"
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -40,7 +41,7 @@ const Landing = () => {
         // Initial animation for first heading
         gsap.from(".firstHeading div", {
             y: 100,
-            duration: 1.8,
+            duration: 2,
             ease: "power3.out",
             stagger: 0.2
         })
@@ -286,75 +287,135 @@ const Landing = () => {
             <div className="sticky-wrapper" style={{ height: '200vh' }}>
                 <div
                     ref={containerRef}
-                    className="sticky-content sticky top-0 h-screen w-full overflow-hidden"
+                    className="sticky-content sticky top-0 h-screen w-[95%] mx-auto overflow-hidden"
                     style={{ willChange: 'transform' }}>
-                    <div className="fifthPara px-10 pt-[8rem]">
-                        <div className="h-fit overflow-hidden">
-                            <p className="uppercase text-white">make it yours</p>
+                    <div className="fifthPara relative pt-[8rem]">
+                        <div className="h-fit overflow-hidden ml-3">
+                            <p className="uppercase text-white font-bold">make it yours</p>
                         </div>
                     </div>
-                    <div className="fifthPara-1 px-10 pt-16">
+                    <div className="fifthPara-1 relative pt-16">
                         <div className="h-fit w-fit overflow-hidden">
-                            <p className="uppercase text-[#FF3A65] px-4 py-2 bg-[#FF3A651A] font-light opacity-0 flex items-center gap-2">
-                                <Image src="/assets/HeartStraight.svg" alt="heart" width={18} height={18} />
+                            <p className="uppercase text-[#FF3A65] px-[10px] py-1 bg-[#FF3A651A] opacity-0 text-xs flex items-center gap-2 ml-1">
+                                <Image src="/assets/HeartStraight.svg" alt="heart" width={12} height={12} />
                                 most favourite designs
                             </p>
                         </div>
                     </div>
-                    <div className="flex px-10">
-                        <div className="firstHeading absolute top-[9rem] left-8">
+                    <div className="flex">
+                        <div className="firstHeading absolute top-[9.5rem] ">
                             <div className="h-fit overflow-hidden">
-                                <h1 className="text-9xl leading-none text-white font-bebas">custom threads</h1>
+                                <h1 className="text-[8vw] leading-[8vw] text-white font-bebas">custom threads</h1>
                             </div>
                             <div className="h-fit overflow-hidden">
-                                <h1 className="text-9xl leading-none text-white font-bebas">your way</h1>
-                            </div>
-                        </div>
-                        <div className="secondHeading absolute top-[16rem] left-8">
-                            <div className="h-fit overflow-hidden">
-                                <h1 className="text-white font-bebas text-9xl opacity-0">best sellers</h1>
+                                <h1 className="text-[8vw] leading-[7.5vw] text-white font-bebas">your way</h1>
                             </div>
                         </div>
+                        <div className="secondHeading absolute top-[15.5rem]">
+                            <div className="h-fit overflow-hidden">
+                                <h1 className="text-white font-bebas text-[6.5vw] leading-[6vw] opacity-0">best sellers</h1>
+                            </div>
+                        </div>
                     </div>
-                    <div className="thirdPara absolute top-[26rem] left-10">
-                        <p className="text-white font-light">Bring your memories, faces, and moments to life — right on your tee.</p>
-                        <p className="text-white font-light">At Tropicade, we blend bold street vibes with personal stories.</p>
+                    <div className="thirdPara absolute top-[26.5rem] ml-2">
+                        <p className="text-[#979797] font-[300] leading-[1.2]">Bring your memories, faces, and moments to life — right on your tee.</p>
+                        <p className="text-[#979797] font-[300]">At Tropicade, we blend bold street vibes with personal stories.</p>
                     </div>
-                    <div className="fourthButton px-10 absolute top-[30rem]">
-                        <button className="px-10 py-2 rounded-full bg-[#FF3A65] text-white uppercase font-light">
-                            shop our collection
-                        </button>
+                    <div className="fourthButton absolute top-[31rem] ml-2">
+                        <Link href="/products">
+                            <button
+                                className="bg-[#FF3A65] px-2 flex-center gap-2 py-1"
+                            >
+                                <p className="px-3">SHOP OUR COLLECTION</p>
+                                <Image
+                                    src="/assets/ArrowUpRight.svg"
+                                    alt="ButtonArrow"
+                                    width={40}
+                                    height={40}
+                                />
+                            </button>
+                        </Link>
                     </div>
-                    <div className="fifthPara-3 px-10">
-                        <div className="flex flex-col absolute top-[19.5rem] left-10 opacity-0 text-white">
-                            <span className="font-bebas opacity-0 left-10 text-white text-lg">t-shirt</span>
-                            <div className="flex gap-2">
-                                <span className="uppercase inline-block">
+                    <div className="fifthPara-3 ml-1">
+                        <div className="flex flex-col absolute top-[18rem] opacity-0 text-white">
+                            <span className="font-bebas opacity-0 left-10 text-[#828282] text-sm leading-3">t-shirt</span>
+                            <div className="flex-center gap-2">
+                                <span className="uppercase inline-block text-lg">
                                     bootleg
                                 </span>
-                                <span className="px-2 py-1 bg-[#EAB6511A] text-[#EAB651] uppercase text-xs inline-block">
+                                <span className="px-2 py-1 bg-[#EAB651]/10 text-[#EAB651] uppercase text-xs leading-3 inline-block">
                                     design #2
                                 </span>
                             </div>
-                            <span className="uppercase inline-block">
+                            <span className="uppercase inline-block text-lg">
                                 $ 1,250
                             </span>
                         </div>
                     </div>
-                    <div className="fifthPara-4 px-10">
-                        <div className="flex gap-4 absolute top-[26rem] left-10 opacity-0">
-                            <Image src="/assets/landingAnimation-1.png" alt="t-shirt" width={100} height={100} className="rounded-full object-cover" />
-                            <Image src="/assets/landingAnimation-2.png" alt="t-shirt" width={100} height={100} className="rounded-full object-cover" />
-                            <Image src="/assets/landingAnimation-3.png" alt="t-shirt" width={100} height={100} className="rounded-full object-cover" />
+                    <div className="fifthPara-4 ">
+                        <div className="flex gap-4 absolute top-[25rem] opacity-0 ml-1">
+                            <div className="w-22 h-22 relative">
+                                <Image src="/assets/landingAnimation-1.png" alt="t-shirt" fill className="rounded-full object-cover" />
+                            </div>
+                            <div className="w-22 h-22 relative">
+                                <Image src="/assets/landingAnimation-2.png" alt="t-shirt" fill className="rounded-full object-cover" />
+                            </div>
+                            <div className="w-22 h-22 relative">
+                                <Image src="/assets/landingAnimation-3.png" alt="t-shirt" fill className="rounded-full object-cover" />
+                            </div>
                         </div>
                     </div>
-                    <button className="buttonAnime-1 px-10 py-4 bg-[#FF3A65] absolute top-[34rem] left-10 text-white uppercase font-light opacity-0 flex items-center gap-2">
-                        EXPLORE ALL DESIGNS
-                        <Image src="/assets/ArrowLeft.svg" alt="arrow" width={52} height={52} />
-                    </button>
+                    <div className="absolute top-[34rem] ml-1 flex-center gap-4">
+                        <button className="buttonAnime-1 px-10 py-2 gap-4 bg-dark-pink-500 relative text-white uppercase opacity-0 flex-center ">
+                            <span className="font-[500]">Explore All Designs</span>
+                            <Image
+                                src="/assets/ArrowUp.svg"
+                                alt="arrow-up"
+                                width={36}
+                                height={36}
+                            />
+                        </button>
+                        <div className="flex-center relative">
+                            <div className="w-9 h-9 rounded-full relative overflow-hidden ">
+                                <Image
+                                    src="/assets/product-2.png"
+                                    alt="alt"
+                                    fill
+                                    className="object-contain"
+                                />
+                            </div>
+                            <div className="w-9 h-9 rounded-full relative overflow-hidden border-violet-400 right-[10%]">
+                                <Image
+                                    src="/assets/product-3.png"
+                                    alt="alt"
+                                    fill
+                                    className="object-contain"
+                                />
+                            </div>
+                            <div className="w-9 h-9 rounded-full relative overflow-hidden border-violet-400 right-[20%]">
+                                <Image
+                                    src="/assets/product-1.png"
+                                    alt="alt"
+                                    fill
+                                    className="object-contain"
+                                />
+                            </div>
+                            <div className="w-9 h-9 rounded-full relative overflow-hidden bg-[#333333] right-[30%]">
+                                <Image
+                                    src="/assets/product-1.png"
+                                    alt="alt"
+                                    fill
+                                    className="object-contain"
+                                />
+                                <div className="w-full h-full bg-black/80 absolute top-0 left-0 flex-center text-sm">
+                                    +24
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
-                    <div ref={tShirtRef} className="absolute top-24 right-10 w-[50vw] h-[50vw]">
-                        <Image src="/assets/t-shirt2.png" alt="t-shirt" width={300} height={300} className="w-full h-full object-contain" />
+                    <div ref={tShirtRef} className="absolute top-24 right-[-4vw] w-[55vw] h-[50vw] ">
+                        <Image src="/assets/t-shirt2.png" alt="t-shirt" fill className="object-contain" />
                     </div>
                 </div>
             </div>

@@ -58,7 +58,7 @@ export default function VerticalScale() {
 
   return (
     <div
-      className={`transition-opacity duration-300 ${
+      className={`transition-opacity z-[50] duration-300 ${
         labelText ? "opacity-100" : "opacity-0"
       } fixed bottom-8 left-4 z-50`}
       ref={containerRef}

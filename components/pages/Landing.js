@@ -1,3 +1,4 @@
+
 import { useGSAP } from "@gsap/react"
 import gsap from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
@@ -22,7 +23,7 @@ const Landing = () => {
             ".secondHeading div", ".secondHeading h1",
             ".fifthPara div", ".fifthPara p",
             ".fifthPara-1 div", ".fifthPara-1 p",
-            ".fifthPara-3 div", ".fifthPara-3 span", ".fifthPara-4 div",
+            ".fifthPara-4 div",
             ".thirdPara p", ".fourthButton button", ".buttonAnime-1",
             tShirtRef.current
         ], {
@@ -37,6 +38,33 @@ const Landing = () => {
         gsap.set(singleLeafRef.current, {
             scale: 1.2,
         });
+
+        // Set initial positions for elements that will animate in during scroll
+        gsap.set([".secondHeading h1", ".secondHeading div"], {
+            y: 80,
+            opacity: 0
+        })
+
+        gsap.set([".fifthPara-1 p", ".fifthPara-1 div"], {
+            y: 80,
+            opacity: 0
+        })
+
+        gsap.set([".fifthPara-4 div"], {
+            y: 60,
+            opacity: 0
+        })
+
+        gsap.set([".buttonAnime-1"], {
+            y: 60,
+            opacity: 0
+        })
+
+        // Set initial state for fifthPara-3 pin animation - starting from further down
+        gsap.set(".fifthPara-3", {
+            y: 120,
+            opacity: 0
+        })
 
         // Initial animation for first heading
         gsap.from(".firstHeading div", {
@@ -88,7 +116,7 @@ const Landing = () => {
 
         // Initial animation for T-shirt image - moving from bottom to top
         gsap.from(tShirtRef.current, {
-            y: 200,
+            y: 400,
             opacity: 0,
             duration: 2,
             ease: "power3.out",
@@ -106,7 +134,7 @@ const Landing = () => {
                 const progress = self.progress;
 
                 // First heading moves up and fades out (smoother timing)
-                const firstHeadingProgress = Math.min(progress * 4, 1);
+                const firstHeadingProgress = Math.min(progress * 3, 1);
                 gsap.to(".firstHeading h1", {
                     y: -150 * firstHeadingProgress,
                     opacity: 1 - firstHeadingProgress,
@@ -139,22 +167,23 @@ const Landing = () => {
                 })
 
                 // fifthPara moves up and fades out
+                const fifthParaProgress = Math.min(progress * 3, 1);
                 gsap.to(".fifthPara p", {
-                    y: -150 * progress,
-                    opacity: 1 - progress,
+                    y: -150 * fifthParaProgress,
+                    opacity: 1 - fifthParaProgress,
                     duration: 0.3,
                     ease: "power2.out"
                 })
 
                 gsap.to(".fifthPara div", {
-                    y: -150 * (progress + 0.05),
-                    opacity: 1 - progress,
+                    y: -150 * (fifthParaProgress + 0.05),
+                    opacity: 1 - fifthParaProgress,
                     duration: 0.3,
                     ease: "power2.out"
                 })
 
                 // thirdPara moves up and fades out (smoother timing)
-                const thirdParaProgress = Math.min(progress * 4, 1);
+                const thirdParaProgress = Math.min(progress * 3, 1);
                 gsap.to(".thirdPara p", {
                     y: -150 * thirdParaProgress,
                     opacity: 1 - thirdParaProgress,
@@ -164,7 +193,7 @@ const Landing = () => {
                 })
 
                 // fourthButton moves up and fades out (smoother timing)
-                const fourthButtonProgress = Math.min(progress * 4, 1);
+                const fourthButtonProgress = Math.min(progress * 3, 1);
                 gsap.to(".fourthButton button", {
                     y: -150 * fourthButtonProgress,
                     opacity: 1 - fourthButtonProgress,
@@ -174,53 +203,46 @@ const Landing = () => {
 
                 // T-shirt moves up during the animation
                 gsap.to(tShirtRef.current, {
-                    y: -80 * progress,
+                    y: -140 * progress,
                     duration: 0.3,
                     ease: "power2.out"
                 })
 
                 // New content fades in from bottom with staggered timing
-                const newContentDelay = Math.max(0, progress - 0.2);
+                const newContentDelay = Math.max(0, progress - 0.15);
 
                 gsap.to(".fifthPara-1 p", {
-                    y: 80 - (80 * newContentDelay * 1.25),
-                    opacity: newContentDelay * 1.25,
+                    y: 80 - (80 * newContentDelay * 1.2),
+                    opacity: newContentDelay * 1.2,
                     duration: 0.3,
                     ease: "power2.out"
                 })
 
                 gsap.to(".fifthPara-1 div", {
-                    y: 80 - (160 * newContentDelay * 1.25),
-                    opacity: newContentDelay * 1.25,
+                    y: 80 - (160 * newContentDelay * 1.2),
+                    opacity: newContentDelay * 1.2,
                     duration: 0.3,
                     ease: "power2.out"
                 })
 
-                gsap.to(".fifthPara-3 div", {
-                    y: 60 - (60 * newContentDelay * 1.25),
-                    opacity: newContentDelay * 1.25,
+                // fifthPara-3 pin animation - fades in and moves up from further down
+                gsap.to(".fifthPara-3", {
+                    y: 120 - (120 * newContentDelay * 1.2),
+                    opacity: newContentDelay * 1.5,
                     duration: 0.3,
                     ease: "power2.out"
-                })
-
-                gsap.to(".fifthPara-3 span", {
-                    y: 60 - (60 * newContentDelay * 1.25),
-                    opacity: newContentDelay * 1.25,
-                    duration: 0.3,
-                    ease: "power2.out",
-                    stagger: 0.1
                 })
 
                 gsap.to(".fifthPara-4 div", {
-                    y: 60 - (60 * newContentDelay * 1.25),
-                    opacity: newContentDelay * 1.25,
+                    y: 60 - (60 * newContentDelay * 1.2),
+                    opacity: newContentDelay * 1.2,
                     duration: 0.3,
                     ease: "power2.out"
                 })
 
                 gsap.to(".buttonAnime-1", {
-                    y: 60 - (60 * newContentDelay * 1.25),
-                    opacity: newContentDelay * 1.25,
+                    y: 60 - (60 * newContentDelay * 1.2),
+                    opacity: newContentDelay * 1.2,
                     duration: 0.3,
                     ease: "power2.out"
                 })
@@ -272,7 +294,7 @@ const Landing = () => {
                 ".secondHeading div", ".secondHeading h1",
                 ".fifthPara div", ".fifthPara p",
                 ".fifthPara-1 div", ".fifthPara-1 p",
-                ".fifthPara-3 div", ".fifthPara-3 span", ".fifthPara-4 div",
+                ".fifthPara-4 div",
                 ".thirdPara p", ".fourthButton button", ".buttonAnime-1",
                 tShirtRef.current
             ], {
@@ -296,7 +318,7 @@ const Landing = () => {
                     </div>
                     <div className="fifthPara-1 relative pt-16">
                         <div className="h-fit w-fit overflow-hidden">
-                            <p className="uppercase text-[#FF3A65] px-[10px] py-1 bg-[#FF3A651A] opacity-0 text-xs flex items-center gap-2 ml-1">
+                            <p className="uppercase text-[#FF3A65] px-[10px] py-1 bg-[#FF3A651A] text-xs flex items-center gap-2 ml-1">
                                 <Image src="/assets/HeartStraight.svg" alt="heart" width={12} height={12} />
                                 most favourite designs
                             </p>
@@ -313,7 +335,7 @@ const Landing = () => {
                         </div>
                         <div className="secondHeading absolute top-[15.5rem]">
                             <div className="h-fit overflow-hidden">
-                                <h1 className="text-white font-bebas text-[6.5vw] leading-[6vw] opacity-0">best sellers</h1>
+                                <h1 className="text-white font-bebas text-[6.5vw] leading-[6vw]">best sellers</h1>
                             </div>
                         </div>
                     </div>
@@ -336,24 +358,24 @@ const Landing = () => {
                             </button>
                         </Link>
                     </div>
-                    <div className="fifthPara-3 ml-1">
-                        <div className="flex flex-col absolute top-[18rem] opacity-0 text-white">
-                            <span className="font-bebas opacity-0 left-10 text-[#828282] text-sm leading-3">t-shirt</span>
-                            <div className="flex-center gap-2">
-                                <span className="uppercase inline-block text-lg">
-                                    bootleg
-                                </span>
-                                <span className="px-2 py-1 bg-[#EAB651]/10 text-[#EAB651] uppercase text-xs leading-3 inline-block">
-                                    design #2
-                                </span>
-                            </div>
+
+                    <div className="fifthPara-3 flex flex-col absolute top-[18rem] text-white">
+                        <span className="font-bebas left-10 text-[#828282] text-sm leading-3">t-shirt</span>
+                        <div className="flex-center gap-2">
                             <span className="uppercase inline-block text-lg">
-                                $ 1,250
+                                bootleg
+                            </span>
+                            <span className="px-2 py-1 bg-[#EAB651]/10 text-[#EAB651] uppercase text-xs leading-3 inline-block">
+                                design #2
                             </span>
                         </div>
+                        <span className="uppercase inline-block text-lg">
+                            $ 1,250
+                        </span>
                     </div>
+
                     <div className="fifthPara-4 ">
-                        <div className="flex gap-4 absolute top-[25rem] opacity-0 ml-1">
+                        <div className="flex gap-4 absolute top-[25rem] ml-1">
                             <div className="w-22 h-22 relative">
                                 <Image src="/assets/landingAnimation-1.png" alt="t-shirt" fill className="rounded-full object-cover" />
                             </div>
@@ -366,7 +388,7 @@ const Landing = () => {
                         </div>
                     </div>
                     <div className="absolute top-[34rem] ml-1 flex-center gap-4">
-                        <button className="buttonAnime-1 px-10 py-2 gap-4 bg-dark-pink-500 relative text-white uppercase opacity-0 flex-center ">
+                        <button className="buttonAnime-1 px-10 py-2 gap-4 bg-dark-pink-500 relative text-white uppercase flex-center ">
                             <span className="font-[500]">Explore All Designs</span>
                             <Image
                                 src="/assets/ArrowUp.svg"
@@ -414,7 +436,7 @@ const Landing = () => {
                         </div> */}
                     </div>
 
-                    <div ref={tShirtRef} className="absolute top-24 right-[-4vw] w-[55vw] h-[50vw] ">
+                    <div ref={tShirtRef} className="absolute top-40 right-0 w-[55vw] h-[50vw] ">
                         <Image src="/assets/t-shirt2.png" alt="t-shirt" fill className="object-contain" />
                     </div>
                 </div>

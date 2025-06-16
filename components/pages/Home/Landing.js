@@ -1,4 +1,3 @@
-
 import { useGSAP } from "@gsap/react"
 import gsap from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
@@ -15,6 +14,7 @@ const Landing = () => {
     const containerRef = useRef(null)
     const singleLeafRef = useRef(null)
     const leafsRef = useRef(null)
+    const bottomAnime = useRef(null)
 
     useGSAP(() => {
         // Set will-change properties for better performance
@@ -25,7 +25,7 @@ const Landing = () => {
             ".fifthPara-1 div", ".fifthPara-1 p",
             ".fifthPara-4 div",
             ".thirdPara p", ".fourthButton button", ".buttonAnime-1",
-            tShirtRef.current
+            tShirtRef.current, bottomAnime.current
         ], {
             willChange: "transform, opacity"
         })
@@ -151,6 +151,14 @@ const Landing = () => {
                     ease: "power2.out"
                 })
 
+                // Update bottomAnime animation to properly handle scroll back
+                gsap.to(bottomAnime.current, {
+                    y: 400 * firstHeadingProgress,
+                    opacity: 1 - firstHeadingProgress,
+                    duration: 0.5,
+                    ease: "power2.out"
+                })
+
                 // Second heading moves up from bottom and fades in
                 gsap.to(".secondHeading h1", {
                     y: 80 - (80 * progress),
@@ -273,6 +281,8 @@ const Landing = () => {
             "he"
         );
 
+
+
         // Add scroll-triggered leaf animation
         gsap.to(leafsRef.current, {
             y: "-120vh",
@@ -306,7 +316,7 @@ const Landing = () => {
     return (
         <>
             {/* Sticky wrapper with defined height for scroll distance */}
-            <div className="sticky-wrapper" style={{ height: '200vh' }}>
+            <div className="sticky-wrapper relative" style={{ height: '200vh' }}>
                 <div
                     ref={containerRef}
                     className="sticky-content sticky top-0 h-screen w-[95%] mx-auto overflow-hidden"
@@ -436,9 +446,45 @@ const Landing = () => {
                         </div> */}
                     </div>
 
-                    <div ref={tShirtRef} className="absolute top-40 right-0 w-[55vw] h-[50vw] ">
+                    <div ref={tShirtRef} className="absolute top-40 right-12 w-[55vw] h-[50vw] ">
                         <Image src="/assets/t-shirt2.png" alt="t-shirt" fill className="object-contain" />
                     </div>
+
+                    <div
+                    ref={bottomAnime}
+                    className="py-4 flex items-center justify-evenly w-full backdrop-blur-[28px] absolute bottom-0 left-0 z-50"
+                >
+                    <h1 className="text-sm max-w-30 font-[300]">Pick your tee & design</h1>
+                    <div className="w-41 h-8 relative">
+                        <Image
+                            src="/assets/ArrowRight.svg"
+                            alt="ArrowLeft"
+                            fill
+                            className="object-cover relative"
+                        />
+                    </div>
+                    <h1 className="text-sm max-w-36">
+                        Our design team will get in touch with you
+                    </h1>
+                    <div className="w-41 h-8 relative">
+                        <Image
+                            src="/assets/ArrowRight.svg"
+                            alt="ArrowLeft"
+                            fill
+                            className="object-cover relative"
+                        />
+                    </div>
+                    <h1 className="text-sm max-w-30">Add your own photos/texts</h1>
+                    <div className="w-41 h-8 relative">
+                        <Image
+                            src="/assets/ArrowRight.svg"
+                            alt="ArrowLeft"
+                            fill
+                            className="object-cover relative"
+                        />
+                    </div>
+                    <h1 className="text-sm max-w-30">Delivered in 5 - 7 days</h1>
+                </div>
                 </div>
             </div>
             <OurProcess />

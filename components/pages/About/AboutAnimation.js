@@ -2,7 +2,7 @@ const AboutAnimation = () => {
     return (
         <div className="h-screen w-full px-20 pt-28">
             <div className="flex justify-between items-center">
-                <h1 className="font-bebas text-4xl">What set's us apart?</h1>
+                <h1 className="font-bebas text-4xl">What sets us apart?</h1>
                 <div className="h-[1px] w-[500px] bg-white"></div>
                 <p className="flex flex-col gap-2 w-1/3">
                     <span className="text-sm font-light">

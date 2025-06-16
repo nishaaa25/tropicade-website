@@ -37,7 +37,7 @@ export default function ProductDetailsPage() {
         <div className="h-[60vh] fixed top-1/2 -translate-y-1/2 -right-30 w-[60vh] rounded-full blur-[180px] bg-[#440a53] z-10"></div>
         <div className="h-[60vh] fixed top-[80%] left-1/2 -translate-x-1/2 w-[60vh] rounded-full blur-[200px] bg-[#CF2379] z-30"></div>
       </div>
-      <div className="container w-[95%] ml-auto h-full flex-center relative">
+      <div className="container w-full h-full flex-center relative ml-[5vw]">
         <div className="absolute top-[17vh] z-10 left-0">
           <Link href="/" className="flex items-center gap-3 text-white">
             <Image
@@ -55,7 +55,7 @@ export default function ProductDetailsPage() {
           </h1>
         </div>
         <div className="flex items-center h-full gap-10 w-full relative">
-          <div className="relative w-[23%] h-full flex justify-center items-start flex-col pt-[10vh] gap-5">
+          <div className="relative w-[20%] h-full flex justify-center items-start flex-col pt-[10vh] gap-5">
             <div className="flex flex-col items-start gap-2">
               <div className="text-xs uppercase  text-[#eab651] bg-[#EAB651]/10 px-2 py-1">
                 DESIGN #2

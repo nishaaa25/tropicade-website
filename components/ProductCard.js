@@ -12,7 +12,7 @@ export default function ProductCard({ id, image, name, price }) {
             className="object-cover"
           />
         </div>
-        <div className="w-[100%] h-[100%] relative -top-[8vh] ">
+        <div className="w-[100%] h-[100%] relative -top-[6vh] ">
           <Image
             src={image}
             alt={name}

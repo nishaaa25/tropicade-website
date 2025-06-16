@@ -4,8 +4,8 @@ import gsap from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
 import Image from "next/image"
 import { useRef } from "react"
-import OurProcess from "../OurProcess"
-import VerticalScale from "../VerticalScale"
+import OurProcess from "../../OurProcess"
+import VerticalScale from "../../VerticalScale"
 import Link from "next/link"
 
 gsap.registerPlugin(ScrollTrigger)

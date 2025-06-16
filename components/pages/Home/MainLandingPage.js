@@ -6,8 +6,8 @@ import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import OurProcess from "../OurProcess";
-import VerticalScale from "../VerticalScale";
+import OurProcess from "../../OurProcess";
+import VerticalScale from "../../VerticalScale";
 
 gsap.registerPlugin(ScrollTrigger);
 

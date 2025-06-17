@@ -257,6 +257,23 @@ const Landing = () => {
             }
         })
 
+        // Add separate ScrollTrigger for fast t-shirt scroll after main animation
+        ScrollTrigger.create({
+            trigger: ".sticky-wrapper",
+            start: "bottom top", // Start when sticky wrapper ends
+            end: "+=150vh", // Continue for extra distance
+            scrub: 1,
+            onUpdate: (self) => {
+                const progress = self.progress;
+                // Move t-shirt up faster than normal scroll
+                gsap.to(tShirtRef.current, {
+                    y: -140 - (300 * progress), // Continue from where main animation ended
+                    duration: 0.1,
+                    ease: "none"
+                })
+            }
+        })
+
         // Add leaf animations
         const tl = gsap.timeline();
         tl.to(
@@ -280,8 +297,6 @@ const Landing = () => {
             },
             "he"
         );
-
-
 
         // Add scroll-triggered leaf animation
         gsap.to(leafsRef.current, {
@@ -407,43 +422,6 @@ const Landing = () => {
                                 height={36}
                             />
                         </button>
-                        {/* <div className="flex-center relative">
-                            <div className="w-9 h-9 rounded-full relative overflow-hidden ">
-                                <Image
-                                    src="/assets/product-2.png"
-                                    alt="alt"
-                                    fill
-                                    className="object-contain"
-                                />
-                            </div>
-                            <div className="w-9 h-9 rounded-full relative overflow-hidden border-violet-400 right-[10%]">
-                                <Image
-                                    src="/assets/product-3.png"
-                                    alt="alt"
-                                    fill
-                                    className="object-contain"
-                                />
-                            </div>
-                            <div className="w-9 h-9 rounded-full relative overflow-hidden border-violet-400 right-[20%]">
-                                <Image
-                                    src="/assets/product-1.png"
-                                    alt="alt"
-                                    fill
-                                    className="object-contain"
-                                />
-                            </div>
-                            <div className="w-9 h-9 rounded-full relative overflow-hidden bg-[#333333] right-[30%]">
-                                <Image
-                                    src="/assets/product-1.png"
-                                    alt="alt"
-                                    fill
-                                    className="object-contain"
-                                />
-                                <div className="w-full h-full bg-black/80 absolute top-0 left-0 flex-center text-sm">
-                                    +24
-                                </div>
-                            </div>
-                        </div> */}
                     </div>
 
                     <div ref={tShirtRef} className="absolute top-40 right-12 w-[55vw] h-[50vw] ">
@@ -451,40 +429,40 @@ const Landing = () => {
                     </div>
 
                     <div
-                    ref={bottomAnime}
-                    className="py-4 flex items-center justify-evenly w-full backdrop-blur-[28px] absolute bottom-0 left-0 z-50"
-                >
-                    <h1 className="text-sm max-w-30 font-[300]">Pick your tee & design</h1>
-                    <div className="w-41 h-8 relative">
-                        <Image
-                            src="/assets/ArrowRight.svg"
-                            alt="ArrowLeft"
-                            fill
-                            className="object-cover relative"
-                        />
+                        ref={bottomAnime}
+                        className="py-4 flex items-center justify-evenly w-full backdrop-blur-[28px] absolute bottom-0 left-0 z-50"
+                    >
+                        <h1 className="text-sm max-w-30 font-[300]">Pick your tee & design</h1>
+                        <div className="w-41 h-8 relative">
+                            <Image
+                                src="/assets/ArrowRight.svg"
+                                alt="ArrowLeft"
+                                fill
+                                className="object-cover relative"
+                            />
+                        </div>
+                        <h1 className="text-sm max-w-36">
+                            Our design team will get in touch with you
+                        </h1>
+                        <div className="w-41 h-8 relative">
+                            <Image
+                                src="/assets/ArrowRight.svg"
+                                alt="ArrowLeft"
+                                fill
+                                className="object-cover relative"
+                            />
+                        </div>
+                        <h1 className="text-sm max-w-30">Add your own photos/texts</h1>
+                        <div className="w-41 h-8 relative">
+                            <Image
+                                src="/assets/ArrowRight.svg"
+                                alt="ArrowLeft"
+                                fill
+                                className="object-cover relative"
+                            />
+                        </div>
+                        <h1 className="text-sm max-w-30">Delivered in 5 - 7 days</h1>
                     </div>
-                    <h1 className="text-sm max-w-36">
-                        Our design team will get in touch with you
-                    </h1>
-                    <div className="w-41 h-8 relative">
-                        <Image
-                            src="/assets/ArrowRight.svg"
-                            alt="ArrowLeft"
-                            fill
-                            className="object-cover relative"
-                        />
-                    </div>
-                    <h1 className="text-sm max-w-30">Add your own photos/texts</h1>
-                    <div className="w-41 h-8 relative">
-                        <Image
-                            src="/assets/ArrowRight.svg"
-                            alt="ArrowLeft"
-                            fill
-                            className="object-cover relative"
-                        />
-                    </div>
-                    <h1 className="text-sm max-w-30">Delivered in 5 - 7 days</h1>
-                </div>
                 </div>
             </div>
             <OurProcess />

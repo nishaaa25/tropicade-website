@@ -103,25 +103,6 @@ export default function OurProcess() {
       .to("#para-1", { x: "50vw", opacity: 0, duration: 1.5, ease: "power2.inOut" }, 0)
       .to(["#img-1", "#img-3"], { opacity: 0, duration: 1.5, ease: "power2.inOut" }, 0)
       .to("#text-2", { opacity: 1, duration: 1.5, ease: "power2.inOut" }, 0)
-      .fromTo(
-        "#img-2",
-        {
-          y: -20,
-          borderRadius: "100%",
-          borderWidth: 15,
-          width: "248px",
-          height: "248px",
-        },
-        {
-          borderRadius: "30%",
-          minWidth: "17vw",
-          height: "60vh",
-          borderColor: "transparent",
-          duration: 2,
-          ease: "power2.inOut"
-        },
-        0
-      )
       .to(
         "#img-2 .main-product",
         {
@@ -138,6 +119,16 @@ export default function OurProcess() {
         0
       )
       .to(".tshirt-outline", { opacity: 1, duration: 1.5, ease: "power2.inOut" }, 0)
+      .fromTo(
+        "#img-2",
+        { borderRadius: "50%" },
+        {
+          borderRadius: "0%",
+          ease: "power2.inOut",
+          duration: 1.5,
+        },
+        0
+      )
       .to("#bottom-btn", { opacity: 0, duration: 1, ease: "power2.inOut" }, 0)
       .fromTo(
         "#para-2",
@@ -152,7 +143,7 @@ export default function OurProcess() {
       .to("#para-2", { x: "50vw", opacity: 0, duration: 1.5, ease: "power2.inOut" }, 0)
       .to(
         "#img-2 .main-product",
-        { y: -5, scale: 1, duration: 1.5, ease: "power2.inOut" },
+        { scale: 1, duration: 1.5, ease: "power2.inOut" },
         0
       )
       .to(".tshirt-outline", { scale: 0, opacity: 0, duration: 1.5, ease: "power2.inOut" }, 0)
@@ -300,7 +291,7 @@ export default function OurProcess() {
             />
           </div>
           <div
-            className="min-w-62 h-62 relative z-20 right-[5vw] border-violet-400 rounded-full overflow-hidden product"
+            className="min-w-62 h-62 relative z-20 right-[5vw] rounded-full overflow-hidden product"
             id="img-2"
           >
             <Image
@@ -480,4 +471,4 @@ export default function OurProcess() {
       </div>
     </div>
   );
-}
+} 

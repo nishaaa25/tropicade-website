@@ -34,7 +34,7 @@ export default function VerticalScale() {
       ScrollTrigger.create({
         trigger: "#ourprocess",
         start: "top top",
-        end: "+=150%",
+        end: "+=200%",
         onEnter: () => setSection("ourprocess"),
         onEnterBack: () => setSection("ourprocess"),
         onLeave: () => setSection("bestsellers"),

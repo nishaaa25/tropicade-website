@@ -335,7 +335,7 @@ const Landing = () => {
                         </div>
                     </div>
                     <div className="flex">
-                        <div className="firstHeading absolute top-[9.5rem] ">
+                        <div className="firstHeading absolute top-[9.5rem]">
                             <div className="h-fit overflow-hidden">
                                 <h1 className="text-[8vw] leading-[8vw] text-white font-bebas">custom threads</h1>
                             </div>

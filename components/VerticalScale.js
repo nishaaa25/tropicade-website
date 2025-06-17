@@ -7,42 +7,38 @@ gsap.registerPlugin(ScrollTrigger);
 
 export default function VerticalScale() {
   const containerRef = useRef(null);
-  const [section, setSection] = useState("hero"); // Start with hero
+  const [section, setSection] = useState(""); // Start empty
 
   useEffect(() => {
     const triggers = [];
 
+    // Sync with the main scroll progress
     triggers.push(
       ScrollTrigger.create({
-        trigger: "#hero",
+        trigger: ".sticky-content",
         start: "top top",
-        end: "bottom top",
-        onEnter: () => setSection("hero"),
-        onEnterBack: () => setSection("hero"),
-      })
-    );
-
-    triggers.push(
-      ScrollTrigger.create({
-        trigger: "#bestsellers",
-        start: "top center",
         end: "bottom center",
-        onEnter: () => setSection("bestsellers"),
-        onEnterBack: () => setSection("bestsellers"),
-        onLeave: () => setSection("default"),
-        onLeaveBack: () => setSection("default"),
+        scrub: 1.5,
+        onUpdate: (self) => {
+          const progress = self.progress;
+          if (progress > 0) {
+            setSection("bestsellers");
+          } else {
+            setSection("");
+          }
+        }
       })
     );
 
     triggers.push(
       ScrollTrigger.create({
         trigger: "#ourprocess",
-        start: "top center",
-        end: "bottom center",
+        start: "top top",
+        end: "+=150%",
         onEnter: () => setSection("ourprocess"),
         onEnterBack: () => setSection("ourprocess"),
-        onLeave: () => setSection("default"),
-        onLeaveBack: () => setSection("default"),
+        onLeave: () => setSection("bestsellers"),
+        onLeaveBack: () => setSection("bestsellers"),
       })
     );
 
@@ -70,11 +66,11 @@ export default function VerticalScale() {
         <div className="w-2 border-[0.5px] border-[#7b7b7b]"></div>
         <div className="w-1.5 border-[0.5px] border-[#7b7b7b]"></div>
 
-          <div className="flex items-center gap-1.5">
-            <div className="w-4 border-[1px] border-white"></div>
-            <div className="border-[1px] border-white rounded-full h-2 w-2"></div>
-            <p className="font-bebas text-[10px] text-white">{labelText}</p>
-          </div>
+        <div className="flex items-center gap-1.5">
+          <div className="w-4 border-[1px] border-white"></div>
+          <div className="border-[1px] border-white rounded-full h-2 w-2"></div>
+          <p className="font-bebas text-[10px] text-white">{labelText}</p>
+        </div>
 
         <div className="w-1.5 border-[0.5px] border-[#7b7b7b]"></div>
         <div className="w-2 border-[0.5px] border-[#7b7b7b]"></div>

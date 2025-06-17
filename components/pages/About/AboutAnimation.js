@@ -1,3 +1,5 @@
+import Image from "next/image"
+
 const AboutAnimation = () => {
     return (
         <div className="h-screen w-full px-20 pt-28">
@@ -13,9 +15,10 @@ const AboutAnimation = () => {
                     </span>
                 </p>
             </div>
-            <div className="h-[70vh] flex flex-col justify-center">
+            <div className="h-[70vh] flex flex-col justify-center relative">
                 <h1 className="font-bebas text-8xl opacity-50">Tropicade is where your style becomes</h1>
                 <h1 className="font-bebas text-8xl opacity-50">the main story</h1>
+                <Image src="/assets/anchor.svg" alt="Anchor Image" width={200} height={100} className="object-cover absolute top-20 left-0" />
             </div>
         </div>
     )

@@ -51,13 +51,12 @@ const AboutCards = () => {
       {
         cardsData.map((item, index) => {
           return (
-            <div key={index} className={`h-[50vh] w-[22vw] relative bg-[#24022C] p-4 ${
-              index === 2
+            <div key={index} className={`h-[50vh] w-[22vw] relative bg-[#24022C] p-4 ${index === 2
                 ? "bottom-[16vh]"
                 : index === 1 || index === 3
-                ? "bottom-[8vh]"
-                : "bottom-0"
-            }`}>
+                  ? "bottom-[8vh]"
+                  : "bottom-0"
+              }`}>
               <p className='text-sm font-extralight opacity-50'>
                 {item.title}
               </p>
@@ -78,10 +77,14 @@ const AboutCards = () => {
                   </div>
                 </div>
               </div>
+              <Image src="/assets/anchor.svg" alt="Anchor Image" width={200} height={100} className="object-cover absolute bottom-0 right-0" />
             </div>
           )
         })
       }
+      <div className='h-[400px] w-[400px] rounded-full bg-[#CF2379] blur-[10vw] absolute -bottom-52 right-52'>
+
+      </div>
     </div>
   )
 }

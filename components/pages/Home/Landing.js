@@ -24,7 +24,7 @@ const Landing = () => {
             ".fifthPara div", ".fifthPara p",
             ".fifthPara-1 div", ".fifthPara-1 p",
             ".fifthPara-4 div",
-            ".thirdPara p", ".fourthButton button", ".buttonAnime-1",
+            ".thirdPara", ".fourthButton button", ".buttonAnime-1",
             tShirtRef.current, bottomAnime.current
         ], {
             willChange: "transform, opacity"
@@ -192,7 +192,7 @@ const Landing = () => {
 
                 // thirdPara moves up and fades out (smoother timing)
                 const thirdParaProgress = Math.min(progress * 3, 1);
-                gsap.to(".thirdPara p", {
+                gsap.to(".thirdPara", {
                     y: -150 * thirdParaProgress,
                     opacity: 1 - thirdParaProgress,
                     duration: 0.3,

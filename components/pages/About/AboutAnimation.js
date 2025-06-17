@@ -9,7 +9,7 @@ const AboutAnimation = () => {
                         Bold, high-quality designs inspired by ‘80s-‘90s streetwear culture, printed with premium DTG technology for lasting color and detail.
                     </span>
                     <span className="text-sm font-light">
-                        Whether you're looking to express yourself, surprise someone with a unique gift, or create custom tees for your crew.
+                        Whether you&apos;re looking to express yourself, surprise someone with a unique gift, or create custom tees for your crew.
                     </span>
                 </p>
             </div>

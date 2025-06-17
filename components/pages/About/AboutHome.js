@@ -18,7 +18,7 @@ const AboutHome = () => {
           </span>
 
           <span>
-            We’re a small team based in Tallinn, Estonia:
+            We&apos;re a small team based in Tallinn, Estonia:
             a manager handling production and customer care, two dedicated designers who work one-on-one with clients to bring their ideas to life, and a creative agency managing our marketing and socials.
           </span>
         </p>

@@ -10,12 +10,12 @@ export default function ProductDetailsPage() {
   const [selectedSize, setSelectedSize] = useState("S");
   const [selectedColor, setSelectedColor] = useState(colors[0]);
   const [activeTab, setActiveTab] = useState("FRONT");
-  const items = Array.from({ length: 12 }, (_, i) => i + 1);
-  const radius = 219;
+  const items = Array.from({ length: 5 }, (_, i) => i + 1);
+  const radius = 200;
 
   return (
     <div className="h-screen relative overflow-hidden w-full">
-      <div className="fixed -bottom-80 -l eft-[15vw] -z-10">
+      <div className="fixed -bottom-80 -left-[15vw] -z-10">
         <Image
           src="/assets/leafs.svg"
           alt="landing-page-bg"
@@ -24,7 +24,7 @@ export default function ProductDetailsPage() {
           className="object-contain z-50 h-[50vw] w-[50vw]"
         />
       </div>
-      <div className="fixed -bottom-52 -right-[15vw] -z-10">
+      <div className="fixed -bottom-[40vh] -right-[15vw] -z-10">
         <div className="leaf-img h-[30vw] w-[40vw]">
           <Image
             src="/assets/singleleaf.svg"
@@ -37,8 +37,8 @@ export default function ProductDetailsPage() {
         <div className="h-[60vh] fixed top-1/2 -translate-y-1/2 -right-30 w-[60vh] rounded-full blur-[180px] bg-[#440a53] z-10"></div>
         <div className="h-[60vh] fixed top-[80%] left-1/2 -translate-x-1/2 w-[60vh] rounded-full blur-[200px] bg-[#CF2379] z-30"></div>
       </div>
-      <div className="container mx-auto w-[90%] h-full flex-center relative">
-        <div className="absolute top-[17vh] left-0 z-10">
+      <div className="container w-full h-full flex-center relative ml-[5vw]">
+        <div className="absolute top-[17vh] z-10 left-0">
           <Link href="/" className="flex items-center gap-3 text-white">
             <Image
               src="/assets/arrow-back.svg"
@@ -49,13 +49,13 @@ export default function ProductDetailsPage() {
             Back to all products
           </Link>
         </div>
-        <div className="absolute top-[10vh]">
-          <h1 className="text-[22vw] leading-[20vw] font-bebas mix-blend-overlay opacity-15 ">
+        <div className="absolute top-[10vh] left-12">
+          <h1 className="text-[22vw] leading-[20vw] font-bebas opacity-2 ">
             CUSTOMISE
           </h1>
         </div>
-        <div className="flex items-center h-full gap-6 w-full relative">
-          <div className="relative w-[24%] h-full flex justify-center items-start flex-col pt-[10vh] gap-5">
+        <div className="flex items-center h-full gap-10 w-full relative">
+          <div className="relative w-[20%] h-full flex justify-center items-start flex-col pt-[10vh] gap-5">
             <div className="flex flex-col items-start gap-2">
               <div className="text-xs uppercase  text-[#eab651] bg-[#EAB651]/10 px-2 py-1">
                 DESIGN #2
@@ -65,10 +65,7 @@ export default function ProductDetailsPage() {
               </h1>
               <p className="text-base">$ 1,250</p>
               <p className="text-gray-400 font-[200] text-xs">
-                At The Design Shop, we craft digital experiences that don&apos;t
-                just look amazing — they work beautifully. We believe in design
-                that&apos;s both stunning and strategic, focused on growth and
-                development.
+               At The Design Shop, we craft digital experiences that don&apos;t just look stunning — they work beautifully. We specialize in website and application design & development.
               </p>
             </div>
             <div className="relative">
@@ -114,7 +111,7 @@ export default function ProductDetailsPage() {
               BUY NOW
             </button>
           </div>
-          <div className="relative w-[60%] h-full flex justify-end items-end">
+          <div className="relative w-[55%] h-full flex justify-end items-end">
             <div className="absolute w-[100%] h-[105%] z-200 -bottom-[10vh] -left-[5vw]">
               <Image
                 src="/assets/t-shirt2.png"
@@ -147,38 +144,40 @@ export default function ProductDetailsPage() {
               </div>
             </div>
           </div>
-        </div>
-        <div className="fixed -right-[18vw] top-1/2 -translate-y-1/2 flex flex-col gap-4 bg-[#200124] w-[60vh] h-[60vh] rounded-full flex-center mr-8">
-          <div className="relative w-[70%] h-[70%] border-l-2 border-white/50  rounded-full flex items-center ">
-            <div className="w-4 h-4 rounded-full bg-dark-pink-500 right-2 custom-shadow-2 relative"></div>
+          <div className="flex flex-col gap-4 w-[17%] h-[60vh] relative ">
+            <div className="-translate-y-1/2 top-1/2 translate-x-[40%] right-1/2 relative w-100 h-100 rounded-full bg-[#200124] flex-center">
+              <div className="relative w-[65%] h-[65%] border-l-2 border-white/50  rounded-full flex items-center ">
+                <div className="w-4 h-4 rounded-full bg-dark-pink-500 right-2 custom-shadow-2 relative"></div>
+              </div>
+              <ul
+                className="absolute top-1/2 -translate-y-1/2 grid place-items-center "
+                style={{ transform: "rotate(-255deg)" }}
+              >
+                {items.map((item, i) => {
+                  const angle = (185 / items.length) * i;
+                  const transform = `rotate(${angle}deg) translate(${radius}px) rotate(-${angle}deg)`;
+                  return (
+                    <li
+                      key={i}
+                      className={`${
+                        i === 2
+                          ? "w-18 h-18 border-dark-pink-500"
+                          : "w-10 h-10 border-white/5"
+                      } absolute bg-[#3c3841]  grid place-items-center rounded-full overflow-hidden border-3 `}
+                      style={{ transform }}
+                    >
+                      <Image
+                        src={`/assets/product-1.png`}
+                        alt="alt"
+                        fill
+                        className="rotate-255 text-white text-xs font-sans"
+                      ></Image>
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
           </div>
-          <ul
-            className="absolute top-1/2 -translate-y-1/2 grid place-items-center "
-            style={{ transform: "rotate(-90deg)" }}
-          >
-            {items.map((item, i) => {
-              const angle = (360 / items.length) * i;
-              const transform = `rotate(${angle}deg) translate(${radius}px) rotate(-${angle}deg)`;
-              return (
-                <li
-                  key={i}
-                  className={`${
-                    i === 9
-                      ? "w-17 h-17 border-dark-pink-500"
-                      : "w-10 h-10 border-white/5"
-                  } absolute bg-[#3c3841]  grid place-items-center rounded-full overflow-hidden border-3 `}
-                  style={{ transform }}
-                >
-                  <Image
-                    src={`/assets/product-1.png`}
-                    alt="alt"
-                    fill
-                    className="rotate-90 text-white text-xs font-sans"
-                  ></Image>
-                </li>
-              );
-            })}
-          </ul>
         </div>
       </div>
     </div>

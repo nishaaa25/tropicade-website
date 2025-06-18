@@ -123,6 +123,7 @@ const Landing = () => {
             delay: 0.5
         })
 
+
         // Scroll-triggered animations with improved timing
         ScrollTrigger.create({
             trigger: ".sticky-content",

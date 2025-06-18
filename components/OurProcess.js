@@ -19,6 +19,7 @@ export default function OurProcess() {
       }
     });
 
+    // Initial entrance animation
     const tl1 = gsap.timeline({
       scrollTrigger: {
         trigger: processDivRef.current,
@@ -87,154 +88,88 @@ export default function OurProcess() {
         duration: 2,
       });
 
-    // Create separate timelines for each step with immediate: false to prevent instant execution
-    const step1Timeline = gsap.timeline({ 
-      paused: true,
-      immediateRender: false
-    });
-    const step2Timeline = gsap.timeline({ 
-      paused: true,
-      immediateRender: false
+    // Main scroll-controlled timeline for step transitions
+    const mainTimeline = gsap.timeline({
+      scrollTrigger: {
+        trigger: processDivRef.current,
+        start: "top top",
+        end: "+=200%",
+        pin: true,
+        scrub: 1, // This ensures smooth scroll-based animation
+      }
     });
 
-    // Step 1: Transition from initial state to step 2
-    step1Timeline
-      .to("#text-1", { x: "-50vw", opacity: 0, duration: 1.5, ease: "power2.inOut" }, 0)
-      .to("#para-1", { x: "50vw", opacity: 0, duration: 1.5, ease: "power2.inOut" }, 0)
-      .to(["#img-1", "#img-3"], { opacity: 0, duration: 1.5, ease: "power2.inOut" }, 0)
-      .to("#text-2", { opacity: 1, duration: 1.5, ease: "power2.inOut" }, 0)
+    // Step 1 to Step 2 transition (25% - 33% of scroll)
+    mainTimeline
+      .to("#text-1", { x: "-50vw", opacity: 0, duration: 1, ease: "power2.inOut" })
+      .to("#para-1", { x: "50vw", opacity: 0, duration: 1, ease: "power2.inOut" }, "<")
+      .to(["#img-1", "#img-3"], { opacity: 0, duration: 1, ease: "power2.inOut" }, "<")
+      .to("#text-2", { opacity: 1, duration: 1, ease: "power2.inOut" }, "<")
       .to(
         "#img-2 .main-product",
         {
           scale: 1.1,
-          duration: 1.5,
+          duration: 1,
           ease: "power2.inOut"
         },
-        0
+        "<"
       )
       .fromTo(
         "#message",
         { y: "50vh", opacity: 0 },
-        { y: 0, opacity: 1, duration: 1.5, ease: "power2.inOut" },
-        0
+        { y: 0, opacity: 1, duration: 1, ease: "power2.inOut" },
+        "<"
       )
-      .to(".tshirt-outline", { opacity: 1, duration: 1.5, ease: "power2.inOut" }, 0)
+      .to(".tshirt-outline", { opacity: 1, duration: 1, ease: "power2.inOut" }, "<")
       .fromTo(
         "#img-2",
         { borderRadius: "50%" },
         {
           borderRadius: "0%",
           ease: "power2.inOut",
-          duration: 1.5,
+          duration: 1,
         },
-        0
+        "<"
       )
-      .to("#bottom-btn", { opacity: 0, duration: 1, ease: "power2.inOut" }, 0)
+      .to("#bottom-btn", { opacity: 0, duration: 1, ease: "power2.inOut" }, "<")
       .fromTo(
         "#para-2",
         { y: "40vh", opacity: 0 },
-        { y: 0, opacity: 1, duration: 1.5, ease: "power2.inOut" },
-        0
-      );
-
-    // Step 2: Transition from step 2 to step 3
-    step2Timeline
-      .to("#text-2", { x: "-50vw", opacity: 0, duration: 1.5, ease: "power2.inOut" }, 0)
-      .to("#para-2", { x: "50vw", opacity: 0, duration: 1.5, ease: "power2.inOut" }, 0)
+        { y: 0, opacity: 1, duration: 1, ease: "power2.inOut" },
+        "<"
+      )
+      
+      // Add some pause between transitions
+      .to({}, { duration: 0.5 })
+      
+      // Step 2 to Step 3 transition (66% - 75% of scroll)
+      .to("#text-2", { x: "-50vw", opacity: 0, duration: 1, ease: "power2.inOut" })
+      .to("#para-2", { x: "50vw", opacity: 0, duration: 1, ease: "power2.inOut" }, "<")
       .to(
         "#img-2 .main-product",
-        { scale: 1, duration: 1.5, ease: "power2.inOut" },
-        0
+        { scale: 1, duration: 1, ease: "power2.inOut" },
+        "<"
       )
-      .to(".tshirt-outline", { scale: 0, opacity: 0, duration: 1.5, ease: "power2.inOut" }, 0)
-      .to("#message", { y: "50vh", opacity: 0, duration: 1.5, ease: "power2.inOut" }, 0)
-      .to(".black-tshirt", { opacity: 1, duration: 1.5, ease: "power2.inOut" }, 0)
+      .to(".tshirt-outline", { scale: 0, opacity: 0, duration: 1, ease: "power2.inOut" }, "<")
+      .to("#message", { y: "50vh", opacity: 0, duration: 1, ease: "power2.inOut" }, "<")
+      .to(".black-tshirt", { opacity: 1, duration: 1, ease: "power2.inOut" }, "<")
       .from(
         ["#leaves-1", "#leaves-2", "#leaves-3", "#leaves-4"],
         {
           rotate: 90,
           scale: 0,
-          duration: 1.5,
-          ease: "power2.inOut"
+          duration: 1,
+          ease: "power2.inOut",
+          stagger: 0.1
         },
-        0
+        "<"
       )
       .fromTo(
         "#text-3",
         { opacity: 0 },
-        { opacity: 1, duration: 1.5, ease: "power2.inOut" },
-        0
+        { opacity: 1, duration: 1, ease: "power2.inOut" },
+        "<"
       );
-
-    let currentStep = 0; // 0 = initial, 1 = step2, 2 = step3
-    let isTransitioning = false; // Flag to prevent overlapping transitions
-
-    // Use ScrollTrigger to control step-by-step progression
-    ScrollTrigger.create({
-      trigger: processDivRef.current,
-      start: "top top",
-      end: "+=150%",
-      pin: true,
-      scrub: false, // Changed to false to prevent scrubbing conflicts
-      onUpdate: (self) => {
-        if (isTransitioning) return; // Prevent updates during transitions
-        
-        const progress = self.progress;
-        
-        if (progress < 0.25 && currentStep !== 0) {
-          isTransitioning = true;
-          // Going back to initial state
-          if (currentStep === 2) {
-            step2Timeline.reverse().then(() => {
-              if (currentStep >= 1) {
-                step1Timeline.reverse().then(() => {
-                  currentStep = 0;
-                  isTransitioning = false;
-                });
-              } else {
-                currentStep = 0;
-                isTransitioning = false;
-              }
-            });
-          } else if (currentStep >= 1) {
-            step1Timeline.reverse().then(() => {
-              currentStep = 0;
-              isTransitioning = false;
-            });
-          }
-        } else if (progress >= 0.25 && progress < 0.66 && currentStep !== 1) {
-          isTransitioning = true;
-          // Going to step 2
-          if (currentStep === 0) {
-            step1Timeline.play().then(() => {
-              currentStep = 1;
-              isTransitioning = false;
-            });
-          } else if (currentStep === 2) {
-            step2Timeline.reverse().then(() => {
-              currentStep = 1;
-              isTransitioning = false;
-            });
-          }
-        } else if (progress >= 0.66 && currentStep !== 2) {
-          isTransitioning = true;
-          // Going to step 3
-          if (currentStep === 0) {
-            step1Timeline.play().then(() => {
-              step2Timeline.play().then(() => {
-                currentStep = 2;
-                isTransitioning = false;
-              });
-            });
-          } else if (currentStep === 1) {
-            step2Timeline.play().then(() => {
-              currentStep = 2;
-              isTransitioning = false;
-            });
-          }
-        }
-      }
-    });
   });
 
   return (
@@ -471,4 +406,4 @@ export default function OurProcess() {
       </div>
     </div>
   );
-} 
+}

@@ -1,12 +1,14 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import React, { useState } from "react";
 
 const sizes = ["S", "M", "L", "X", "XL", "XXL"];
 const colors = ["#416d8a", "#418a5c", "#8a5641", "#8a4180"];
 
-export default function ProductDetailsPage() {
+export default function ProductDetailsPage({params}) {
+  const productSlug = React.use(params);
+  
   const [selectedSize, setSelectedSize] = useState("S");
   const [selectedColor, setSelectedColor] = useState(colors[0]);
   const [activeTab, setActiveTab] = useState("FRONT");
@@ -55,7 +57,7 @@ export default function ProductDetailsPage() {
           </h1>
         </div>
         <div className="flex items-center h-full gap-10 w-full relative">
-          <div className="relative w-[20%] h-full flex justify-center items-start flex-col pt-[10vh] gap-5">
+          <div className="relative w-[25%] h-full flex justify-center items-start flex-col pt-[10vh] gap-5">
             <div className="flex flex-col items-start gap-2">
               <div className="text-xs uppercase  text-[#eab651] bg-[#EAB651]/10 px-2 py-1">
                 DESIGN #2
@@ -64,7 +66,7 @@ export default function ProductDetailsPage() {
                 T-SHIRT BOOTLEG
               </h1>
               <p className="text-base">$ 1,250</p>
-              <p className="text-gray-400 font-[200] text-xs">
+              <p className="text-gray-400 font-[200] text-xs pr-10">
                At The Design Shop, we craft digital experiences that don&apos;t just look stunning — they work beautifully. We specialize in website and application design & development.
               </p>
             </div>
@@ -144,8 +146,8 @@ export default function ProductDetailsPage() {
               </div>
             </div>
           </div>
-          <div className="flex flex-col gap-4 w-[17%] h-[60vh] relative ">
-            <div className="-translate-y-1/2 top-1/2 translate-x-[40%] right-1/2 relative w-100 h-100 rounded-full bg-[#200124] flex-center">
+          <div className="flex flex-col gap-4 w-[20%] h-[60vh] relative ">
+            <div className="-translate-y-1/2 top-1/2 -translate-x-1/4 left-1/2  relative w-100 h-100 rounded-full bg-[#200124] flex-center">
               <div className="relative w-[65%] h-[65%] border-l-2 border-white/50  rounded-full flex items-center ">
                 <div className="w-4 h-4 rounded-full bg-dark-pink-500 right-2 custom-shadow-2 relative"></div>
               </div>

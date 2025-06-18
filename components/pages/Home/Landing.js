@@ -353,7 +353,7 @@ const Landing = () => {
                         <p className="text-[#979797] font-[300] leading-[1.2]">Bring your memories, faces, and moments to life — right on your tee.</p>
                         <p className="text-[#979797] font-[300]">At Tropicade, we blend bold street vibes with personal stories.</p>
                     </div>
-                    <div className="fourthButton absolute top-[31rem] ml-2">
+                    <div className="fourthButton absolute top-[31rem] ml-2 z-400">
                         <Link href="/products">
                             <button
                                 className="bg-[#FF3A65] px-2 flex-center gap-2 py-1"

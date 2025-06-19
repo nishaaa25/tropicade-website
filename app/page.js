@@ -19,10 +19,6 @@ export default function Home() {
   const [isLoaderComplete, setIsLoaderComplete] = useState(false);
 
   useEffect(() => {
-    // Set initial positions for word images
-    gsap.set("#word-1 img", { y: "-100%" });
-    gsap.set("#word-2 img", { y: "100%" });
-
     // Pulse animation for blur element
     if (blurElement.current) {
       gsap.to(blurElement.current, {
@@ -211,10 +207,10 @@ export default function Home() {
 
           <div className="intro-logo">
             <div className="word" id="word-1">
-              <Image src="/assets/tropicade.svg" alt="Tropicade" width={329} height={108} className="tropicade-svg relative left-1/2" style={{clipPath: "inset(0 50% 0 0)"}} />
+              <Image src="/assets/tropicade.svg" alt="Tropicade" width={329} height={108} className="tropicade-svg relative left-1/2 -translate-y-full" style={{clipPath: "inset(0 50% 0 0)"}} />
             </div>
             <div className="word" id="word-2">
-              <Image src="/assets/tropicade.svg" alt="Tropicade" width={329} height={108} className="tropicade-svg relative right-1/2" style={{clipPath: "inset(0 0 0 50%)"}} />
+              <Image src="/assets/tropicade.svg" alt="Tropicade" width={329} height={108} className="tropicade-svg relative right-1/2 translate-y-full" style={{clipPath: "inset(0 0 0 50%)"}} />
             </div>
           </div>
 

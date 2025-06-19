@@ -13,15 +13,20 @@ export default function ProductsPage() {
 
   useEffect(() => {
     const fetchProducts = async () => {
-      const res = await fetch("/api/products");
-      const data = await res.json();
-      setProducts(data);
-      console.log(data[0]._id , "id")
+      try {
+        const res = await fetch("/api/products");
+        const data = await res.json();
+        setProducts(Array.isArray(data) ? data : []);
+        console.log(data[0]?._id , "id")
+      } catch (error) {
+        console.error("Error fetching products:", error);
+        setProducts([]);
+      }
     };
     fetchProducts();
   }, []);
 
-  const filteredProducts = products.filter((product) => {
+  const filteredProducts = Array.isArray(products) ? products.filter((product) => {
     const title = product?.title?.toLowerCase() || "";
     const category = product?.category || "";
 
@@ -31,7 +36,7 @@ export default function ProductsPage() {
     const matchesSearch = title.includes(searchQuery.toLowerCase());
 
     return matchesCategory && matchesSearch;
-  });
+  }) : [];
 
   return (
     <div className="min-h-screen relative">

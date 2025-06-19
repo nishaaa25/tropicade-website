@@ -262,7 +262,7 @@ const Landing = () => {
         ScrollTrigger.create({
             trigger: ".sticky-wrapper",
             start: "bottom top", // Start when sticky wrapper ends
-            end: "+=150vh", // Continue for extra distance
+            end: "+=400vh", // Continue for extra distance
             scrub: 1,
             onUpdate: (self) => {
                 const progress = self.progress;

@@ -132,13 +132,10 @@ clip-path: polygon(100% 0, 83% 0, 0 100%, 100% 100%, 100% 93%);}
   left: 50%;
   transform: translate(-50%, -50%);
   display: flex;
-  gap: 0.25rem;
 }
 
 #word-1 {
   position: relative;
-  left: -0.5rem;
-  padding-right: 0.25rem;
 }
 
 .word h1 {

@@ -108,7 +108,7 @@ export default function OurProcess() {
       .to(
         "#img-2 .main-product",
         {
-          scale: 1.1,
+          scale: 1,
           duration: 1,
           ease: "power2.inOut"
         },

@@ -22,7 +22,7 @@
     "next": "15.3.2",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "split-type": "^0.2.1"
+    "split-type": "^0.2.5"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",

@@ -1,4 +1,5 @@
 "use client";
+import HistoryBackBtn from "@/components/HistoryBackBtn";
 import Image from "next/image";
 import Link from "next/link";
 import React, { useState } from "react";
@@ -6,9 +7,9 @@ import React, { useState } from "react";
 const sizes = ["S", "M", "L", "X", "XL", "XXL"];
 const colors = ["#416d8a", "#418a5c", "#8a5641", "#8a4180"];
 
-export default function ProductDetailsPage({params}) {
+export default function ProductDetailsPage({ params }) {
   const productSlug = React.use(params);
-  
+
   const [selectedSize, setSelectedSize] = useState("S");
   const [selectedColor, setSelectedColor] = useState(colors[0]);
   const [activeTab, setActiveTab] = useState("FRONT");
@@ -39,18 +40,9 @@ export default function ProductDetailsPage({params}) {
         <div className="h-[60vh] fixed top-1/2 -translate-y-1/2 -right-30 w-[60vh] rounded-full blur-[180px] bg-[#440a53] z-10"></div>
         <div className="h-[60vh] fixed top-[80%] left-1/2 -translate-x-1/2 w-[60vh] rounded-full blur-[200px] bg-[#CF2379] z-30"></div>
       </div>
+      <HistoryBackBtn text="Back to all products" />
+
       <div className="container w-full h-full flex-center relative ml-[5vw]">
-        <div className="absolute top-[17vh] z-10 left-0">
-          <Link href="/" className="flex items-center gap-3 text-white">
-            <Image
-              src="/assets/arrow-back.svg"
-              alt="arrowback"
-              width={51}
-              height={27}
-            />
-            Back to all products
-          </Link>
-        </div>
         <div className="absolute top-[10vh] left-12">
           <h1 className="text-[22vw] leading-[20vw] font-bebas opacity-2 ">
             CUSTOMISE
@@ -67,7 +59,9 @@ export default function ProductDetailsPage({params}) {
               </h1>
               <p className="text-base">$ 1,250</p>
               <p className="text-gray-400 font-[200] text-xs pr-10">
-               At The Design Shop, we craft digital experiences that don&apos;t just look stunning — they work beautifully. We specialize in website and application design & development.
+                At The Design Shop, we craft digital experiences that don&apos;t
+                just look stunning — they work beautifully. We specialize in
+                website and application design & development.
               </p>
             </div>
             <div className="relative">

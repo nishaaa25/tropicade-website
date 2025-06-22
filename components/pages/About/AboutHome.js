@@ -1,37 +1,101 @@
-import Image from "next/image"
+"use client";
+
+import { useRef } from "react";
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
+import ScrollTrigger from "gsap/dist/ScrollTrigger";
+import Image from "next/image";
+import HistoryBackBtn from "@/components/HistoryBackBtn";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const AboutHome = () => {
-  return (
-    <div className="h-screen w-full relative">
-      <div>
-        <h1 className="font-bebas absolute top-48 left-20 text-8xl">custom t-shirts that combine</h1>
-        <h1 className="font-bebas absolute top-72 right-20 text-8xl">quality, creativity, & personality.</h1>
-      </div>
-      <div className="flex-center gap-10 absolute bottom-20 left-20 right-20">
-        <p className="w-1/2 font-extralight flex flex-col gap-4 text-sm">
-          <span>
-            was born in 2024 with a clear vision: to create custom t-shirts that
-            combine quality, creativity, and personality. After in depth market research
-            and a close look at the competition, we realized one thing: most custom
-            apparel out there lacks originality and attention to detail.
-            We knew we could do better.
-          </span>
+  const container = useRef(null);
 
-          <span>
-            We&apos;re a small team based in Tallinn, Estonia:
-            a manager handling production and customer care, two dedicated designers who work one-on-one with clients to bring their ideas to life, and a creative agency managing our marketing and socials.
+  useGSAP(
+    () => {
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: container.current,
+          start: "top 80%",
+        },
+      });
+
+      tl.from("#back-btn", {
+        y: 40,
+        opacity: 0,
+        duration: 1,
+        delay: 1,
+        ease: "power2.out",
+      })
+        .from(
+          "#headtext h1",
+          {
+            y: 100,
+            opacity: 0,
+            clipPath: "inset(0 0 90% 0)",
+            duration: 1,
+            ease: "power2.out",
+            stagger: 0.3,
+          },
+          "<"
+        )
+        .from(
+          ["#paratext-1", "#paratext-2", "#header-img"],
+          {
+            y: "50vh",
+            duration: 3,
+            stagger: 0.1,
+            ease: "expo.inOut",
+          },
+          "<"
+        );
+    },
+    { scope: container }
+  );
+
+  return (
+    <div ref={container} className="h-screen w-full relative about-header">
+      <div id="back-btn">
+        <HistoryBackBtn text="Back" />
+      </div>
+
+      <div id="headtext">
+        <h1 className="font-bebas absolute top-48 left-20 text-8xl h-fit overflow-hidden">
+          custom t-shirts that combine
+        </h1>
+        <h1 className="font-bebas absolute top-72 right-20 text-8xl h-fit overflow-hidden">
+          quality, creativity, & personality.
+        </h1>
+      </div>
+
+      <div className="flex-center gap-10 absolute bottom-20 left-20 right-20">
+        <p className="w-[40%] font-extralight flex flex-col gap-4 text-sm opacity-70">
+          <span id="paratext-1">
+            was born in 2024 with a clear vision: to create custom t-shirts that
+            combine quality, creativity, and personality. After in depth market
+            research and a close look at the competition, we realized one thing:
+            most custom apparel out there lacks originality and attention to
+            detail. We knew we could do better.
+          </span>
+          <span id="paratext-2">
+            We&apos;re a small team based in Tallinn, Estonia: a manager
+            handling production and customer care, two dedicated designers who
+            work one-on-one with clients to bring their ideas to life, and a
+            creative agency managing our marketing and socials.
           </span>
         </p>
-        <div className="w-1/2 h-[25vh] relative">
-          <Image src="/assets/about-landing.png" alt="about" fill className="object-cover" />
+        <div className="w-[60%] h-[30vh] relative" id="header-img">
+          <Image
+            src="/assets/about-landing.png"
+            alt="about"
+            fill
+            className="object-cover"
+          />
         </div>
       </div>
-      <div className="absolute top-32 left-20 right-0 flex-center gap-4 w-fit">
-        <Image src="/assets/arrow-back.svg" alt="about" width={50} height={50} />
-        <span className="text-sm">Back</span>
-      </div>
     </div>
-  )
-}
+  );
+};
 
-export default AboutHome
+export default AboutHome;

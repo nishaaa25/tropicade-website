@@ -110,7 +110,7 @@ const AboutCards = () => {
             <div
               key={index}
               ref={(el) => (cardRefs.current[index] = el)}
-              className={` r   elative bg-[#24022C] p-4 ${
+              className={` relative bg-[#24022C] p-4 ${
                 index === 2
                   ? "bottom-[9vh] w-100 xxl:w-120  h-[65vh]"
                   : index === 1 || index === 3

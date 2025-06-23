@@ -70,7 +70,7 @@ const AboutCards = () => {
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: testRef.current,
-          start: "top 90%",
+          start: "top 60%",
         },
       });
 
@@ -78,7 +78,7 @@ const AboutCards = () => {
       tl.to(cardRefs.current[2], {
         y: 0,
         opacity: 1,
-        duration: 0.8,
+        duration: 1,
         ease: "power2.out",
       })
       // Then animate side cards (index 1 and 3)
@@ -86,7 +86,7 @@ const AboutCards = () => {
         y: 0,
         opacity: 1,
     
-        duration: 0.8,
+        duration: 1,
         ease: "power 2.out",
         stagger: 0.1,
       }, "-=0.4")
@@ -94,7 +94,7 @@ const AboutCards = () => {
       .to([cardRefs.current[0], cardRefs.current[4]], {
         y: 0,
         opacity: 1,
-        duration: 0.8,
+        duration: 1,
         ease: "power2.out",
         stagger: 0.1,
       }, "-=0.6");

@@ -81,10 +81,10 @@ const AboutAnimation = () => {
           className="object-cover relative top-[10vh] left-0"
         />
         <div className="relative" ref={titleRef}>
-          <h1 className="font-bebas text-8xl" ref={titleLine1}>
+          <h1 className="font-bebas text-[6vw] leading-[6vw]" ref={titleLine1}>
             Tropicade is where your style becomes
           </h1>
-          <h1 className="font-bebas text-8xl" ref={titleLine2}>
+          <h1 className="font-bebas text-[6vw] leading-[6vw]" ref={titleLine2}>
             the main story
           </h1>
         </div>

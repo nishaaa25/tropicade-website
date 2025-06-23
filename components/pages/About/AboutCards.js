@@ -84,7 +84,7 @@ const AboutCards = () => {
       // Then animate side cards (index 1 and 3)
       .to([cardRefs.current[1], cardRefs.current[3]], {
         y: 0,
-        opacity: 1,
+        opacity: 0.5,
     
         duration: 1,
         ease: "power 2.out",
@@ -93,7 +93,7 @@ const AboutCards = () => {
       // Finally animate outer cards (index 0 and 4)
       .to([cardRefs.current[0], cardRefs.current[4]], {
         y: 0,
-        opacity: 1,
+        opacity: 0.5,
         duration: 1,
         ease: "power2.out",
         stagger: 0.1,
@@ -103,22 +103,22 @@ const AboutCards = () => {
   );
 
   return (
-    <div className="h-screen w-full overflow-hidden relative" ref={testRef}>
-      <div className=" flex-center gap-4 relative h-full w-full pt-[15vh]">
+    <div className="h-screen w-full overflow-hidden  flex-center relative" ref={testRef}>
+      <div className=" flex-center gap-4 relative h-full w-[120%] pt-[15vh]">
         {cardsData.map((item, index) => {
           return (
             <div
               key={index}
               ref={(el) => (cardRefs.current[index] = el)}
-              className={` relative bg-[#24022C] p-4 ${
+              className={` r   elative bg-[#24022C] p-4 ${
                 index === 2
-                  ? "bottom-[9vh] w-6/12 h-[60vh]"
+                  ? "bottom-[9vh] w-100 xxl:w-120  h-[65vh]"
                   : index === 1 || index === 3
-                  ? "bottom-[8vh] h-[50vh] w-5/12"
-                  : "bottom-0 h-[50vh] w-5/12"
+                  ? "bottom-[8vh] h-[55vh] w-80 xxl:w-100 "
+                  : "bottom-0 h-[55vh] w-80"
               }`}
             >
-              <p className="text-sm font-extralight opacity-50">{item.title}</p>
+              <p className="text-sm font-extralight xxl:text-lg xxl:leading-[24px]">{item.title}</p>
               <div className="py-6 flex gap-4">
                 <div className="w-16 h-16 relative flex-shrink-0">
                   <Image

@@ -4,13 +4,27 @@ import gsap from "gsap";
 import ScrollTrigger from "gsap/dist/ScrollTrigger";
 import Image from "next/image";
 import { useRef } from "react";
+import SplitType from "split-type";
 
 gsap.registerPlugin(ScrollTrigger);
 
 const AboutAnimation = () => {
   const contRef = useRef();
+  const titleRef = useRef();
+  const titleLine1 = useRef(null);
+  const titleLine2 = useRef(null);
+
   useGSAP(
     () => {
+      const split1 = new SplitType(titleLine1.current, {
+        types: "chars",
+        tagName: "span",
+      });
+      const split2 = new SplitType(titleLine2.current, {
+        types: "chars",
+        tagName: "span",
+      });
+
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: contRef.current,
@@ -20,15 +34,29 @@ const AboutAnimation = () => {
       tl.from(["#heading", "#bar", "#para-text-1", "#para-text-2"], {
         y: 200,
         opacity: 0,
-        ease: "expo.inOut",
-        stagger: 0.3, duration: 3
+        ease: "expo.out",
+        stagger: 0.3,
+        duration: 3,
+      });
+
+      gsap.from([...split1.chars, ...split2.chars], {
+        scrollTrigger: {
+          trigger: titleRef.current,
+          start: "top 80%",
+          end: "bottom 10%",
+          scrub: 1,
+        },
+        opacity: 0.2,
+        stagger: 0.03,
+        duration: 3,
+        ease: "expo.out",
       });
     },
     { scope: contRef }
   );
   return (
-    <div className="h-screen w-full px-20 pt-28" ref={contRef}>
-      <div className="flex justify-between items-center">
+    <div className="w-full px-20 " ref={contRef}>
+      <div className="flex justify-between items-center pt-[10vh] pb-[5vh]">
         <h1 className="font-bebas text-4xl" id="heading">
           What sets us apart?
         </h1>
@@ -44,18 +72,22 @@ const AboutAnimation = () => {
           </span>
         </p>
       </div>
-      <div className="h-[70vh] flex flex-col justify-center relative">
-        <h1 className="font-bebas text-8xl opacity-50">
-          Tropicade is where your style becomes
-        </h1>
-        <h1 className="font-bebas text-8xl opacity-50">the main story</h1>
+      <div className="h-[50vh] flex flex-col justify-center relative">
         <Image
           src="/assets/anchor.svg"
           alt="Anchor Image"
           width={200}
           height={100}
-          className="object-cover absolute top-20 left-0"
+          className="object-cover relative top-[10vh] left-0"
         />
+        <div className="relative" ref={titleRef}>
+          <h1 className="font-bebas text-8xl" ref={titleLine1}>
+            Tropicade is where your style becomes
+          </h1>
+          <h1 className="font-bebas text-8xl" ref={titleLine2}>
+            the main story
+          </h1>
+        </div>
       </div>
     </div>
   );

@@ -24,8 +24,8 @@ const AboutHome = () => {
       tl.from("#back-btn", {
         y: 40,
         opacity: 0,
-        duration: 1,
-        delay: 1,
+        duration: 0.7,
+        delay: 0.5,
         ease: "power2.out",
       })
         .from(
@@ -34,19 +34,20 @@ const AboutHome = () => {
             y: 100,
             opacity: 0,
             clipPath: "inset(0 0 90% 0)",
-            duration: 1,
+            duration: 0.8,
             ease: "power2.out",
             stagger: 0.3,
           },
-          "<"
+          "-=0.2"
         )
         .from(
           ["#paratext-1", "#paratext-2", "#header-img"],
           {
             y: "50vh",
-            duration: 3,
-            stagger: 0.1,
-            ease: "expo.inOut",
+            opacity: 0,
+            duration: 1,
+            stagger: 0.3,
+            ease: "power2.out",
           },
           "<"
         );

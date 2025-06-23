@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@glidejs/glide": "^3.7.1",
     "@gsap/react": "^2.1.2",
     "@studio-freight/lenis": "^1.0.42",
     "@vfx-js/core": "^0.7.0",

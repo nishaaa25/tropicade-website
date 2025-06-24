@@ -1,4 +1,5 @@
 "use client";
+import Background from "@/components/Background";
 import HistoryBackBtn from "@/components/HistoryBackBtn";
 import { useCart } from "@/components/Hooks/CartContext";
 import Image from "next/image";
@@ -10,36 +11,15 @@ export default function CartPage() {
 
   return (
     <div className="min-h-screen w-full relative pb-[10vh]">
-      <div className="fixed -bottom-80 -left-[15vw] -z-10">
-        <Image
-          src="/assets/leafs.svg"
-          alt="landing-page-bg"
-          width={900}
-          height={900}
-          className="object-contain z-50 h-[50vw] w-[50vw]"
-        />
-      </div>
-      <div className="fixed -bottom-52 -right-[15vw] -z-10">
-        <div className="leaf-img h-[30vw] w-[40vw]">
-          <Image
-            src="/assets/singleleaf.svg"
-            alt="landing-page-bg"
-            width={900}
-            height={900}
-            className="object-contain z-50 h-full w-full mix-blend-screen"
-          />
-        </div>
-        <div className="h-[60vh] fixed top-1/2 -translate-y-1/2 -right-30 w-[60vh] rounded-full blur-[180px] bg-[#440a53] z-10"></div>
-        <div className="h-[60vh] fixed top-[80%] left-1/2 -translate-x-1/2 w-[60vh] rounded-full blur-[200px] bg-[#CF2379] z-30"></div>
-      </div>
-      <div className="ml-5 relative z-10"><HistoryBackBtn text="Back to shopping" />
-      </div>
-      <div className="container mx-auto w-[90%] pt-[24vh] relative">
-        <div className="absolute top-[10vh] left-1/2 -translate-x-1/2">
+      <Background/>
+      <div className="fixed top-[10vh] left-1/2 -translate-x-1/2">
           <h1 className="text-[22vw] leading-[20vw] font-bebas opacity-1 relative text-center">
             Cart
           </h1>
         </div>
+      <div className="ml-5 relative z-10"><HistoryBackBtn text="Back to shopping" />
+      </div>
+      <div className="container mx-auto w-[90%] pt-[24vh] relative">
         <h1 className="text-white  text-4xl font-bebas ml-7">Cart</h1>
         <div className="w-full flex gap-10 mt-7 relative">
           <div className="w-7/12 relative">

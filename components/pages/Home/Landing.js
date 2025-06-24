@@ -6,6 +6,7 @@ import { useRef } from "react"
 import OurProcess from "../../OurProcess"
 import VerticalScale from "../../VerticalScale"
 import Link from "next/link"
+import Background from "@/components/Background"
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -275,43 +276,6 @@ const Landing = () => {
             }
         })
 
-        // Add leaf animations
-        const tl = gsap.timeline();
-        tl.to(
-            leafsRef.current,
-            {
-                scale: 1,
-                duration: 3,
-                ease: "expo.inOut",
-                delay: 0.5,
-            },
-            "he"
-        );
-
-        tl.to(
-            singleLeafRef.current,
-            {
-                scale: 1,
-                duration: 3,
-                ease: "expo.inOut",
-                delay: 0.5,
-            },
-            "he"
-        );
-
-        // Add scroll-triggered leaf animation
-        gsap.to(leafsRef.current, {
-            y: "-120vh",
-            scrollTrigger: {
-                trigger: leafsRef.current,
-                start: "top bottom",
-                end: "bottom top",
-                scrub: 1,
-                invalidateOnRefresh: true,
-            },
-            ease: "none",
-            immediateRender: false,
-        });
 
         // Cleanup will-change on animation complete
         return () => {
@@ -468,30 +432,7 @@ const Landing = () => {
             </div>
             <OurProcess />
             <VerticalScale />
-            <div className="fixed -bottom-52 -right-[15vw] -z-20">
-                <div className="leaf-img h-[30vw] w-[40vw]">
-                    <Image
-                        ref={singleLeafRef}
-                        src="/assets/singleleaf.svg"
-                        alt="landing-page-bg"
-                        width={900}
-                        height={900}
-                        className="object-contain z-50 h-full w-full mix-blend-screen"
-                    />
-                </div>
-                <div className="h-[60vh] fixed top-1/2 -translate-y-1/2 -right-10 w-[60vh] rounded-full blur-[200px] bg-[#32033F]"></div>
-                <div className="h-[60vh] fixed top-[80%] left-1/2 -translate-x-1/2 w-[60vh] rounded-full blur-[200px] bg-[#CF2379]"></div>
-            </div>
-            <div className="fixed -bottom-120 -left-[20vw] -z-10">
-                <Image
-                    ref={leafsRef}
-                    src="/assets/leafs.svg"
-                    alt="landing-page-bg"
-                    width={900}
-                    height={900}
-                    className="object-contain z-50 h-[50vw] w-[50vw]"
-                />
-            </div>
+            <Background/>
         </>
     )
 }

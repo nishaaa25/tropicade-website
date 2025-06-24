@@ -106,7 +106,7 @@ export default function ProductsPage() {
           </h3>
           <div className="grid grid-cols-5 relative top-10 gap-8 pt-[5vh]">
             {filteredProducts.map((product, index) => (
-              <Link href={`/products/productId?=${product?._id}`} key={index}>
+              <Link href={`/products/${product?._id}`} key={index}>
                 <ProductCard {...product} />
               </Link>
             ))}

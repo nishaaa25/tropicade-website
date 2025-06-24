@@ -13,14 +13,12 @@ export default function Navbar() {
       const currentScrollY = window.scrollY;
       
       if (currentScrollY > lastScrollY.current) {
-        // Scrolling down
         gsap.to(navRef.current, {
           y: -100,
           duration: 2,
           ease: "power2.out"
         });
       } else {
-        // Scrolling up
         gsap.to(navRef.current, {
           y: 0,
           duration: 2,
@@ -67,12 +65,14 @@ export default function Navbar() {
             />
           </div>
           <div className="relative">
+            <Link href="/cart">
             <Image
               src="/assets/ShoppingBag.svg"
               alt="search"
               width={28}
-              height={28}
-            />
+                height={28}
+              />
+            </Link>
           </div>
           <div className="relative">
             <Image

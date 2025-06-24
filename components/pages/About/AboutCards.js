@@ -5,6 +5,7 @@ import gsap from "gsap";
 import ScrollTrigger from "gsap/dist/ScrollTrigger";
 import Image from "next/image";
 import React, { useRef } from "react";
+import Background from "@/components/Background";
 
 gsap.registerPlugin(ScrollTrigger);
 const AboutCards = () => {
@@ -104,6 +105,7 @@ const AboutCards = () => {
 
   return (
     <div className="h-screen w-full overflow-hidden  flex-center relative" ref={testRef}>
+      <Background/>
       <div className=" flex-center gap-4 relative h-full w-[120%] pt-[15vh]">
         {cardsData.map((item, index) => {
           return (
@@ -151,7 +153,7 @@ const AboutCards = () => {
           );
         })}
       </div>
-      <div className="h-[400px] w-[400px] rounded-full bg-[#CF2379] blur-[10vw] absolute -bottom-[20vh] right-[20vw]"></div>
+      {/* <div className="h-[400px] w-[400px] rounded-full bg-[#CF2379] blur-[10vw] absolute -bottom-[20vh] right-[20vw]"></div>
       <div className="absolute w-100 h-100 -bottom-[20vh] -right-[10vw] mix-blend-color
       ">
         <Image
@@ -160,7 +162,7 @@ const AboutCards = () => {
           fill
           className="object-contain relative -rotate-45"
         />
-      </div>
+      </div> */}
     </div>
   );
 };

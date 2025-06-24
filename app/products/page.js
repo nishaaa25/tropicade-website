@@ -1,4 +1,5 @@
 "use client";
+import Background from "@/components/Background";
 import HistoryBackBtn from "@/components/HistoryBackBtn";
 import ProductCard from "@/components/ProductCard";
 import Image from "next/image";
@@ -43,28 +44,7 @@ export default function ProductsPage() {
 
   return (
     <div className="min-h-screen relative">
-      <div className="fixed -bottom-80 -left-[15vw] -z-10">
-        <Image
-          src="/assets/leafs.svg"
-          alt="landing-page-bg"
-          width={900}
-          height={900}
-          className="object-contain z-50 h-[50vw] w-[50vw]"
-        />
-      </div>
-      <div className="fixed -bottom-52 -right-[15vw] -z-10">
-        <div className="leaf-img h-[30vw] w-[40vw]">
-          <Image
-            src="/assets/singleleaf.svg"
-            alt="landing-page-bg"
-            width={900}
-            height={900}
-            className="object-contain z-50 h-full w-full mix-blend-screen"
-          />
-        </div>
-        <div className="h-[60vh] fixed top-1/2 -translate-y-1/2 -right-30 w-[60vh] rounded-full blur-[180px] bg-[#440a53] z-10"></div>
-        <div className="h-[60vh] fixed top-[80%] left-1/2 -translate-x-1/2 w-[60vh] rounded-full blur-[200px] bg-[#CF2379] z-30"></div>
-      </div>
+      <Background/>
       <HistoryBackBtn text="Back to home page" />
       <div className="container mx-auto w-[90%] pt-[20vh] relative">
         <div className="flex-between relative my-4">

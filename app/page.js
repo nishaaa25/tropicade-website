@@ -185,7 +185,7 @@ export default function Home() {
     <LoaderContext.Provider value={{ isLoaderComplete }}>
       <div>
         {/* Loader */}
-        <div className="loader" ref={loader}>
+        {/* <div className="loader" ref={loader}>
           <div className="overlay relative">
             <div className="block relative">
               <div>
@@ -242,7 +242,7 @@ export default function Home() {
               <div className="digit"><h1>9</h1></div>
             </div>
           </div>
-        </div>
+        </div> */}
 
         {/* Page Content */}
         <Landing />

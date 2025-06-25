@@ -4,6 +4,7 @@ import { useRef, useEffect, createContext, useState } from "react";
 import gsap from "gsap";
 import CustomEase from "gsap/CustomEase";
 import Image from "next/image";
+import RevealCode from "@/components/Hooks/RevealCode";
 
 gsap.registerPlugin(CustomEase);
 CustomEase.create("hop", "0.9, 0, 0.1, 1");
@@ -243,9 +244,9 @@ export default function Home() {
             </div>
           </div>
         </div> */}
-
         {/* Page Content */}
         <Landing />
+        {/* <RevealCode /> */}
       </div>
     </LoaderContext.Provider>
   );

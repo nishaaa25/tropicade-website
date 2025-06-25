@@ -11,11 +11,15 @@
   "dependencies": {
     "@glidejs/glide": "^3.7.1",
     "@gsap/react": "^2.1.2",
+    "@react-three/drei": "^10.3.0",
+    "@react-three/fiber": "^9.1.2",
+    "@react-three/postprocessing": "^3.0.4",
     "@studio-freight/lenis": "^1.0.42",
     "@vfx-js/core": "^0.7.0",
     "bcryptjs": "^3.0.2",
     "cors": "^2.8.5",
     "dotenv": "^16.5.0",
+    "glslify": "^7.1.1",
     "gsap": "^3.13.0",
     "jsonwebtoken": "^9.0.2",
     "lucide-react": "^0.522.0",
@@ -24,13 +28,15 @@
     "next": "15.3.2",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "split-type": "^0.2.5"
+    "split-type": "^0.2.1",
+    "tweakpane": "^4.0.5"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
     "@tailwindcss/postcss": "^4",
     "eslint": "^9",
     "eslint-config-next": "15.3.2",
+    "raw-loader": "^4.0.2",
     "tailwindcss": "^4"
   }
 }

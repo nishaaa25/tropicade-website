@@ -4,6 +4,7 @@ import { useRef, useEffect, createContext, useState } from "react";
 import gsap from "gsap";
 import CustomEase from "gsap/CustomEase";
 import Image from "next/image";
+import RevealCode from "@/components/Hooks/RevealCode";
 
 gsap.registerPlugin(CustomEase);
 CustomEase.create("hop", "0.9, 0, 0.1, 1");
@@ -185,7 +186,7 @@ export default function Home() {
     <LoaderContext.Provider value={{ isLoaderComplete }}>
       <div>
         {/* Loader */}
-        <div className="loader" ref={loader}>
+        {/* <div className="loader" ref={loader}>
           <div className="overlay relative">
             <div className="block relative">
               <div>
@@ -242,10 +243,10 @@ export default function Home() {
               <div className="digit"><h1>9</h1></div>
             </div>
           </div>
-        </div>
-
+        </div> */}
         {/* Page Content */}
         <Landing />
+        {/* <RevealCode /> */}
       </div>
     </LoaderContext.Provider>
   );

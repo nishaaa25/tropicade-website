@@ -14,7 +14,7 @@ export default function ProductCard({ id, image, title, price }) {
         </div>
         <div className="w-[100%] h-[100%] relative -top-[5.5vh] ">
           <Image
-            src={image}
+            src={image || "/products/tshirt-2.png"}
             alt={title}
             fill 
             className="object-contain group-hover:scale-110 transition-transform duration-300"

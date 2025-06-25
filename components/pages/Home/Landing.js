@@ -6,6 +6,7 @@ import { useRef } from "react"
 import OurProcess from "../../OurProcess"
 import VerticalScale from "../../VerticalScale"
 import Link from "next/link"
+import Background from "@/components/Background"
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -270,49 +271,34 @@ const Landing = () => {
                 gsap.to(tShirtRef.current, {
                     y: -140 - (300 * progress), // Continue from where main animation ended
                     opacity: 1 - progress, // Fade out as scroll progresses
+// =======
+//                 // Move t-shirt up faster than normal scroll
+//                 // gsap.to(tShirtRef.current, {
+//                 //     y: -140 - (300 * progress), // Continue from where main animation ended
+//                 //     duration: 0.1,
+//                 //     ease: "none"
+//                 // })
+//             }
+//         })
+
+//         // Add new t-shirt animation after 200vh of scroll
+//         ScrollTrigger.create({
+//             trigger: "body",
+//             start: "200vh top",
+//             end: "300vh top",
+//             scrub: 1,
+//             onUpdate: (self) => {
+//                 const progress = self.progress;
+//                 // Move t-shirt from bottom to top
+//                 gsap.to(tShirtRef.current, {
+//                     y: 100 - (200 * progress), // Start from bottom (100) and move up (-100)
+// >>>>>>> master
                     duration: 0.1,
                     ease: "none"
                 })
             }
         })
 
-        // Add leaf animations
-        const tl = gsap.timeline();
-        tl.to(
-            leafsRef.current,
-            {
-                scale: 1,
-                duration: 3,
-                ease: "expo.inOut",
-                delay: 0.5,
-            },
-            "he"
-        );
-
-        tl.to(
-            singleLeafRef.current,
-            {
-                scale: 1,
-                duration: 3,
-                ease: "expo.inOut",
-                delay: 0.5,
-            },
-            "he"
-        );
-
-        // Add scroll-triggered leaf animation
-        gsap.to(leafsRef.current, {
-            y: "-120vh",
-            scrollTrigger: {
-                trigger: leafsRef.current,
-                start: "top bottom",
-                end: "bottom top",
-                scrub: 1,
-                invalidateOnRefresh: true,
-            },
-            ease: "none",
-            immediateRender: false,
-        });
 
         // Cleanup will-change on animation complete
         return () => {
@@ -334,6 +320,9 @@ const Landing = () => {
         <>
             {/* Sticky wrapper with defined height for scroll distance */}
             <div className="sticky-wrapper relative" style={{ height: '180vh' }}>
+// =======
+//             <div className="sticky-wrapper relative" style={{ height: '220vh' }}>
+// >>>>>>> master
                 <div
                     ref={containerRef}
                     className="sticky-content sticky top-0 h-screen w-[95%] mx-auto overflow-hidden"
@@ -469,30 +458,7 @@ const Landing = () => {
             </div>
             <OurProcess />
             <VerticalScale />
-            <div className="fixed -bottom-[13vw] -right-[15vw] -z-20">
-                <div className="leaf-img h-[30vw] w-[40vw]">
-                    <Image
-                        ref={singleLeafRef}
-                        src="/assets/singleleaf.svg"
-                        alt="landing-page-bg"
-                        width={900}
-                        height={900}
-                        className="object-contain z-50 h-full w-full mix-blend-screen"
-                    />
-                </div>
-                <div className="h-[60vh] fixed top-1/2 -translate-y-1/2 -right-[2.5vw] w-[60vh] rounded-full blur-[200px] bg-[#32033F]"></div>
-                <div className="h-[60vh] fixed top-[80%] left-1/2 -translate-x-1/2 w-[60vh] rounded-full blur-[200px] bg-[#CF2379]"></div>
-            </div>
-            <div className="fixed -bottom-[30vw] -left-[20vw] -z-10">
-                <Image
-                    ref={leafsRef}
-                    src="/assets/leafs.svg"
-                    alt="landing-page-bg"
-                    width={900}
-                    height={900}
-                    className="object-contain z-50 h-[50vw] w-[50vw]"
-                />
-            </div>
+            <Background/>
         </>
     )
 }

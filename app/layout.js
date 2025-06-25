@@ -3,6 +3,7 @@ import "./globals.css";
 import Navbar from "@/components/Navbar";
 import { useLenis } from "@/components/Hooks/useLenis";
 import LenisProvider from "@/components/Hooks/lenisProvider";
+import { CartProvider } from "@/components/Hooks/CartContext";
 
 export const metadata = {
   title: "Create Next App",
@@ -13,10 +14,12 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={`antialiased w-full relative`}>
-        <LenisProvider>
-          <Navbar />
-          {children}
-        </LenisProvider>
+        <CartProvider>
+          <LenisProvider>
+            <Navbar />
+            {children}
+          </LenisProvider>
+        </CartProvider>
       </body>
     </html>
   );

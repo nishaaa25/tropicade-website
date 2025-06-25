@@ -1,56 +1,114 @@
 "use client";
+import HistoryBackBtn from "@/components/HistoryBackBtn";
 import Image from "next/image";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useCart } from "@/components/Hooks/CartContext";
+import { useRouter } from "next/navigation";
+import Background from "@/components/Background";
 
 const sizes = ["S", "M", "L", "X", "XL", "XXL"];
 const colors = ["#416d8a", "#418a5c", "#8a5641", "#8a4180"];
 
-export default function ProductDetailsPage({params}) {
+export default function ProductDetailsPage({ params }) {
   const productSlug = React.use(params);
-  
+  const [product, setProduct] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
   const [selectedSize, setSelectedSize] = useState("S");
   const [selectedColor, setSelectedColor] = useState(colors[0]);
   const [activeTab, setActiveTab] = useState("FRONT");
   const items = Array.from({ length: 5 }, (_, i) => i + 1);
   const radius = 200;
 
+  const { addToCart } = useCart();
+  const router = useRouter();
+
+  useEffect(() => {
+    const fetchProduct = async () => {
+      try {
+        setLoading(true);
+        console.log('Fetching product with ID:', productSlug.productSlug);
+        const response = await fetch(`/api/products/${productSlug.productSlug}`);
+        console.log('Response status:', response.status);
+        if (!response.ok) {
+          const errorData = await response.json();
+          throw new Error(errorData.message || 'Product not found');
+        }
+        const productData = await response.json();
+        console.log('Product data:', productData);
+        setProduct(productData);
+        // Set initial color from product data if available
+        if (productData.colors && productData.colors.length > 0) {
+          setSelectedColor(productData.colors[0]);
+        }
+        // Set initial size from product data if available
+        if (productData.sizes && productData.sizes.length > 0) {
+          setSelectedSize(productData.sizes[0]);
+          console.log('Initial size set to:', productData.sizes[0]);
+        }
+      } catch (err) {
+        console.error('Error fetching product:', err);
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    if (productSlug.productSlug) {
+      fetchProduct();
+    }
+  }, [productSlug.productSlug]);
+
+  useEffect(() => {
+    console.log('Selected size changed:', selectedSize);
+  }, [selectedSize]);
+
+  function handleBuyNow() {
+    if (!product) return;
+    addToCart({
+      id: product._id,
+      title: product.title,
+      image: product.image || "/assets/product-1.png",
+      price: product.price,
+      size: selectedSize,
+      color: selectedColor,
+      qty: 1,
+    });
+    router.push("/cart");
+  }
+
+  if (loading) {
+    return (
+      <div className="h-screen flex items-center justify-center">
+        <div className="text-white text-xl">Loading...</div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="h-screen flex items-center justify-center">
+        <div className="text-white text-xl">Error: {error}</div>
+      </div>
+    );
+  }
+
+  if (!product) {
+    return (
+      <div className="h-screen flex items-center justify-center">
+        <div className="text-white text-xl">Product not found</div>
+      </div>
+    );
+  }
+
   return (
     <div className="h-screen relative overflow-hidden w-full">
-      <div className="fixed -bottom-80 -left-[15vw] -z-10">
-        <Image
-          src="/assets/leafs.svg"
-          alt="landing-page-bg"
-          width={900}
-          height={900}
-          className="object-contain z-50 h-[50vw] w-[50vw]"
-        />
-      </div>
-      <div className="fixed -bottom-[40vh] -right-[15vw] -z-10">
-        <div className="leaf-img h-[30vw] w-[40vw]">
-          <Image
-            src="/assets/singleleaf.svg"
-            alt="landing-page-bg"
-            width={900}
-            height={900}
-            className="object-contain z-50 h-full w-full mix-blend-screen"
-          />
-        </div>
-        <div className="h-[60vh] fixed top-1/2 -translate-y-1/2 -right-30 w-[60vh] rounded-full blur-[180px] bg-[#440a53] z-10"></div>
-        <div className="h-[60vh] fixed top-[80%] left-1/2 -translate-x-1/2 w-[60vh] rounded-full blur-[200px] bg-[#CF2379] z-30"></div>
-      </div>
+      <Background/>
+      <HistoryBackBtn text="Back to all products" />
+
       <div className="container w-full h-full flex-center relative ml-[5vw]">
-        <div className="absolute top-[17vh] z-10 left-0">
-          <Link href="/" className="flex items-center gap-3 text-white">
-            <Image
-              src="/assets/arrow-back.svg"
-              alt="arrowback"
-              width={51}
-              height={27}
-            />
-            Back to all products
-          </Link>
-        </div>
         <div className="absolute top-[10vh] left-12">
           <h1 className="text-[22vw] leading-[20vw] font-bebas opacity-2 ">
             CUSTOMISE
@@ -60,20 +118,20 @@ export default function ProductDetailsPage({params}) {
           <div className="relative w-[25%] h-full flex justify-center items-start flex-col pt-[10vh] gap-5">
             <div className="flex flex-col items-start gap-2">
               <div className="text-xs uppercase  text-[#eab651] bg-[#EAB651]/10 px-2 py-1">
-                DESIGN #2
+                Design#2
               </div>
-              <h1 className="text-[3.5vw] leading-[3vw] font-bebas">
-                T-SHIRT BOOTLEG
+              <h1 className="text-[3.5vw] leading-[3.2vw] font-bebas">
+                {product.title || "T-SHIRT BOOTLEG"}
               </h1>
-              <p className="text-base">$ 1,250</p>
+              <p className="text-base">$ {product.price?.toLocaleString() || "1,250"}</p>
               <p className="text-gray-400 font-[200] text-xs pr-10">
-               At The Design Shop, we craft digital experiences that don&apos;t just look stunning — they work beautifully. We specialize in website and application design & development.
+                {product.desc || "At The Design Shop, we craft digital experiences that don't just look stunning — they work beautifully. We specialize in website and application design & development."}
               </p>
             </div>
             <div className="relative">
               <h3 className="text-base mb-3">COLOR</h3>
               <div className="flex items-center gap-2">
-                {colors.map((color) => (
+                {(product.colors && product.colors.length > 0 ? product.colors : colors).map((color) => (
                   <div
                     key={color}
                     onClick={() => setSelectedColor(color)}
@@ -94,10 +152,13 @@ export default function ProductDetailsPage({params}) {
                 SIZE <span className="text-dark-pink-500">(UNISEX)</span>
               </h3>
               <div className="flex items-center gap-[10px]">
-                {sizes.map((size) => (
+                {(product.sizes && product.sizes.length > 0 ? product.sizes : sizes).map((size) => (
                   <button
                     key={size}
-                    onClick={() => setSelectedSize(size)}
+                    onClick={() => {
+                      setSelectedSize(size);
+                      console.log('Selected size:', size);
+                    }}
                     className={`min-w-6 h-6 flex-center text-sm uppercase px-1 transition-all duration-300 cursor-pointer ${
                       selectedSize === size
                         ? "bg-white text-dark-pink-500"
@@ -109,15 +170,15 @@ export default function ProductDetailsPage({params}) {
                 ))}
               </div>
             </div>
-            <button className="min-w-[162px] bg-[#ff4d6d] text-white py-2 hover:bg-[#ff4d6d]/90 transition-colors cursor-pointer text-sm relative top-2">
+            <button className="min-w-[162px] bg-[#ff4d6d] text-white py-2 hover:bg-[#ff4d6d]/90 transition-colors cursor-pointer text-sm relative top-2" onClick={handleBuyNow}>
               BUY NOW
             </button>
           </div>
           <div className="relative w-[55%] h-full flex justify-end items-end">
             <div className="absolute w-[100%] h-[105%] z-200 -bottom-[10vh] -left-[5vw]">
               <Image
-                src="/assets/t-shirt2.png"
-                alt="T-Shirt Bootleg"
+                src={product.image || "/assets/t-shirt2.png"}
+                alt={product.title || "T-Shirt Bootleg"}
                 fill
                 className="object-contain p-8 relative"
               />
@@ -167,9 +228,9 @@ export default function ProductDetailsPage({params}) {
                           : "w-10 h-10 border-white/5"
                       } absolute bg-[#3c3841]  grid place-items-center rounded-full overflow-hidden border-3 `}
                       style={{ transform }}
-                    >
+                    > 
                       <Image
-                        src={`/assets/product-1.png`}
+                        src={ `/assets/product-1.png`}
                         alt="alt"
                         fill
                         className="rotate-255 text-white text-xs font-sans"

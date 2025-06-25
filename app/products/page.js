@@ -1,4 +1,6 @@
 "use client";
+import Background from "@/components/Background";
+import HistoryBackBtn from "@/components/HistoryBackBtn";
 import ProductCard from "@/components/ProductCard";
 import Image from "next/image";
 import Link from "next/link";
@@ -17,7 +19,7 @@ export default function ProductsPage() {
         const res = await fetch("/api/products");
         const data = await res.json();
         setProducts(Array.isArray(data) ? data : []);
-        console.log(data[0]?._id , "id")
+        console.log(data[0]?._id, "id");
       } catch (error) {
         console.error("Error fetching products:", error);
         setProducts([]);
@@ -26,52 +28,25 @@ export default function ProductsPage() {
     fetchProducts();
   }, []);
 
-  const filteredProducts = Array.isArray(products) ? products.filter((product) => {
-    const title = product?.title?.toLowerCase() || "";
-    const category = product?.category || "";
+  const filteredProducts = Array.isArray(products)
+    ? products.filter((product) => {
+        const title = product?.title?.toLowerCase() || "";
+        const category = product?.category || "";
 
-    const matchesCategory =
-      activeCategory === "All" || category === activeCategory.toLowerCase();
+        const matchesCategory =
+          activeCategory === "All" || category === activeCategory.toLowerCase();
 
-    const matchesSearch = title.includes(searchQuery.toLowerCase());
+        const matchesSearch = title.includes(searchQuery.toLowerCase());
 
-    return matchesCategory && matchesSearch;
-  }) : [];
+        return matchesCategory && matchesSearch;
+      })
+    : [];
 
   return (
     <div className="min-h-screen relative">
-      <div className="fixed -bottom-80 -left-[15vw] -z-10">
-        <Image
-          src="/assets/leafs.svg"
-          alt="landing-page-bg"
-          width={900}
-          height={900}
-          className="object-contain z-50 h-[50vw] w-[50vw]"
-        />
-      </div>
-      <div className="fixed -bottom-52 -right-[15vw] -z-10">
-        <div className="leaf-img h-[30vw] w-[40vw]">
-          <Image
-            src="/assets/singleleaf.svg"
-            alt="landing-page-bg"
-            width={900}
-            height={900}
-            className="object-contain z-50 h-full w-full mix-blend-screen"
-          />
-        </div>
-        <div className="h-[60vh] fixed top-1/2 -translate-y-1/2 -right-30 w-[60vh] rounded-full blur-[180px] bg-[#440a53] z-10"></div>
-        <div className="h-[60vh] fixed top-[80%] left-1/2 -translate-x-1/2 w-[60vh] rounded-full blur-[200px] bg-[#CF2379] z-30"></div>
-      </div>
-      <div className="container mx-auto w-[90%] pt-[17vh] relative">
-        <Link href="/" className="flex items-center gap-3 text-white ">
-          <Image
-            src="/assets/arrow-back.svg"
-            alt="arrowback"
-            width={51}
-            height={27}
-          />
-          Back to home page
-        </Link>
+      <Background/>
+      <HistoryBackBtn text="Back to home page" />
+      <div className="container mx-auto w-[90%] pt-[20vh] relative">
         <div className="flex-between relative my-4">
           <div className="flex-center gap-4">
             {categories.map((category) => (
@@ -110,8 +85,8 @@ export default function ProductsPage() {
             ALL PRODUCTS
           </h3>
           <div className="grid grid-cols-5 relative top-10 gap-8 pt-[5vh]">
-            {filteredProducts.map((product,index) => (
-              <Link href={`/products/productId?=${product?._id}`} key={index}>
+            {filteredProducts.map((product, index) => (
+              <Link href={`/products/${product?._id}`} key={index}>
                 <ProductCard {...product} />
               </Link>
             ))}

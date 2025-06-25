@@ -320,9 +320,6 @@ const Landing = () => {
         <>
             {/* Sticky wrapper with defined height for scroll distance */}
             <div className="sticky-wrapper relative" style={{ height: '180vh' }}>
-// =======
-//             <div className="sticky-wrapper relative" style={{ height: '220vh' }}>
-// >>>>>>> master
                 <div
                     ref={containerRef}
                     className="sticky-content sticky top-0 h-screen w-[95%] mx-auto overflow-hidden"

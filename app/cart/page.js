@@ -5,7 +5,6 @@ import { useCart } from "@/components/Hooks/CartContext";
 import Image from "next/image";
 
 export default function CartPage() {
-<<<<<<< HEAD
   const { cart, removeFromCart, updateQty } = useCart();
 
   const subtotal = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
@@ -121,9 +120,4 @@ export default function CartPage() {
 
     </div>
   );
-=======
-  return <div className="cart">
-    
-  </div>;
->>>>>>> a27824b (ss)
 }

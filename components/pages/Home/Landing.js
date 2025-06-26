@@ -262,7 +262,7 @@ const Landing = () => {
         // Add separate ScrollTrigger for fast t-shirt scroll after main animation
         ScrollTrigger.create({
             trigger: ".sticky-wrapper",
-            start: "bottom top", // Start when sticky wrapper ends
+            start: "100% bottom", // Start when sticky wrapper bottom is at 80%
             end: "+=360vh", // Continue for extra distance (reduced from 400vh to 360vh for 180vh total)
             scrub: 1,
             onUpdate: (self) => {

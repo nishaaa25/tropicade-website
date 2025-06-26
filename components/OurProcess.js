@@ -23,7 +23,7 @@ export default function OurProcess() {
     const tl1 = gsap.timeline({
       scrollTrigger: {
         trigger: processDivRef.current,
-        start: "top center",
+        start: "top 80%",
         end: "top -10%",
         scrub: 2,
       },
@@ -35,16 +35,7 @@ export default function OurProcess() {
         ease: "power1.out",
         duration: 2,
       })
-      .from(
-        "#text-1 p",
-        {
-          y: 400,
-          ease: "power1.out",
-          duration: 2,
-        },
-        "<"
-      )
-      .from(
+     .from(
         ".img-cont .product",
         {
           skewY: -10,
@@ -54,6 +45,14 @@ export default function OurProcess() {
           duration: 2,
         },
         "<0.2"
+      ) .from(
+        "#text-1 p",
+        {
+          y: 400,
+          ease: "power1.out",
+          duration: 3
+        },
+        "<1"
       )
       .to(
         ".clip-1",
@@ -174,7 +173,7 @@ export default function OurProcess() {
 
   return (
     <div
-      className="w-full h-screen relative py-[4.17vw] flex-center overflow-hidden"
+      className="w-full h-screen relative pb-[4.17vw] flex-center overflow-hidden"
       ref={processDivRef}
       id="ourprocess"
     >

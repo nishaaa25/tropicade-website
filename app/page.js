@@ -245,8 +245,7 @@ export default function Home() {
           </div>
         </div> */}
         {/* Page Content */}
-        {/* <Landing /> */}
-        <RevealCode />
+        <Landing />
       </div>
     </LoaderContext.Provider>
   );

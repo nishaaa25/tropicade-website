@@ -17,11 +17,6 @@ const Loader = ({ onComplete }) => {
       },
     });
 
-    tl.to(".spinner", {
-      opacity: 0,
-      duration: 0.3,
-    });
-
     // Add onComplete callback to signal when loader is done
     tl.to({}, {
       duration: 0.1,

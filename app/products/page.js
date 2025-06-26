@@ -5,12 +5,14 @@ import ProductCard from "@/components/ProductCard";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import Loader from "@/components/Loader";
 
 const categories = ["All", "Bootleg", "Only You", "Eras Tour"];
 
 export default function ProductsPage() {
   const [activeCategory, setActiveCategory] = useState("All");
   const [searchQuery, setSearchQuery] = useState("");
+  const [loading, setLoading] = useState(true);
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
@@ -20,13 +22,23 @@ export default function ProductsPage() {
         const data = await res.json();
         setProducts(Array.isArray(data) ? data : []);
         console.log(data[0]?._id, "id");
+        setLoading(false);
       } catch (error) {
         console.error("Error fetching products:", error);
         setProducts([]);
+        setLoading(false);
       }
     };
     fetchProducts();
   }, []);
+
+  if (loading) {
+    return (
+      <div className="h-screen flex items-center justify-center">
+        <Loader/>
+      </div>
+    );
+  }
 
   const filteredProducts = Array.isArray(products)
     ? products.filter((product) => {

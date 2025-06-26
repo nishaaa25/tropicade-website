@@ -46,14 +46,14 @@ export default function CartPage() {
                       <span className="text-white text-lg font-semibold">{item.qty}</span>
                       <div className="flex-center flex-col gap-1 "><button
                         className="text-white text-xl cursor-pointer"
-                        onClick={() => updateQty(idx, Math.max(1, item.qty - 1))}
+                        onClick={() => updateQty(idx, item.qty + 1)}
                       >
                         <Image src="/assets/up.svg" alt="minus" width={16} height={16} />
                       </button>
 
                         <button
                           className="text-white text-xl cursor-pointer"
-                          onClick={() => updateQty(idx, item.qty + 1)}
+                          onClick={() => updateQty(idx, Math.max(1, item.qty - 1))}
                         >
                           <Image src="/assets/down.svg" alt="plus" width={16} height={16} />
                         </button></div>

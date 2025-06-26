@@ -91,177 +91,7 @@ const snoise = `
     }
 `;
 
-// GUI Panel Component
-const GuiPanel = ({ settings, onSettingChange }) => {
-    const [isCollapsed, setIsCollapsed] = useState(false);
-
-    const ColorPicker = ({ label, value, onChange }) => (
-        <div className="mb-3">
-            <label className="block text-xs text-gray-300 mb-1">{label}</label>
-            <div className="flex items-center gap-2">
-                <input
-                    type="color"
-                    value={value}
-                    onChange={(e) => onChange(e.target.value)}
-                    className="w-8 h-6 rounded border-none cursor-pointer"
-                />
-                <span className="text-xs text-gray-400">{value}</span>
-            </div>
-        </div>
-    );
-
-    const Slider = ({ label, value, onChange, min, max, step = 0.01, suffix = "" }) => (
-        <div className="mb-3">
-            <label className="block text-xs text-gray-300 mb-1">
-                {label}: {value.toFixed(2)}{suffix}
-            </label>
-            <input
-                type="range"
-                min={min}
-                max={max}
-                step={step}
-                value={value}
-                onChange={(e) => onChange(parseFloat(e.target.value))}
-                className="w-full h-1 bg-gray-700 rounded-lg appearance-none cursor-pointer slider"
-            />
-        </div>
-    );
-
-    const Checkbox = ({ label, checked, onChange }) => (
-        <div className="mb-3 flex items-center gap-2">
-            <input
-                type="checkbox"
-                checked={checked}
-                onChange={(e) => onChange(e.target.checked)}
-                className="w-4 h-4 text-blue-600 bg-gray-700 border-gray-600 rounded focus:ring-blue-500"
-            />
-            <label className="text-xs text-gray-300">{label}</label>
-        </div>
-    );
-
-    const Button = ({ label, onClick, active = false }) => (
-        <button
-            onClick={onClick}
-            className={`px-3 py-1 text-xs rounded mb-2 mr-2 transition-colors ${
-                active 
-                    ? 'bg-blue-600 text-white' 
-                    : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
-            }`}
-        >
-            {label}
-        </button>
-    );
-
-    return (
-        <div className="absolute top-4 right-4 z-10">
-            <div className={`bg-white/10 backdrop-blur-sm rounded-lg border border-white/20 transition-all duration-300 ${
-                isCollapsed ? 'w-12 h-12' : 'w-80 max-h-[90vh] overflow-y-auto'
-            }`}>
-                <div 
-                    className="flex items-center justify-between p-3 border-b border-white/20 cursor-pointer"
-                    onClick={() => setIsCollapsed(!isCollapsed)}
-                >
-                    <h3 className={`text-sm font-medium text-white ${isCollapsed ? 'hidden' : ''}`}>
-                        Effect Controls
-                    </h3>
-                    <button className="text-gray-400 hover:text-white">
-                        {isCollapsed ? '⚙️' : '−'}
-                    </button>
-                </div>
-                
-                {!isCollapsed && (
-                    <div className="p-4 space-y-4">
-                        {/* Dissolve Controls */}
-                        <div>
-                            <h4 className="text-xs font-semibold text-blue-400 mb-2 uppercase tracking-wider">
-                                Dissolve Effect (Bottom to Top)
-                            </h4>
-                            <Slider
-                                label="Dissolve Progress"
-                                value={settings.dissolveProgress}
-                                onChange={(val) => onSettingChange('dissolveProgress', val)}
-                                min={-1}
-                                max={1}
-                                step={0.01}
-                            />
-                            <Slider
-                                label="Edge Width"
-                                value={settings.edgeWidth}
-                                onChange={(val) => onSettingChange('edgeWidth', val)}
-                                min={0.01}
-                                max={0.5}
-                                step={0.01}
-                            />
-                            <Slider
-                                label="Noise Amplitude"
-                                value={settings.amplitude}
-                                onChange={(val) => onSettingChange('amplitude', val)}
-                                min={0.1}
-                                max={2}
-                                step={0.01}
-                            />
-                            <Slider
-                                label="Noise Frequency"
-                                value={settings.frequency}
-                                onChange={(val) => onSettingChange('frequency', val)}
-                                min={0.01}
-                                max={2}
-                                step={0.01}
-                            />
-                            <Checkbox
-                                label="Auto Dissolve Animation"
-                                checked={settings.autoDissolve}
-                                onChange={(val) => onSettingChange('autoDissolve', val)}
-                            />
-                        </div>
-
-                        {/* Mesh Controls */}
-                        <div>
-                            <h4 className="text-xs font-semibold text-green-400 mb-2 uppercase tracking-wider">
-                                Mesh Settings
-                            </h4>
-                            <ColorPicker
-                                label="Edge Color"
-                                value={settings.edgeColor}
-                                onChange={(val) => onSettingChange('edgeColor', val)}
-                            />
-                            <Slider
-                                label="Rotation Y"
-                                value={settings.rotationY}
-                                onChange={(val) => onSettingChange('rotationY', val)}
-                                min={0}
-                                max={Math.PI * 2}
-                                step={0.01}
-                                suffix=" rad"
-                            />
-                        </div>
-
-                        {/* Presets */}
-                        <div>
-                            <h4 className="text-xs font-semibold text-yellow-400 mb-2 uppercase tracking-wider">
-                                Quick Presets
-                            </h4>
-                            <Button
-                                label="Reset Default"
-                                onClick={() => onSettingChange('preset', 'default')}
-                            />
-                            <Button
-                                label="Slow Dissolve"
-                                onClick={() => onSettingChange('preset', 'slow')}
-                            />
-                            <Button
-                                label="Fast Dissolve"
-                                onClick={() => onSettingChange('preset', 'fast')}
-                            />
-                        </div>
-                    </div>
-                )}
-            </div>
-        </div>
-    );
-};
-
-const Scene = ({ settings }) => {
+const Scene = () => {
     const meshRef = useRef();
     const { gl, scene, camera, size } = useThree();
     
@@ -271,8 +101,19 @@ const Scene = ({ settings }) => {
     // Create plane geometry
     const planeGeometry = useMemo(() => {
         const segments = isMobileDevice() ? 64 : 128;
-        return new THREE.PlaneGeometry(8, 8, segments, segments);
+        return new THREE.PlaneGeometry(20, 20, segments, segments);
     }, []);
+
+    // Default settings
+    const settings = {
+        dissolveProgress: 0.0,
+        edgeWidth: 0.01,
+        amplitude: 0.15,
+        frequency: 1.5,
+        edgeColor: "#ff3a65",
+        autoDissolve: true,
+        rotationY: 0,
+    };
 
     // Dissolve uniform data
     const dissolveUniformData = useMemo(() => ({
@@ -283,18 +124,9 @@ const Scene = ({ settings }) => {
         uEdge: { value: settings.edgeWidth }
     }), []);
 
-    // Update uniforms when settings change
-    useEffect(() => {
-        dissolveUniformData.uEdgeColor.value.set(settings.edgeColor);
-        dissolveUniformData.uFreq.value = settings.frequency;
-        dissolveUniformData.uAmp.value = settings.amplitude;
-        dissolveUniformData.uProgress.value = settings.dissolveProgress;
-        dissolveUniformData.uEdge.value = settings.edgeWidth;
-    }, [settings.edgeColor, settings.frequency, settings.amplitude, settings.dissolveProgress, settings.edgeWidth, dissolveUniformData]);
-
     // Shader materials
     const meshMaterial = useMemo(() => {
-        const material = new THREE.MeshBasicMaterial({
+        const material = new THREE.MeshStandardMaterial({
             map: tshirtTexture,
             transparent: true,
             side: THREE.DoubleSide,
@@ -360,8 +192,7 @@ const Scene = ({ settings }) => {
 
         // Float mesh
         if (meshRef.current) {
-            const yPos = Math.sin(time * 2.0) * 0.5;
-            meshRef.current.position.y = yPos;
+            meshRef.current.position.y = 0;
             meshRef.current.rotation.y = settings.rotationY;
         }
 
@@ -385,57 +216,8 @@ const Scene = ({ settings }) => {
 };
 
 const RevealCode = () => {
-    const [settings, setSettings] = useState({
-        dissolveProgress: 0.0,
-        edgeWidth: 0.1,
-        amplitude: 0.3,
-        frequency: 0.5,
-        edgeColor: "#4d9bff",
-        autoDissolve: false,
-        rotationY: 0,
-    });
-
-    const handleSettingChange = (key, value) => {
-        if (key === 'preset') {
-            // Handle presets
-            const presets = {
-                default: {
-                    dissolveProgress: 0.0,
-                    edgeWidth: 0.1,
-                    amplitude: 0.3,
-                    frequency: 0.5,
-                    edgeColor: "#4d9bff",
-                    autoDissolve: false,
-                    rotationY: 0,
-                },
-                slow: {
-                    ...settings,
-                    dissolveProgress: 0.0,
-                    edgeWidth: 0.15,
-                    amplitude: 0.2,
-                    frequency: 0.3,
-                    autoDissolve: true,
-                },
-                fast: {
-                    ...settings,
-                    dissolveProgress: 0.0,
-                    edgeWidth: 0.05,
-                    amplitude: 0.5,
-                    frequency: 0.8,
-                    autoDissolve: true,
-                }
-            };
-            setSettings(presets[value]);
-        } else {
-            setSettings(prev => ({
-                ...prev,
-                [key]: value
-            }));
-        }
-    };
-
     return (
-        <div className="w-full h-screen relative">
+        <div className="w-full h-[100vh] relative">
             <Canvas
                 camera={{
                     position: isMobileDevice() ? [0, 8, 18] : [0, 1, 14],
@@ -443,61 +225,18 @@ const RevealCode = () => {
                     near: 0.001,
                     far: 100
                 }}
+                flat
                 gl={{
                     antialias: true,
-                    toneMapping: THREE.CineonToneMapping,
-                    outputColorSpace: THREE.SRGBColorSpace,
+                    toneMappingExposure: 0.8,
+                    outputEncoding: THREE.sRGBEncoding,
+    toneMapping: THREE.ACESFilmicToneMapping,
                 }}
                 
             >
-                <Scene settings={settings} />
-                <OrbitControls />
+                <ambientLight/>
+                <Scene />
             </Canvas>
-            
-            <GuiPanel 
-                settings={settings} 
-                onSettingChange={handleSettingChange}
-            />
-            
-            {/* Instructions */}
-            <div className="absolute bottom-4 left-4 text-white/70 text-sm">
-                <p>🎛️ Use the controls panel to tweak the dissolve effect</p>
-                <p>🖱️ Click and drag to orbit • Scroll to zoom</p>
-            </div>
-            
-            {/* Custom CSS for slider styling */}
-            <style jsx>{`
-                .slider::-webkit-slider-thumb {
-                    appearance: none;
-                    height: 16px;
-                    width: 16px;
-                    border-radius: 50%;
-                    background: #4d9bff;
-                    cursor: pointer;
-                    border: 2px solid #1f2937;
-                    box-shadow: 0 0 0 1px #4d9bff;
-                }
-                
-                .slider::-moz-range-thumb {
-                    height: 16px;
-                    width: 16px;
-                    border-radius: 50%;
-                    background: #4d9bff;
-                    cursor: pointer;
-                    border: 2px solid #1f2937;
-                    box-shadow: 0 0 0 1px #4d9bff;
-                }
-                
-                .slider::-webkit-slider-track {
-                    background: #374151;
-                    border-radius: 8px;
-                }
-                
-                .slider::-moz-range-track {
-                    background: #374151;
-                    border-radius: 8px;
-                }
-            `}</style>
         </div>
     );
 };

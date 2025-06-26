@@ -7,6 +7,7 @@ import OurProcess from "../../OurProcess"
 import VerticalScale from "../../VerticalScale"
 import Link from "next/link"
 import Background from "@/components/Background"
+import RevealCode from "@/components/Hooks/RevealCode"
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -391,7 +392,7 @@ const Landing = () => {
                     </div>
 
                     <div ref={tShirtRef} className="absolute top-[10vw] right-[3vw] w-[55vw] h-[50vw] ">
-                        <Image src="/assets/t-shirt2.png" alt="t-shirt" fill className="object-contain" />
+                        <RevealCode/>
                     </div>
 
                     <div

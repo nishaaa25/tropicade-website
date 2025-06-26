@@ -6,6 +6,7 @@ import React, { useState, useEffect } from "react";
 import { useCart } from "@/components/Hooks/CartContext";
 import { useRouter } from "next/navigation";
 import Background from "@/components/Background";
+import Loader from "@/components/Loader";
 
 const sizes = ["S", "M", "L", "X", "XL", "XXL"];
 const colors = ["#416d8a", "#418a5c", "#8a5641", "#8a4180"];
@@ -82,7 +83,7 @@ export default function ProductDetailsPage({ params }) {
   if (loading) {
     return (
       <div className="h-screen flex items-center justify-center">
-        <div className="text-white text-xl">Loading...</div>
+        <Loader/>
       </div>
     );
   }

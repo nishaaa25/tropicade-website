@@ -271,28 +271,6 @@ const Landing = () => {
                 gsap.to(tShirtRef.current, {
                     y: -140 - (300 * progress), // Continue from where main animation ended
                     opacity: 1 - progress, // Fade out as scroll progresses
-// =======
-//                 // Move t-shirt up faster than normal scroll
-//                 // gsap.to(tShirtRef.current, {
-//                 //     y: -140 - (300 * progress), // Continue from where main animation ended
-//                 //     duration: 0.1,
-//                 //     ease: "none"
-//                 // })
-//             }
-//         })
-
-//         // Add new t-shirt animation after 200vh of scroll
-//         ScrollTrigger.create({
-//             trigger: "body",
-//             start: "200vh top",
-//             end: "300vh top",
-//             scrub: 1,
-//             onUpdate: (self) => {
-//                 const progress = self.progress;
-//                 // Move t-shirt from bottom to top
-//                 gsap.to(tShirtRef.current, {
-//                     y: 100 - (200 * progress), // Start from bottom (100) and move up (-100)
-// >>>>>>> master
                     duration: 0.1,
                     ease: "none"
                 })
@@ -320,9 +298,6 @@ const Landing = () => {
         <>
             {/* Sticky wrapper with defined height for scroll distance */}
             <div className="sticky-wrapper relative" style={{ height: '180vh' }}>
-// =======
-//             <div className="sticky-wrapper relative" style={{ height: '220vh' }}>
-// >>>>>>> master
                 <div
                     ref={containerRef}
                     className="sticky-content sticky top-0 h-screen w-[95%] mx-auto overflow-hidden"

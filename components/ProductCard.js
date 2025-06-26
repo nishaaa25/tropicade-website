@@ -26,7 +26,7 @@ export default function ProductCard({ id, image, title, price }) {
         <h3 className="text-white uppercase mb-2">{title}</h3>
         <div className="flex justify-between items-center">
           <button className="text-dark-pink-500 hover:text-dark-pink-600 flex items-center gap-2 text-sm">
-            ADD TO BAG
+            BUY NOW
             <Image
               src="/assets/HandbagSimple.svg"
               alt="handbag"

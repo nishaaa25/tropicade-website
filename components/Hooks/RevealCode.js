@@ -163,7 +163,7 @@ const Scene = () => {
             shader.fragmentShader = shader.fragmentShader.replace('#include <dithering_fragment>', `#include <dithering_fragment>
                 // Bottom to top dissolve effect
                 // Normalize Y position from -4 to 4 (plane height) to 0 to 1
-                float normalizedY = (vPos.y + 4.0) / 8.0;
+                float normalizedY = (vPos.y + 14.0) / 28.0;
                 
                 // Add noise to create organic dissolve pattern
                 float noise = snoise(vPos * uFreq) * uAmp;

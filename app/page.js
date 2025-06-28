@@ -5,6 +5,7 @@ import gsap from "gsap";
 import CustomEase from "gsap/CustomEase";
 import Image from "next/image";
 import RevealCode from "@/components/Hooks/RevealCode";
+import TshirtFadeReveal from "@/components/pages/tshirtFadeReveal";
 
 gsap.registerPlugin(CustomEase);
 CustomEase.create("hop", "0.9, 0, 0.1, 1");
@@ -245,7 +246,8 @@ export default function Home() {
           </div>
         </div> */}
         {/* Page Content */}
-        <Landing />
+        {/* <Landing /> */}
+        <TshirtFadeReveal />
       </div>
     </LoaderContext.Provider>
   );

@@ -246,8 +246,8 @@ export default function Home() {
           </div>
         </div> */}
         {/* Page Content */}
-        {/* <Landing /> */}
-        <TshirtFadeReveal />
+        <Landing />
+        {/* <TshirtFadeReveal /> */}
       </div>
     </LoaderContext.Provider>
   );

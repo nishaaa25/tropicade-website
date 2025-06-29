@@ -108,8 +108,7 @@ export default function ProductDetailsPage({ params }) {
     <div className="h-screen relative overflow-hidden w-full">
       <Background/>
       <HistoryBackBtn text="Back to all products" />
-
-      <div className="container w-full h-full flex-center relative ml-[5vw]">
+      <div className=" w-full h-full flex-center relative ml-[5vw]">
         <div className="absolute top-[10vh] left-12">
           <h1 className="text-[22vw] leading-[20vw] font-bebas opacity-2 ">
             CUSTOMISE

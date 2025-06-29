@@ -2,12 +2,13 @@ import { useGSAP } from "@gsap/react"
 import gsap from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
 import Image from "next/image"
-import { useRef } from "react"
+import { useRef, useState } from "react"
 import OurProcess from "../../OurProcess"
 import VerticalScale from "../../VerticalScale"
 import Link from "next/link"
 import Background from "@/components/Background"
 import RevealCode from "@/components/Hooks/RevealCode"
+import TshirtFadeReveal from "@/components/pages/tshirtFadeReveal"
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -17,6 +18,14 @@ const Landing = () => {
     const singleLeafRef = useRef(null)
     const leafsRef = useRef(null)
     const bottomAnime = useRef(null)
+    const [activeButton, setActiveButton] = useState(0)
+    const [isPlaying, setIsPlaying] = useState(true)
+
+    const handleButtonClick = (index) => {
+        setActiveButton(index)
+        setIsPlaying(!isPlaying)
+        console.log(`Button ${index + 1} clicked`)
+    }
 
     useGSAP(() => {
         // Set will-change properties for better performance
@@ -367,15 +376,30 @@ const Landing = () => {
 
                     <div className="fifthPara-4 ">
                         <div className="flex gap-[1vw] absolute top-[25vw] ml-[0.3vw]">
-                            <div className="w-[5.5vw] h-[5.5vw] relative">
+                            <button 
+                                onClick={() => handleButtonClick(0)}
+                                className={`w-[5.5vw] h-[5.5vw] relative rounded-full border-4 cursor-pointer transition-all duration-300 ${
+                                    activeButton === 0 ? 'border-[#FF3A65]' : 'border-transparent'
+                                }`}
+                            >
                                 <Image src="/assets/landingAnimation-1.png" alt="t-shirt" fill className="rounded-full object-cover" />
-                            </div>
-                            <div className="w-[5.5vw] h-[5.5vw] relative">
+                            </button>
+                            <button 
+                                onClick={() => handleButtonClick(1)}
+                                className={`w-[5.5vw] h-[5.5vw] relative rounded-full border-4 cursor-pointer transition-all duration-300 ${
+                                    activeButton === 1 ? 'border-[#FF3A65]' : 'border-transparent'
+                                }`}
+                            >
                                 <Image src="/assets/landingAnimation-2.png" alt="t-shirt" fill className="rounded-full object-cover" />
-                            </div>
-                            <div className="w-[5.5vw] h-[5.5vw] relative">
+                            </button>
+                            <button 
+                                onClick={() => handleButtonClick(2)}
+                                className={`w-[5.5vw] h-[5.5vw] relative rounded-full border-4 cursor-pointer transition-all duration-300 ${
+                                    activeButton === 2 ? 'border-[#FF3A65]' : 'border-transparent'
+                                }`}
+                            >
                                 <Image src="/assets/landingAnimation-3.png" alt="t-shirt" fill className="rounded-full object-cover" />
-                            </div>
+                            </button>
                         </div>
                     </div>
                     <div className="absolute top-[34vw] ml-[0.3vw] flex-center gap-[1vw]">
@@ -391,7 +415,7 @@ const Landing = () => {
                     </div>
 
                     <div ref={tShirtRef} className="absolute top-[10vw] right-[3vw] w-[55vw] h-[50vw] ">
-                        <RevealCode/>
+                        <TshirtFadeReveal isPlaying={isPlaying}/>
                     </div>
 
                     <div

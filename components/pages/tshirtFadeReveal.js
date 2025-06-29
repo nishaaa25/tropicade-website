@@ -1,38 +1,50 @@
 import { useGSAP } from '@gsap/react'
 import Image from 'next/image'
-import React, { useRef } from 'react'
+import React, { useRef, useState } from 'react'
 import gsap from 'gsap'
 
 
-const tshirtFadeReveal = () => {
+const tshirtFadeReveal = ( {isPlaying} ) => {
       const tshirtRef = useRef(null);
       const tshirtRef2 = useRef(null);
+      const timelineRef = useRef(null);
+      // const [isPlaying, setIsPlaying] = useState(false);
       
       useGSAP(() => {
-            // gsap.set(tshirtRef2.current, {clipPath: "inset(0 0 100% 0)", opacity: 0});
-            const tl = gsap.timeline({ repeat: -1, yoyo: true });
+            // Create timeline but don't play it automatically
+            timelineRef.current = gsap.timeline({ paused: true });
             
-            // Fade out first image
-            tl.to(tshirtRef.current, {
+            // Fade out first image with clipPath and blur effect for smooth transition
+            timelineRef.current.to(tshirtRef.current, {
                 clipPath: "inset(0 0 100% 0)",
-                opacity: 0,
+                filter: "blur(2px)",
                 duration: 1.5,
                 ease: "power2.inOut",
             })
-            
-            // // Fade in second image
-            // .to(tshirtRef2.current, {
-            //     clipPath: "inset(0 0 0 0)",
-            //     opacity: 1,
-            //     duration: 1.5,
-            //     ease: "power2.inOut",
-            // });
+            // Reset blur after animation
+            .set(tshirtRef.current, {
+                filter: "blur(0px)"
+            });
       });
+
+      const handleButtonClick = () => {
+            if (timelineRef.current) {
+                  if (isPlaying) {
+                        // If animation is playing forward, reverse it
+                        timelineRef.current.reverse();
+                  } else {
+                        // If animation is not playing or reversed, play it forward
+                        timelineRef.current.play();
+                  }
+                  // setIsPlaying(!isPlaying);
+            }
+      };
+      handleButtonClick()
 
   return (
     <>
-      <div className='h-screen w-full flex items-center justify-center bg-black'>
-        <div ref={tshirtRef2} className='h-[36vw] w-[36vw] absolute'>
+      <div className='h-screen w-full flex items-center justify-center'>
+        <div ref={tshirtRef2} className='h-[50vw] w-[45vw] absolute left-[49.4%] -translate-x-1/2'>
         <Image 
             
             src="/assets/changedImage2.png" 
@@ -42,7 +54,7 @@ const tshirtFadeReveal = () => {
             priority
           />
         </div>
-        <div ref={tshirtRef} className='h-[40vw] w-[40vw] absolute'>
+        <div ref={tshirtRef} className='h-[50vw] w-[50vw] absolute left-1/2 -translate-x-1/2'>
         <Image 
             
             src="/assets/t-shirt2.png" 

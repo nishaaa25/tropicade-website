@@ -4,7 +4,7 @@ import React, { useRef, useState } from 'react'
 import gsap from 'gsap'
 
 
-const tshirtFadeReveal = ( {isPlaying} ) => {
+const TshirtFadeReveal = ( {isPlaying} ) => {
       const tshirtRef = useRef(null);
       const tshirtRef2 = useRef(null);
       const timelineRef = useRef(null);
@@ -69,4 +69,4 @@ const tshirtFadeReveal = ( {isPlaying} ) => {
   )
 }
 
-export default tshirtFadeReveal
+export default TshirtFadeReveal

@@ -1,5 +1,5 @@
 import Image from "next/image"
-import { useRef, useState } from "react"
+import { useRef, useState, useEffect } from "react"
 import OurProcess from "../../OurProcess"
 import VerticalScale from "../../VerticalScale"
 import Link from "next/link"
@@ -15,6 +15,19 @@ const Landing = () => {
     const singleLeafRef = useRef(null)
     const leafsRef = useRef(null)
     const bottomAnime = useRef(null)
+    const [isAnimating, setIsAnimating] = useState(false)
+    const [currentState, setCurrentState] = useState('initial') // 'initial', 'scrolled'
+    const lastScrollY = useRef(0)
+    const scrollTriggerRef = useRef(null)
+    const lenisRef = useRef(null)
+
+    // Get Lenis instance
+    useEffect(() => {
+        // Try to get Lenis instance from window or import it
+        if (typeof window !== 'undefined') {
+            lenisRef.current = window.lenis || null
+        }
+    }, []);
     const [activeButton, setActiveButton] = useState(0)
     const [isPlaying, setIsPlaying] = useState(true)
     const firstAnime = useRef(null)

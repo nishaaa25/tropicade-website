@@ -3,9 +3,6 @@ import { Canvas, useFrame, useThree, extend, useLoader } from '@react-three/fibe
 import { OrbitControls, Environment } from '@react-three/drei';
 import * as THREE from 'three';
 
-// Extend R3F with custom geometries
-extend({ TeapotGeometry: THREE.TeapotGeometry });
-
 let scale = 1.0;
 function isMobileDevice() {
     return /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
@@ -229,8 +226,8 @@ const RevealCode = () => {
                 gl={{
                     antialias: true,
                     toneMappingExposure: 0.8,
-                    outputEncoding: THREE.sRGBEncoding,
-    toneMapping: THREE.ACESFilmicToneMapping,
+                    outputColorSpace: THREE.SRGBColorSpace,
+                    toneMapping: THREE.ACESFilmicToneMapping,
                 }}
                 
             >

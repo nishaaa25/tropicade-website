@@ -4,6 +4,18 @@ import HistoryBackBtn from "@/components/HistoryBackBtn";
 import { useCart } from "@/components/Hooks/CartContext";
 import Image from "next/image";
 
+// Function to convert hex colors to color names
+const getColorName = (hexColor) => {
+  const colorMap = {
+    '#416d8a': 'Blue',
+    '#418a5c': 'Green', 
+    '#8a5641': 'Brown',
+    '#8a4180': 'Purple'
+  };
+  
+  return colorMap[hexColor] || hexColor;
+};
+
 export default function CartPage() {
   const { cart, removeFromCart, updateQty } = useCart();
 
@@ -38,7 +50,7 @@ export default function CartPage() {
                         <span className="text-s cursor-pointer">{item.size}</span>
                         <span className="flex items-center gap-1 text-xs text-white border-l  border-[#c5c5c5]/50 pl-3 cursor-pointer">
                           <span className="w-5 h-5 rounded-full border-3 border-white inline-block" style={{ background: item.color }}></span>
-                          {item.colorName || item.color}
+                          {getColorName(item.color)}
                         </span>
                       </div>
                     </div>

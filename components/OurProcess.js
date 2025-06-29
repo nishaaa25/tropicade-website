@@ -122,9 +122,11 @@ export default function OurProcess() {
       .to(".tshirt-outline", { opacity: 1, duration: 1, ease: "power2.inOut" }, "<")
       .fromTo(
         "#img-2",
-        { borderRadius: "50%" },
+        { borderWidth : "10px" , borderRadius: "50%", scale: 1, },
         {
           borderRadius: "0%",
+          scale:1.5,
+          borderWidth : "0px",
           ease: "power2.inOut",
           duration: 1,
         },
@@ -145,8 +147,8 @@ export default function OurProcess() {
       .to("#text-2", { x: "-50vw", opacity: 0, duration: 1, ease: "power2.inOut" })
       .to("#para-2", { x: "50vw", opacity: 0, duration: 1, ease: "power2.inOut" }, "<")
       .to(
-        "#img-2 .main-product",
-        { scale: 1, duration: 1, ease: "power2.inOut" },
+        "#img-2 ",
+        { scale: 1.3, duration: 1, ease: "power2.inOut", marginBottom:"6vh", marginLeft:"20px" },
         "<"
       )
       .to(".tshirt-outline", { scale: 0, opacity: 0, duration: 1, ease: "power2.inOut" }, "<")
@@ -214,45 +216,39 @@ export default function OurProcess() {
 
         <div className="w-[36%] relative flex items-center justify-center h-full img-cont">
           <div
-            className="min-w-[12.08vw] h-[12.08vw] rounded-full relative overflow-hidden ml-[30%] product"
+            className="min-w-[27vh] h-[27vh] rounded-full relative overflow-hidden ml-[30%] product border-10 border-violet-400  "
             id="img-1"
           >
             <Image
               src="/assets/product-2.png"
               alt="alt"
-              width={0}
-              height={0}
-              sizes="12.08vw"
+              fill
               className="object-contain w-full h-full"
             />
           </div>
           <div
-            className="min-w-[15.92vw] h-[15.92vw] relative z-20 right-[5vw] rounded-full overflow-hidden product"
+            className="min-w-[27vh] h-[27vh] relative z-20 right-[5vw] rounded-full overflow-hidden product border-10 border-violet-400 "
             id="img-2"
           >
             <Image
               src="/assets/product-4.png"
               alt="alt"
-              width={0}
-              height={0}
-              sizes="15.92vw"
+              fill
               className="object-contain main-product scale-[1.4] w-full h-full"
             />
           </div>
           <div
-            className="min-w-[12.92vw] h-[12.92vw] rounded-full relative z-30 overflow-hidden right-[10vw] border-[0.31vw] border-violet-400 product"
+            className="min-w-[27vh] h-[27vh] rounded-full relative z-30 overflow-hidden right-[10vw] border-10 border-violet-400 product"
             id="img-3"
           >
             <Image
               src="/assets/product-1.png"
               alt="alt"
-              width={0}
-              height={0}
-              sizes="12.92vw"
+              fill
               className="object-contain w-full h-full"
             />
           </div>
-          <div className="w-10/12 h-[68vh] absolute mt-[0.83vw] tshirt-outline opacity-0">
+          <div className="w-10/12 h-[68vh] absolute mt-[0.83vw] ml-5 tshirt-outline opacity-0">
             <Image
               src="/assets/outline.svg"
               alt="alt"
@@ -312,7 +308,7 @@ export default function OurProcess() {
                 className="object-contain w-full h-full"
               />
             </div>
-            <div className="w-full relative h-full bottom-0 ">
+            <div className="w-full relative h-full bottom-0 ml-5">
               <Image
                 src="/assets/black-tshirt.svg"
                 alt="alt"

@@ -2,7 +2,7 @@ import { useGSAP } from "@gsap/react"
 import gsap from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
 import Image from "next/image"
-import { useRef, useState } from "react"
+import { useRef, useState, useEffect } from "react"
 import OurProcess from "../../OurProcess"
 import VerticalScale from "../../VerticalScale"
 import Link from "next/link"
@@ -18,6 +18,19 @@ const Landing = () => {
     const singleLeafRef = useRef(null)
     const leafsRef = useRef(null)
     const bottomAnime = useRef(null)
+    const [isAnimating, setIsAnimating] = useState(false)
+    const [currentState, setCurrentState] = useState('initial') // 'initial', 'scrolled'
+    const lastScrollY = useRef(0)
+    const scrollTriggerRef = useRef(null)
+    const lenisRef = useRef(null)
+
+    // Get Lenis instance
+    useEffect(() => {
+        // Try to get Lenis instance from window or import it
+        if (typeof window !== 'undefined') {
+            lenisRef.current = window.lenis || null
+        }
+    }, []);
     const [activeButton, setActiveButton] = useState(0)
     const [isPlaying, setIsPlaying] = useState(true)
 
@@ -26,7 +39,6 @@ const Landing = () => {
         setIsPlaying(!isPlaying)
         console.log(`Button ${index + 1} clicked`)
     }
-
     useGSAP(() => {
         // Set will-change properties for better performance
         gsap.set([
@@ -129,166 +141,349 @@ const Landing = () => {
         gsap.from(tShirtRef.current, {
             y: 400,
             opacity: 0,
-            duration: 1.5,
-            ease: "power3.out"
+            duration: 2,
+            ease: "power3.out",
+            delay: 0.5
         })
 
+        // Function to animate to scrolled state
+        const animateToScrolled = () => {
+            if (isAnimating || currentState === 'scrolled') return
+            setIsAnimating(true)
+            setCurrentState('scrolled')
 
-        // Scroll-triggered animations with improved timing
-        ScrollTrigger.create({
+            const tl = gsap.timeline({
+                onComplete: () => setIsAnimating(false)
+            })
+
+            // First heading moves up and fades out
+            tl.to(".firstHeading h1", {
+                y: -150,
+                opacity: 0,
+                duration: 0.8,
+                stagger: 0.05,
+                ease: "power2.out"
+            }, 0)
+
+            tl.to(".firstHeading div", {
+                y: -150,
+                opacity: 0,
+                duration: 0.8,
+                stagger: 0.05,
+                ease: "power2.out"
+            }, 0)
+
+            // Bottom anime moves down and fades out
+            tl.to(bottomAnime.current, {
+                y: 400,
+                opacity: 0,
+                duration: 0.8,
+                ease: "power2.out"
+            }, 0)
+
+            // fifthPara moves up and fades out
+            tl.to(".fifthPara p", {
+                y: -150,
+                opacity: 0,
+                duration: 0.8,
+                ease: "power2.out"
+            }, 0)
+
+            tl.to(".fifthPara div", {
+                y: -150,
+                opacity: 0,
+                duration: 0.8,
+                ease: "power2.out"
+            }, 0)
+
+            // thirdPara moves up and fades out
+            tl.to(".thirdPara", {
+                y: -150,
+                opacity: 0,
+                duration: 0.8,
+                stagger: 0.05,
+                ease: "power2.out"
+            }, 0)
+
+            // fourthButton moves up and fades out
+            tl.to(".fourthButton button", {
+                y: -150,
+                opacity: 0,
+                duration: 0.8,
+                ease: "power2.out"
+            }, 0)
+
+            // T-shirt moves up
+            tl.to(tShirtRef.current, {
+                y: -140,
+                duration: 0.8,
+                ease: "power2.out"
+            }, 0)
+
+            // Second heading moves up from bottom and fades in
+            tl.to(".secondHeading h1", {
+                y: 0,
+                opacity: 1,
+                duration: 0.8,
+                ease: "power2.out"
+            }, 0.2)
+
+            tl.to(".secondHeading div", {
+                y: -80,
+                opacity: 1,
+                duration: 0.8,
+                ease: "power2.out"
+            }, 0.2)
+
+            // New content fades in from bottom
+            tl.to(".fifthPara-1 p", {
+                y: 0,
+                opacity: 1,
+                duration: 0.8,
+                ease: "power2.out"
+            }, 0.3)
+
+            tl.to(".fifthPara-1 div", {
+                y: -80,
+                opacity: 1,
+                duration: 0.8,
+                ease: "power2.out"
+            }, 0.3)
+
+            // fifthPara-3 pin animation
+            tl.to(".fifthPara-3", {
+                y: 0,
+                opacity: 1,
+                duration: 0.8,
+                ease: "power2.out"
+            }, 0.3)
+
+            tl.to(".fifthPara-4 div", {
+                y: 0,
+                opacity: 1,
+                duration: 0.8,
+                ease: "power2.out"
+            }, 0.4)
+
+            tl.to(".buttonAnime-1", {
+                y: 0,
+                opacity: 1,
+                duration: 0.8,
+                ease: "power2.out"
+            }, 0.4)
+        }
+
+        // Function to animate back to initial state
+        const animateToInitial = () => {
+            if (isAnimating || currentState === 'initial') return
+            setIsAnimating(true)
+            setCurrentState('initial')
+
+            const tl = gsap.timeline({
+                onComplete: () => setIsAnimating(false)
+            })
+
+            // Hide new content first
+            tl.to([".secondHeading h1", ".secondHeading div"], {
+                y: 80,
+                opacity: 0,
+                duration: 0.8,
+                ease: "power2.out"
+            }, 0)
+
+            tl.to([".fifthPara-1 p", ".fifthPara-1 div"], {
+                y: 80,
+                opacity: 0,
+                duration: 0.8,
+                ease: "power2.out"
+            }, 0)
+
+            tl.to(".fifthPara-3", {
+                y: 120,
+                opacity: 0,
+                duration: 0.8,
+                ease: "power2.out"
+            }, 0)
+
+            tl.to([".fifthPara-4 div"], {
+                y: 60,
+                opacity: 0,
+                duration: 0.8,
+                ease: "power2.out"
+            }, 0)
+
+            tl.to([".buttonAnime-1"], {
+                y: 60,
+                opacity: 0,
+                duration: 0.8,
+                ease: "power2.out"
+            }, 0)
+
+            // Bring back original content - animate directly from current position
+            tl.to([".firstHeading h1"], {
+                y: 0,
+                opacity: 1,
+                duration: 0.8,
+                stagger: 0.05,
+                ease: "power2.out"
+            }, 0.2)
+
+            tl.to([".firstHeading div"], {
+                y: 0,
+                opacity: 1,
+                duration: 0.8,
+                stagger: 0.05,
+                ease: "power2.out"
+            }, 0.2)
+
+            tl.to([".fifthPara p"], {
+                y: 0,
+                opacity: 1,
+                duration: 0.8,
+                ease: "power2.out"
+            }, 0.2)
+
+            tl.to([".fifthPara div"], {
+                y: 0,
+                opacity: 1,
+                duration: 0.8,
+                ease: "power2.out"
+            }, 0.2)
+
+            tl.to(".thirdPara", {
+                y: 0,
+                opacity: 1,
+                duration: 0.8,
+                stagger: 0.05,
+                ease: "power2.out"
+            }, 0.2)
+
+            tl.to(".fourthButton button", {
+                y: 0,
+                opacity: 1,
+                duration: 0.8,
+                ease: "power2.out"
+            }, 0.2)
+
+            // T-shirt moves back to original position
+            tl.to(tShirtRef.current, {
+                y: 0,
+                duration: 0.8,
+                ease: "power2.out"
+            }, 0.2)
+
+            // Bottom anime comes back
+            tl.to(bottomAnime.current, {
+                y: 0,
+                opacity: 1,
+                duration: 0.8,
+                ease: "power2.out"
+            }, 0.2)
+        }
+
+        // Improved scroll detection with debouncing
+        let scrollTimeout = null;
+        const handleScroll = () => {
+            if (isAnimating) return
+
+            // Clear existing timeout
+            if (scrollTimeout) {
+                clearTimeout(scrollTimeout)
+            }
+
+            // Debounce scroll events
+            scrollTimeout = setTimeout(() => {
+                const currentScrollY = lenisRef.current ? lenisRef.current.scroll : window.scrollY
+                const scrollDelta = currentScrollY - lastScrollY.current
+                const threshold = 50
+
+                if (Math.abs(scrollDelta) > threshold) {
+                    if (scrollDelta > 0 && currentState === 'initial') {
+                        // Scrolling down
+                        animateToScrolled()
+                    } else if (scrollDelta < 0 && currentState === 'scrolled') {
+                        // Scrolling up
+                        animateToInitial()
+                    }
+                    lastScrollY.current = currentScrollY
+                }
+            }, 100) // 100ms debounce
+        }
+
+        // Use ScrollTrigger with Lenis integration
+        scrollTriggerRef.current = ScrollTrigger.create({
             trigger: ".sticky-content",
             start: "top top",
             end: "bottom center",
-            scrub: 1.5,
-            ease: "power2.inOut",
-            onUpdate: (self) => {
-                const progress = self.progress;
-
-                // First heading moves up and fades out (smoother timing)
-                const firstHeadingProgress = Math.min(progress * 3, 1);
-                gsap.to(".firstHeading h1", {
-                    y: -150 * firstHeadingProgress,
-                    opacity: 1 - firstHeadingProgress,
-                    duration: 0.3,
-                    stagger: 0.05,
-                    ease: "power2.out"
-                })
-
-                gsap.to(".firstHeading div", {
-                    y: -150 * (firstHeadingProgress + 0.05),
-                    opacity: 1 - firstHeadingProgress,
-                    duration: 0.3,
-                    stagger: 0.05,
-                    ease: "power2.out"
-                })
-
-                // Update bottomAnime animation to properly handle scroll back
-                gsap.to(bottomAnime.current, {
-                    y: 400 * firstHeadingProgress,
-                    opacity: 1 - firstHeadingProgress,
-                    duration: 0.5,
-                    ease: "power2.out"
-                })
-
-                // Second heading moves up from bottom and fades in
-                gsap.to(".secondHeading h1", {
-                    y: 80 - (80 * progress),
-                    opacity: progress,
-                    duration: 0.3,
-                    ease: "power2.out"
-                })
-
-                gsap.to(".secondHeading div", {
-                    y: 80 - (160 * progress),
-                    opacity: progress,
-                    duration: 0.3,
-                    ease: "power2.out"
-                })
-
-                // fifthPara moves up and fades out
-                const fifthParaProgress = Math.min(progress * 3, 1);
-                gsap.to(".fifthPara p", {
-                    y: -150 * fifthParaProgress,
-                    opacity: 1 - fifthParaProgress,
-                    duration: 0.3,
-                    ease: "power2.out"
-                })
-
-                gsap.to(".fifthPara div", {
-                    y: -150 * (fifthParaProgress + 0.05),
-                    opacity: 1 - fifthParaProgress,
-                    duration: 0.3,
-                    ease: "power2.out"
-                })
-
-                // thirdPara moves up and fades out (smoother timing)
-                const thirdParaProgress = Math.min(progress * 3, 1);
-                gsap.to(".thirdPara", {
-                    y: -150 * thirdParaProgress,
-                    opacity: 1 - thirdParaProgress,
-                    duration: 0.3,
-                    stagger: 0.05,
-                    ease: "power2.out"
-                })
-
-                // fourthButton moves up and fades out (smoother timing)
-                const fourthButtonProgress = Math.min(progress * 3, 1);
-                gsap.to(".fourthButton button", {
-                    y: -150 * fourthButtonProgress,
-                    opacity: 1 - fourthButtonProgress,
-                    duration: 0.3,
-                    ease: "power2.out"
-                })
-
-                // T-shirt moves up during the animation
-                gsap.to(tShirtRef.current, {
-                    y: -140 * progress,
-                    duration: 0.3,
-                    ease: "power2.out"
-                })
-
-                // New content fades in from bottom with staggered timing
-                const newContentDelay = Math.max(0, progress - 0.15);
-
-                gsap.to(".fifthPara-1 p", {
-                    y: 80 - (80 * newContentDelay * 1.2),
-                    opacity: newContentDelay * 1.2,
-                    duration: 0.3,
-                    ease: "power2.out"
-                })
-
-                gsap.to(".fifthPara-1 div", {
-                    y: 80 - (160 * newContentDelay * 1.2),
-                    opacity: newContentDelay * 1.2,
-                    duration: 0.3,
-                    ease: "power2.out"
-                })
-
-                // fifthPara-3 pin animation - fades in and moves up from further down
-                gsap.to(".fifthPara-3", {
-                    y: 120 - (120 * newContentDelay * 1.2),
-                    opacity: newContentDelay * 1.5,
-                    duration: 0.3,
-                    ease: "power2.out"
-                })
-
-                gsap.to(".fifthPara-4 div", {
-                    y: 60 - (60 * newContentDelay * 1.2),
-                    opacity: newContentDelay * 1.2,
-                    duration: 0.3,
-                    ease: "power2.out"
-                })
-
-                gsap.to(".buttonAnime-1", {
-                    y: 60 - (60 * newContentDelay * 1.2),
-                    opacity: newContentDelay * 1.2,
-                    duration: 0.3,
-                    ease: "power2.out"
-                })
+            onUpdate: handleScroll,
+            onRefresh: () => {
+                // Update scroll position on refresh
+                lastScrollY.current = lenisRef.current ? lenisRef.current.scroll : window.scrollY
+            },
+            onEnter: () => {
+                // Reset state when entering the trigger area
+                lastScrollY.current = lenisRef.current ? lenisRef.current.scroll : window.scrollY
+            },
+            onLeave: () => {
+                // Reset state when leaving the trigger area
+                lastScrollY.current = lenisRef.current ? lenisRef.current.scroll : window.scrollY
+            },
+            onEnterBack: () => {
+                // Ensure we're in initial state when scrolling back up into view
+                if (currentState === 'scrolled' && !isAnimating) {
+                    animateToInitial()
+                }
+                lastScrollY.current = lenisRef.current ? lenisRef.current.scroll : window.scrollY
             }
         })
 
         // Add separate ScrollTrigger for fast t-shirt scroll after main animation
         ScrollTrigger.create({
             trigger: ".sticky-wrapper",
-            start: "100% bottom", // Start when sticky wrapper bottom is at 80%
-            end: "+=360vh", // Continue for extra distance (reduced from 400vh to 360vh for 180vh total)
+            start: "100% bottom",
+            end: "+=360vh",
             scrub: 1,
             onUpdate: (self) => {
                 const progress = self.progress;
                 // Move t-shirt up faster than normal scroll and fade out at the end
                 gsap.to(tShirtRef.current, {
-                    y: -140 - (300 * progress), // Continue from where main animation ended
-                    opacity: 1 - progress, // Fade out as scroll progresses
+                    y: -140 - (300 * progress),
+                    opacity: 1 - progress,
                     duration: 0.1,
                     ease: "none"
                 })
             }
         })
 
+        // Alternative: Direct Lenis event listener if ScrollTrigger doesn't work well
+        if (lenisRef.current) {
+            lenisRef.current.on('scroll', ({ scroll, direction }) => {
+                if (isAnimating) return
+
+                const scrollDelta = scroll - lastScrollY.current
+                const threshold = 50
+
+                if (Math.abs(scrollDelta) > threshold) {
+                    if (direction === 1 && currentState === 'initial') {
+                        // Scrolling down
+                        animateToScrolled()
+                    } else if (direction === -1 && currentState === 'scrolled') {
+                        // Scrolling up
+                        animateToInitial()
+                    }
+                    lastScrollY.current = scroll
+                }
+            })
+        }
 
         // Cleanup will-change on animation complete
         return () => {
+            if (scrollTriggerRef.current) {
+                scrollTriggerRef.current.kill()
+            }
+            if (lenisRef.current && lenisRef.current.off) {
+                lenisRef.current.off('scroll')
+            }
             gsap.set([
                 ".firstHeading div", ".firstHeading h1",
                 ".secondHeading div", ".secondHeading h1",

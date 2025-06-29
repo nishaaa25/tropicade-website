@@ -57,7 +57,7 @@ const Landing = () => {
         const tl = gsap.timeline({
             scrollTrigger: {
                 trigger: ".sticky-content",
-                start: "top top",
+                start: "20% top",
                 end: "bottom center",
                 toggleActions: "play none none reverse",
             }
@@ -97,6 +97,16 @@ const Landing = () => {
             duration: 3.4,
             ease: "back.inOut"
         }, "variable")
+        tl.to(bottomAnime.current, {
+            y: 200,
+            duration: 3.8,
+            ease: "back.inOut"
+        }, "variable")
+        tl.to(tShirtRef.current, {
+            y: -150,
+            duration: 3.8,
+            ease: "back.inOut"
+        }, "variable")
 
 
 
@@ -113,27 +123,27 @@ const Landing = () => {
         }, "var")
         tl.to(twelweAnime.current, {
             top: "0%",
-            duration: 1.4,
+            duration: 1.8,
             ease: "back.inOut"
         }, "var")
         tl.to(thirteenAnime.current, {
             top: "0%",
-            duration: 1.4,
+            duration: 2.2,
             ease: "back.inOut"
         }, "var")
         tl.to(fourteenAnime.current, {
             top: "0%",
-            duration: 1.4,
+            duration: 2.6,
             ease: "back.inOut"
         }, "var")
         tl.to(tenthAnime.current, {
             top: "0%",
-            duration: 1.8,
+            duration: 3,
             ease: "back.inOut"
         }, "var")
         tl.to(eleventhAnime.current, {
             top: "0%",
-            duration: 2.2,
+            duration: 3.4,
             ease: "back.inOut"
         }, "var")
     })

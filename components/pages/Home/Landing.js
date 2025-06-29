@@ -209,7 +209,7 @@ const Landing = () => {
       tl.to(
         tShirtRef.current,
         {
-          y: -140,
+          y: -100,
           duration: 0.8,
           ease: "power2.out",
         },
@@ -225,7 +225,7 @@ const Landing = () => {
         const progress = self.progress;
         // Move t-shirt up faster than normal scroll and fade out at the end
         gsap.to(tShirtRef.current, {
-          y: -140 - 300 * progress,
+          y: -100 - 300 * progress,
           opacity: 1 - progress,
           duration: 0.1,
           ease: "none",

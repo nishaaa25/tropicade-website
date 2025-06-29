@@ -57,7 +57,7 @@ const Landing = () => {
         const tl = gsap.timeline({
             scrollTrigger: {
                 trigger: ".sticky-content",
-                start: "20% top",
+                start: "5% top",
                 end: "bottom center",
                 toggleActions: "play none none reverse",
             }
@@ -100,7 +100,6 @@ const Landing = () => {
         tl.to(bottomAnime.current, {
             y: 200,
             duration: 3.8,
-            ease: "back.inOut"
         }, "variable")
         tl.to(tShirtRef.current, {
             y: -150,
@@ -146,6 +145,21 @@ const Landing = () => {
             duration: 3.4,
             ease: "back.inOut"
         }, "var")
+
+
+        gsap.to(tShirtRef.current, {
+            y: "-500", // Move 150px more up from current position
+            duration: 1.8,
+            opacity: 0,
+            scrollTrigger: {
+                trigger: ".sticky-content",
+                start: "bottom 30%",
+                end: "bottom bottom",
+                toggleActions: "play none none reverse",
+            }
+        })
+
+
     })
     return (
         <>

@@ -18,6 +18,8 @@ export default function Home() {
   const blurElement = useRef(null);
   const topLeaf = useRef(null);
   const bottomLeaf = useRef(null);
+  const progressBar = useRef(null);
+  const progressContainer = useRef(null);
   const [isLoaderComplete, setIsLoaderComplete] = useState(false);
 
   useEffect(() => {
@@ -25,7 +27,7 @@ export default function Home() {
     if (blurElement.current) {
       gsap.to(blurElement.current, {
         filter: "blur(10vw)",
-        duration: 1,
+        duration: 0.5,
         yoyo: true,
         repeat: -1,
         ease: "power2.inOut"
@@ -37,26 +39,33 @@ export default function Home() {
       gsap.to(topLeaf.current, {
         y: "70vh",
         scale: 1.2,
-        duration: 5,
+        duration: 3,
         ease: "expo.inOut"
       });
 
       gsap.to(bottomLeaf.current, {
         y: "-70vh",
         scale: 1.2,
-        duration: 5,
+        duration: 3,
         ease: "expo.inOut"
       });
     }
 
     const tl = gsap.timeline({
-      delay: 0.3,
+      delay: 0.2,
       defaults: {
         ease: "hop",
       },
     });
 
     const counts = document.querySelectorAll(".count");
+
+    // Animate progress bar
+    tl.to(progressBar.current, {
+      width: "100%",
+      duration: 2.5,
+      ease: "power2.inOut"
+    });
 
     counts.forEach((count, index) => {
       const digits = count.querySelectorAll(".digit h1");
@@ -65,10 +74,10 @@ export default function Home() {
         digits,
         {
           y: "0%",
-          duration: 1,
-          stagger: 0.075,
+          duration: 0.6,
+          stagger: 0.05,
         },
-        index * 1
+        index * 0.6
       );
 
       if (index < counts.length) {
@@ -76,10 +85,10 @@ export default function Home() {
           digits,
           {
             y: "-100%",
-            duration: 1,
-            stagger: 0.075,
+            duration: 0.6,
+            stagger: 0.05,
           },
-          index * 1 + 1
+          index * 0.6 + 0.6
         );
       }
     });
@@ -89,46 +98,27 @@ export default function Home() {
       duration: 0.3,
     });
 
-    tl.to(
-      ".word img",
-      {
-        y: "0%",
-        duration: 1,
-      },
-      "<"
-    );
+    // Fade out progress bar
+    tl.to(progressContainer.current, {
+      opacity: 0,
+      duration: 0.5,
+    });
 
     tl.to(".divider", {
       scaleY: "100%",
-      duration: 1,
+      duration: 0.8,
       onComplete: () =>
-        gsap.to(".divider", { opacity: 0, duration: 0.3, delay: 0.3 }),
+        gsap.to(".divider", { opacity: 0, duration: 0.3, delay: 0.2 }),
     });
 
-    tl.to("#word-1 img", {
-      y: "100%",
-      duration: 1,
-      delay: 0.3,
-    });
-
-    tl.to(
-      "#word-2 img",
-      {
-        y: "-100%",
-        duration: 1,
-      },
-      "<"
-    );
-
+    // Replace cutting animation with fade effect
     tl.to(
       ".block",
       {
-        clipPath: "polygon(0% 0%, 100% 0%, 100% 0%, 0% 0%)",
-        duration: 1,
+        opacity: 0,
+        duration: 0.8,
         stagger: 0.1,
-        delay: 0.75,
-        onStart: () =>
-          gsap.to(".hero-img", { scale: 1, duration: 2, ease: "hop" }),
+        delay: 0.3,
       },
       "<"
     );
@@ -137,8 +127,9 @@ export default function Home() {
       [".nav", ".line h1", ".line p"],
       {
         y: "0%",
-        duration: 1.5,
-        stagger: 0.2,
+        opacity: 1,
+        duration: 1,
+        stagger: 0.15,
       },
       "<"
     );
@@ -147,9 +138,10 @@ export default function Home() {
       [".cta", ".cta-icon"],
       {
         scale: 1,
-        duration: 1.5,
-        stagger: 0.75,
-        delay: 0.75,
+        opacity: 1,
+        duration: 1,
+        stagger: 0.5,
+        delay: 0.3,
       },
       "<"
     );
@@ -158,18 +150,19 @@ export default function Home() {
       ".cta-label p",
       {
         y: "0%",
-        duration: 1.5,
-        delay: 0.5,
+        opacity: 1,
+        duration: 1,
+        delay: 0.4,
       },
       "<"
     );
 
-    // Add onComplete callback to signal when loader is done
+    // Add onComplete callback to signal when loader is done with increased timing
     tl.to({}, {
       duration: 0.1,
       onComplete: () => {
         setIsLoaderComplete(true);
-        // Hide the loader after a small delay
+        // Hide the loader after a small delay with fade effect
         gsap.to(loader.current, {
           opacity: 0,
           duration: 0.5,
@@ -187,7 +180,7 @@ export default function Home() {
     <LoaderContext.Provider value={{ isLoaderComplete }}>
       <div>
         {/* Loader */}
-        {/* <div className="loader" ref={loader}>
+        <div className="loader" ref={loader}>
           <div className="overlay relative">
             <div className="block relative">
               <div>
@@ -207,19 +200,15 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="intro-logo">
-            <div className="word" id="word-1">
-              <Image src="/assets/tropicade.svg" alt="Tropicade" width={329} height={108} className="tropicade-svg relative left-1/2 -translate-y-full" style={{clipPath: "inset(0 50% 0 0)"}} />
-            </div>
-            <div className="word" id="word-2">
-              <Image src="/assets/tropicade.svg" alt="Tropicade" width={329} height={108} className="tropicade-svg relative right-1/2 translate-y-full" style={{clipPath: "inset(0 0 0 50%)"}} />
-            </div>
-          </div>
-
-          <div className="divider"></div>
-
-          <div className="spinner-container">
-            <div className="spinner"></div>
+          {/* Progress Bar */}
+          <div 
+            ref={progressContainer}
+            className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-1 bg-white/20 rounded-full overflow-hidden"
+          >
+            <div 
+              ref={progressBar}
+              className="h-full bg-white rounded-full w-0"
+            ></div>
           </div>
 
           <div className="counter">
@@ -244,7 +233,7 @@ export default function Home() {
               <div className="digit"><h1>9</h1></div>
             </div>
           </div>
-        </div> */}
+        </div>
         {/* Page Content */}
         <Landing />
         {/* <TshirtFadeReveal /> */}

@@ -7,6 +7,7 @@ import { useCart } from "@/components/Hooks/CartContext";
 import { useRouter } from "next/navigation";
 import Background from "@/components/Background";
 import Loader from "@/components/Loader";
+import TshirtFadeReveal from "@/components/pages/tshirtFadeReveal";
 
 const sizes = ["S", "M", "L", "X", "XL", "XXL"];
 const colors = ["#416d8a", "#418a5c", "#8a5641", "#8a4180"];
@@ -109,7 +110,7 @@ export default function ProductDetailsPage({ params }) {
       <Background/>
       <HistoryBackBtn text="Back to all products" />
 
-      <div className="container w-full h-full flex-center relative ml-[5vw]">
+      <div className="w-full h-full flex-center relative ml-[5vw]">
         <div className="absolute top-[10vh] left-12">
           <h1 className="text-[22vw] leading-[20vw] font-bebas opacity-2 ">
             CUSTOMISE
@@ -177,12 +178,7 @@ export default function ProductDetailsPage({ params }) {
           </div>
           <div className="relative w-[55%] h-full flex justify-end items-end">
             <div className="absolute w-[100%] h-[105%] z-200 -bottom-[10vh] -left-[5vw]">
-              <Image
-                src={product.image || "/assets/t-shirt2.png"}
-                alt={product.title || "T-Shirt Bootleg"}
-                fill
-                className="object-contain p-8 relative"
-              />
+              <TshirtFadeReveal/>
             </div>
             <div className="w-[80%] h-[80%] relative  left-[-5vw]">
               <div className="absolute w-full h-full bottom-[-10vh] z-10">

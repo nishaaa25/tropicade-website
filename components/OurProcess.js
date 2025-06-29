@@ -258,67 +258,6 @@ export default function OurProcess() {
               className="relative object-contain w-full h-full"
             />
           </div>
-          <div className="w-10/12 h-[65vh] absolute black-tshirt opacity-0">
-            <div className="w-[6.67vw] h-[6.67vw] absolute right-[1.88vw]" id="leaves-1">
-              <Image
-                src="/assets/leaves.svg"
-                alt="leaves"
-                width={0}
-                height={0}
-                sizes="6.67vw"
-                className="object-contain w-full h-full"
-              />
-            </div>
-            <div
-              className="w-[6.67vw] h-[6.67vw] absolute -rotate-80 right-[6.25vw] -top-[2.08vw]"
-              id="leaves-2"
-            >
-              <Image
-                src="/assets/leaves.svg"
-                alt="leaves"
-                width={0}
-                height={0}
-                sizes="6.67vw"
-                className="object-contain w-full h-full"
-              />
-            </div>
-            <div
-              className="w-[6.67vw] h-[6.67vw] absolute -bottom-[1.25vw] rotate-110 left-[6.25vw]"
-              id="leaves-3"
-            >
-              <Image
-                src="/assets/leaves.svg"
-                alt="leaves"
-                width={0}
-                height={0}
-                sizes="6.67vw"
-                className="object-contain w-full h-full"
-              />
-            </div>
-            <div
-              className="w-[6.67vw] h-[6.67vw] absolute bottom-[1.67vw] -rotate-180 left-[2.08vw]"
-              id="leaves-4"
-            >
-              <Image
-                src="/assets/leaves.svg"
-                alt="leaves"
-                width={0}
-                height={0}
-                sizes="6.67vw"
-                className="object-contain w-full h-full"
-              />
-            </div>
-            <div className="w-full relative h-full bottom-0 ml-5">
-              <Image
-                src="/assets/black-tshirt.svg"
-                alt="alt"
-                width={0}
-                height={0}
-                sizes="(max-width: 768px) 100vw, 83.33vw"
-                className="relative object-contain w-full h-full"
-              />
-            </div>
-          </div>
         </div>
         <div className="w-[32%] relative bg-white h-[0.02vw] ml-[2vw] clip-2"></div>
       </div>

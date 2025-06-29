@@ -13,7 +13,7 @@ export default function OurProcess() {
 
   useGSAP(() => {
     // Clear any existing ScrollTriggers to prevent conflicts
-    ScrollTrigger.getAll().forEach(trigger => {
+    ScrollTrigger.getAll().forEach((trigger) => {
       if (trigger.trigger === processDivRef.current) {
         trigger.kill();
       }
@@ -35,7 +35,7 @@ export default function OurProcess() {
         ease: "power1.out",
         duration: 2,
       })
-     .from(
+      .from(
         ".img-cont .product",
         {
           skewY: -10,
@@ -45,12 +45,13 @@ export default function OurProcess() {
           duration: 2,
         },
         "<0.2"
-      ) .from(
+      )
+      .from(
         "#text-1 p",
         {
           y: 400,
           ease: "power1.out",
-          duration: 3
+          duration: 3,
         },
         "<1"
       )
@@ -95,21 +96,34 @@ export default function OurProcess() {
         end: "+=200%",
         pin: true,
         scrub: 1, // This ensures smooth scroll-based animation
-      }
+      },
     });
 
     // Step 1 to Step 2 transition (25% - 33% of scroll)
     mainTimeline
-      .to("#text-1", { x: "-50vw", opacity: 0, duration: 1, ease: "power2.inOut" })
-      .to("#para-1", { x: "50vw", opacity: 0, duration: 1, ease: "power2.inOut" }, "<")
-      .to(["#img-1", "#img-3"], { opacity: 0, duration: 1, ease: "power2.inOut" }, "<")
+      .to("#text-1", {
+        x: "-50vw",
+        opacity: 0,
+        duration: 1,
+        ease: "power2.inOut",
+      })
+      .to(
+        "#para-1",
+        { x: "50vw", opacity: 0, duration: 1, ease: "power2.inOut" },
+        "<"
+      )
+      .to(
+        ["#img-1", "#img-3"],
+        { opacity: 0, duration: 1, ease: "power2.inOut" },
+        "<"
+      )
       .to("#text-2", { opacity: 1, duration: 1, ease: "power2.inOut" }, "<")
       .to(
         "#img-2 .main-product",
         {
           scale: 1,
           duration: 1,
-          ease: "power2.inOut"
+          ease: "power2.inOut",
         },
         "<"
       )
@@ -119,14 +133,18 @@ export default function OurProcess() {
         { y: 0, opacity: 1, duration: 1, ease: "power2.inOut" },
         "<"
       )
-      .to(".tshirt-outline", { opacity: 1, duration: 1, ease: "power2.inOut" }, "<")
+      .to(
+        ".tshirt-outline",
+        { opacity: 1, duration: 1, ease: "power2.inOut" },
+        "<"
+      )
       .fromTo(
         "#img-2",
-        { borderWidth : "10px" , borderRadius: "50%", scale: 1, },
+        { borderWidth: "10px", borderRadius: "50%", scale: 1 },
         {
           borderRadius: "0%",
-          scale:1.5,
-          borderWidth : "0px",
+          scale: 1.5,
+          borderWidth: "0px",
           ease: "power2.inOut",
           duration: 1,
         },
@@ -139,21 +157,48 @@ export default function OurProcess() {
         { y: 0, opacity: 1, duration: 1, ease: "power2.inOut" },
         "<"
       )
-      
+
       // Add some pause between transitions
       .to({}, { duration: 0.5 })
-      
+
       // Step 2 to Step 3 transition (66% - 75% of scroll)
-      .to("#text-2", { x: "-50vw", opacity: 0, duration: 1, ease: "power2.inOut" })
-      .to("#para-2", { x: "50vw", opacity: 0, duration: 1, ease: "power2.inOut" }, "<")
+      .to("#text-2", {
+        x: "-50vw",
+        opacity: 0,
+        duration: 1,
+        ease: "power2.inOut",
+      })
       .to(
-        "#img-2 ",
-        { scale: 1.3, duration: 1, ease: "power2.inOut", marginBottom:"6vh", marginLeft:"20px" },
+        "#para-2",
+        { x: "50vw", opacity: 0, duration: 1, ease: "power2.inOut" },
         "<"
       )
-      .to(".tshirt-outline", { scale: 0, opacity: 0, duration: 1, ease: "power2.inOut" }, "<")
-      .to("#message", { y: "50vh", opacity: 0, duration: 1, ease: "power2.inOut" }, "<")
-      .to(".black-tshirt", { opacity: 1, duration: 1, ease: "power2.inOut" }, "<")
+      .to(
+        "#img-2 ",
+        {
+          scale: 1.3,
+          duration: 1,
+          ease: "power2.inOut",
+          marginBottom: "6vh",
+          marginLeft: "20px",
+        },
+        "<"
+      )
+      .to(
+        ".tshirt-outline",
+        { scale: 0, opacity: 0, duration: 1, ease: "power2.inOut" },
+        "<"
+      )
+      .to(
+        "#message",
+        { y: "50vh", opacity: 0, duration: 1, ease: "power2.inOut" },
+        "<"
+      )
+      .to(
+        ".black-tshirt",
+        { opacity: 1, duration: 1, ease: "power2.inOut" },
+        "<"
+      )
       .from(
         ["#leaves-1", "#leaves-2", "#leaves-3", "#leaves-4"],
         {
@@ -161,7 +206,7 @@ export default function OurProcess() {
           scale: 0,
           duration: 1,
           ease: "power2.inOut",
-          stagger: 0.1
+          stagger: 0.1,
         },
         "<"
       )
@@ -257,6 +302,70 @@ export default function OurProcess() {
               sizes="(max-width: 768px) 100vw, 83.33vw"
               className="relative object-contain w-full h-full"
             />
+          </div>
+          <div className="w-10/12 h-[65vh] absolute black-tshirt opacity-0">
+            <div
+              className="w-[6.67vw] h-[6.67vw] absolute right-[1.88vw]"
+              id="leaves-1"
+            >
+              <Image
+                src="/assets/leaves.svg"
+                alt="leaves"
+                width={0}
+                height={0}
+                sizes="6.67vw"
+                className="object-contain w-full h-full"
+              />
+            </div>
+            <div
+              className="w-[6.67vw] h-[6.67vw] absolute -rotate-80 right-[6.25vw] -top-[2.08vw]"
+              id="leaves-2"
+            >
+              <Image
+                src="/assets/leaves.svg"
+                alt="leaves"
+                width={0}
+                height={0}
+                sizes="6.67vw"
+                className="object-contain w-full h-full"
+              />
+            </div>
+            <div
+              className="w-[6.67vw] h-[6.67vw] absolute -bottom-[1.25vw] rotate-110 left-[6.25vw]"
+              id="leaves-3"
+            >
+              <Image
+                src="/assets/leaves.svg"
+                alt="leaves"
+                width={0}
+                height={0}
+                sizes="6.67vw"
+                className="object-contain w-full h-full"
+              />
+            </div>
+            <div
+              className="w-[6.67vw] h-[6.67vw] absolute bottom-[1.67vw] -rotate-180 left-[2.08vw]"
+              id="leaves-4"
+            >
+              <Image
+                src="/assets/leaves.svg"
+                alt="leaves"
+                width={0}
+                height={0}
+                sizes="6.67vw"
+                className="object-contain w-full h-full"
+              />
+            </div>
+            <div className="w-full relative h-full bottom-0 ml-5">
+              <Image
+                src="/assets/black-tshirt.svg"
+                alt="alt"
+                width={0}
+                height={0}
+                sizes="(max-width: 768px) 100vw, 83.33vw"
+                className="relative object-contain w-full h-full"
+              />
+            </div>
           </div>
         </div>
         <div className="w-[32%] relative bg-white h-[0.02vw] ml-[2vw] clip-2"></div>

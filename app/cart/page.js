@@ -31,8 +31,8 @@ export default function CartPage() {
         </div>
       <div className="ml-5 relative z-10"><HistoryBackBtn text="Back to shopping" />
       </div>
-      <div className="container mx-auto w-[90%] pt-[24vh] relative">
-        <h1 className="text-white  text-4xl font-bebas ml-7">Cart</h1>
+      <div className=" mx-auto w-[90%] pt-[20vh] relative">
+        <h1 className="text-white text-4xl font-bebas ml-7" >Cart</h1>
         <div className="w-full flex gap-10 mt-7 relative">
           <div className="w-7/12 relative">
             <div className="flex flex-col gap-5">
